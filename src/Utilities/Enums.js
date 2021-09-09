@@ -9,7 +9,7 @@ export const AccountTitle = Object.freeze({
     PAST_ORDERS: 'Past Orders',
     BILL_PAYMENT: 'Billing and Payments',
     CHANGE_PASSWORD: 'Change Password',
-    LOG_IN: 'Log In'
+    LOG_IN: 'Log In',
 });
 
 // export const ChangePasswordStatus = Object.freeze({

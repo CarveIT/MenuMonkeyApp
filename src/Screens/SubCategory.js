@@ -6,34 +6,59 @@
  * @flow strict-local
  */
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   SafeAreaView,
   StatusBar,
   StyleSheet,
   Text,
   FlatList,
-  TouchableOpacity
+  TouchableOpacity,
+  Alert
 } from 'react-native';
 
 import Color from '../Utilities/Color';
 import { favourites } from '../Data';
 import SubCategoryCell from '../Components/SubCategoryCell';
 import SubCatHeader from '../Components/SubCatHeader';
+import ApiCalls from '../Services/ApiCalls';
 
 const SubCategory = (props) => {
+
+  const [dishes, setDishes] = useState([])
+
+  useEffect(() => {
+    fetchFood('food/1')
+  }, []);
+
   renderItem = ({ item }) => {
     return (
       <SubCategoryCell item={item} {...props} />
     );
   }
 
+  const fetchFood = (endPoint) => {
+    // setLoading(true)
+    ApiCalls.getApiCall(endPoint).then(data => {
+      console.log("DATA");
+      console.log(data)
+      // setLoading(false)
+      if (data.dishes) {
+        setDishes(data.dishes)
+      } else {
+        Alert.alert('Error', data.error);
+      }
+    }, error => {
+      Alert.alert('Error', error);
+    })
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle={'dark-content'} />
-      <SubCatHeader title={'Search'} {... props} />
+      <SubCatHeader title={'Search'} {...props} />
       <FlatList
-        data={favourites}
+        data={dishes}
         style={styles.list}
         renderItem={(item) => renderItem(item)}
         keyExtractor={(item) => item.id}

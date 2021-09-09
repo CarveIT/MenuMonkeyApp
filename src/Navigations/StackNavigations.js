@@ -8,8 +8,21 @@ import PastOrders from '../Screens/PastOrders';
 import Account from '../Screens/Account';
 import SubCategory from '../Screens/SubCategory';
 import ItemDetail from '../Screens/ItemDetail';
+import Login from '../Screens/Login';
+import Register from '../Screens/Register';
+import Landing from '../Screens/Landing';
+import BottomNavigation from './BottomNavigation';
 
 const Stack = createStackNavigator();
+
+export const LandingStack = () => {
+    return (
+        <Stack.Navigator>
+            <Stack.Screen name="Landing" component={Landing} options={{ headerShown: false }} />
+            <Stack.Screen name="BottomNavigation" component={BottomNavigation} options={{ headerShown: false }} />
+        </Stack.Navigator>
+    );
+}
 
 export const HomeStack = () => {
     return (
@@ -49,6 +62,8 @@ export const AccountStack = () => {
     return (
         <Stack.Navigator>
             <Stack.Screen name="Account" component={Account} options={{ headerShown: false }} />
+            <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
+            <Stack.Screen name="Register" component={Register} options={{ headerShown: false }} />
         </Stack.Navigator>
     );
 }

@@ -21,12 +21,12 @@ const image = require('../../assets/heart.png')
 const SubCategoryCell = (props) => {
     const { item } = props
     return (
-        <TouchableOpacity style={styles.container} onPress={() => {props.navigation.navigate('ItemDetail')}}>
+        <TouchableOpacity style={styles.container} onPress={() => {props.navigation.navigate('ItemDetail', { detail: item })}}>
             <View>
                 <Text style={styles.title}>{item.name}</Text>
-                <Text style={styles.subTitle}>{item.address}</Text>
+                <Text style={styles.subTitle}>{item.description}</Text>
             </View>
-            <Text style={styles.priceTxt}>{'$10'}</Text>
+            <Text style={styles.priceTxt}>{'$'+item.price}</Text>
         </TouchableOpacity>
     );
 };

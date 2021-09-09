@@ -27,7 +27,7 @@ const PastOrderCell = (props) => {
                 <Text style={styles.status}>{'Status:'}</Text>
                 <Text style={styles.statusVal}>{item.status}</Text>
                 <Text style={styles.order}>{'Order ID:'}
-                    <Text>{'  '+item.orderID}</Text>
+                    <Text>{'  '+item.id}</Text>
                 </Text>
             </View>
             <View style={styles.rightView}>

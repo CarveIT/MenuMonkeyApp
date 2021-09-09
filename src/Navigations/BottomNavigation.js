@@ -20,85 +20,86 @@ const Tab = createBottomTabNavigator();
 const BottomNavigation = (props) => {
 
   return (
-    <NavigationContainer>
-      <Tab.Navigator>
-        <Tab.Screen
-          name="HomeTab"
-          component={HomeStack}
-          options={{
-            tabBarLabel: ({ focused }) => {
-              return (
-                <Text style={focused ? styles.activeLabel : styles.label}>{'Home'}</Text>
-              )
-            },
-            tabBarIcon: ({ focused, color, size }) => {
-              return (
-                <Image style={focused ? styles.activeImage : styles.image} source={searchIcon} />
-              )
-            }
-          }} />
-        <Tab.Screen
-          name="CartTab"
-          component={CartStack}
-          options={{
-            tabBarLabel: ({ focused }) => {
-              return (
-                <Text style={focused ? styles.activeLabel : styles.label}>{'Cart'}</Text>
-              )
-            },
-            tabBarIcon: ({ focused, color, size }) => {
-              return (
-                <Image style={focused ? styles.activeImage : styles.image} source={cartIcon} />
-              )
-            }
-          }} />
-        <Tab.Screen
-          name="FavouritesTab"
-          component={FavoriteStack}
-          options={{
-            tabBarLabel: ({ focused }) => {
-              return (
-                <Text style={focused ? styles.activeLabel : styles.label}>{'Favorites'}</Text>
-              )
-            },
-            tabBarIcon: ({ focused, color, size }) => {
-              return (
-                <Image style={focused ? styles.activeImage : styles.image} source={favoriteIcon} />
-              )
-            }
-          }} />
-        <Tab.Screen
-          name="PastOrdersTab"
-          component={OrdersStack}
-          options={{
-            tabBarLabel: ({ focused }) => {
-              return (
-                <Text numberOfLines={1} style={focused ? styles.activeLabel : styles.label}>{'Past Orders'}</Text>
-              )
-            },
-            tabBarIcon: ({ focused, color, size }) => {
-              return (
-                <Image style={focused ? styles.activeImage : styles.image} source={orderIcon} />
-              )
-            }
-          }} />
-        <Tab.Screen
-          name="AccountTab"
-          component={AccountStack}
-          options={{
-            tabBarLabel: ({ focused }) => {
-              return (
-                <Text style={focused ? styles.activeLabel : styles.label}>{'Account'}</Text>
-              )
-            },
-            tabBarIcon: ({ focused, color, size }) => {
-              return (
-                <Image style={focused ? styles.activeImage : styles.image} source={accountIcon} />
-              )
-            }
-          }} />
-      </Tab.Navigator>
-    </NavigationContainer>
+    // <NavigationContainer>
+    <Tab.Navigator>
+      <Tab.Screen
+        name="HomeTab"
+        component={HomeStack}
+        options={{
+          tabBarLabel: ({ focused }) => {
+            return (
+              <Text style={focused ? styles.activeLabel : styles.label}>{'Home'}</Text>
+            )
+          },
+          tabBarIcon: ({ focused, color, size }) => {
+            return (
+              <Image style={focused ? styles.activeImage : styles.image} source={searchIcon} />
+            )
+          }
+        }} />
+      <Tab.Screen
+        name="CartTab"
+        component={CartStack}
+        options={{
+          tabBarLabel: ({ focused }) => {
+            return (
+              <Text style={focused ? styles.activeLabel : styles.label}>{'Cart'}</Text>
+            )
+          },
+          tabBarIcon: ({ focused, color, size }) => {
+            return (
+              <Image style={focused ? styles.activeImage : styles.image} source={cartIcon} />
+            )
+          }
+        }}
+      />
+      <Tab.Screen
+        name="FavouritesTab"
+        component={FavoriteStack}
+        options={{
+          tabBarLabel: ({ focused }) => {
+            return (
+              <Text style={focused ? styles.activeLabel : styles.label}>{'Favorites'}</Text>
+            )
+          },
+          tabBarIcon: ({ focused, color, size }) => {
+            return (
+              <Image style={focused ? styles.activeImage : styles.image} source={favoriteIcon} />
+            )
+          }
+        }} />
+      <Tab.Screen
+        name="PastOrdersTab"
+        component={OrdersStack}
+        options={{
+          tabBarLabel: ({ focused }) => {
+            return (
+              <Text numberOfLines={1} style={focused ? styles.activeLabel : styles.label}>{'Past Orders'}</Text>
+            )
+          },
+          tabBarIcon: ({ focused, color, size }) => {
+            return (
+              <Image style={focused ? styles.activeImage : styles.image} source={orderIcon} />
+            )
+          }
+        }} />
+      <Tab.Screen
+        name="AccountTab"
+        component={AccountStack}
+        options={{
+          tabBarLabel: ({ focused }) => {
+            return (
+              <Text style={focused ? styles.activeLabel : styles.label}>{'Account'}</Text>
+            )
+          },
+          tabBarIcon: ({ focused, color, size }) => {
+            return (
+              <Image style={focused ? styles.activeImage : styles.image} source={accountIcon} />
+            )
+          }
+        }} />
+    </Tab.Navigator>
+    // </NavigationContainer>
   );
 }
 

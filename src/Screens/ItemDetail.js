@@ -29,7 +29,6 @@ const uncheckedImg = require('../../assets/un-checked.png');
 const ItemDetail = (props) => {
   const [size, setSize] = useState(ItemSize.LARGE)
   const [free, setFree] = useState(false)
-
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle={'dark-content'} />
@@ -37,7 +36,7 @@ const ItemDetail = (props) => {
         <Image source={backImg} />
       </TouchableOpacity>
       <ScrollView contentContainerStyle={styles.scroller}>
-        <Text style={styles.header}>{'GOLDBERG'}</Text>
+        <Text style={styles.header}>{props.route.params.detail.name.toUpperCase()}</Text>
         <Separator />
         <View style={styles.row}>
           <Text style={styles.subHeading}>{'Select Size'}</Text>

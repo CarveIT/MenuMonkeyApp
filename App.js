@@ -19,7 +19,6 @@ const App = () => {
     <Provider store={store}>
       <Starter />
     </Provider>
-
   );
 };
 

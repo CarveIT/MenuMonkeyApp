@@ -47,6 +47,7 @@ const Account = (props) => {
         setChangePassword(true)
         return
       case AccountTitle.LOG_IN:
+        props.navigation.navigate('Login')
         return
     }
   }

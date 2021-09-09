@@ -22,8 +22,8 @@ const FavouriteCell = (props) => {
     return (
         <View style={styles.container}>
             <View>
-                <Text style={styles.title}>{item.name}</Text>
-                <Text style={styles.subTitle}>{item.address}</Text>
+                <Text style={styles.title}>{item.restaurant.name}</Text>
+                <Text style={styles.subTitle}>{item.restaurant.address}</Text>
             </View>
             <TouchableOpacity style={styles.heartView}>
                 <Image style={styles.heart} source={image} />

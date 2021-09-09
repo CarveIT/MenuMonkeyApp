@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
   },
   summaryView: {
     marginTop: 20,
-    
+    marginHorizontal: 10
   },
   summaryTxt: {
     fontSize: 18,

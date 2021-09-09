@@ -6,7 +6,7 @@
  * @flow strict-local
  */
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -14,7 +14,7 @@ import {
   StyleSheet,
   Text,
   useColorScheme,
-  View,
+  Alert,
   FlatList
 } from 'react-native';
 import { connect } from 'react-redux';
@@ -22,20 +22,16 @@ import Color from '../Utilities/Color';
 import { categories } from '../Data';
 import CategoryCell from '../Components/CategoryCell';
 import HomeHeader from '../Components/HomeHeader';
-
-// const arr = [
-//   {"sec0": ["td0", "td1", "td2", "td3", "td4", "td5"]},
-//   {"sec1": ["td0", "td1", "td2", "td3", "td4", "td5"]},
-//   {"sec2": ["td0", "td1", "td2", "td3", "td4", "td5"]}
-// ]
-
-const arr = [
-  ["td0", "td1", "td2", "td3", "td4", "td5"],
-  ["td0", "td1", "td2", "td3", "td4", "td5"],
-  ["td0", "td1", "td2", "td3", "td4", "td5"]
-]
+import ApiCalls from '../Services/ApiCalls';
 
 const Home = (props) => {
+
+  const [menu, setMenu] = useState([])
+  const [restaurant, setRestaurant] = useState(null)
+
+  useEffect(() => {
+    fetchMenu('welcome/1')
+  }, []);
 
   renderItem = ({ item }) => {
     return (
@@ -43,77 +39,29 @@ const Home = (props) => {
     );
   }
 
-  getRandomColor = () => { return 'rgb(' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ')'; }
-
-  guidGenerator = () => {
-    var S4 = function () {
-      return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
-    };
-    return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
+  const fetchMenu = (endPoint) => {
+    // setLoading(true)
+    ApiCalls.getApiCall(endPoint).then(data => {
+      console.log("DATA");
+      console.log(data)
+      // setLoading(false)
+      if (data.menus) {
+        setMenu(data.menus)
+        setRestaurant(data.restaurant)
+      } else {
+        Alert.alert('Error', data.error);
+      }
+    }, error => {
+      Alert.alert('Error', error);
+    })
   }
-
-  renderTR = (trData) => {
-    return (
-      <View key={guidGenerator()} style={{ flexDirection: 'row', flex: 1, height: 50, marginTop: 10, backgroundColor: getRandomColor() }}>
-        {/* {trData.map(td => {
-          return renderTD(td)
-        })} */}
-      </View>
-    )
-  }
-
-  renderTD = (tdData) => {
-    return (
-      <View key={guidGenerator()} style={{ flex: 1, backgroundColor: getRandomColor() }}></View>
-    )
-  }
-
-  const SquareView = (props) => {
-    return (
-      <View
-        style={{
-          height: props.size,
-          width: props.size,
-          backgroundColor: props.color,
-        }}
-      />
-    );
-  };
-
-  // return (
-  //   <ScrollView horizontal={true} >
-  //     <SquareView size={100} color="red" />
-  //     <SquareView size={100} color="blue" />
-  //     <SquareView size={100} color="green" />
-  //     <SquareView size={100} color="yellow" />
-  //     <SquareView size={100} color="gray" />
-  //     <SquareView size={100} color="cyan" />
-  //     <SquareView size={100} color="black" />
-  //   </ScrollView>
-  // )
 
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle={'dark-content'} />
-      {/* <ScrollView horizontal>
-        <View style={{flex: 1, flexDirection: 'row', alignSelf: 'stretch',alignItems: 'flex-start',backgroundColor:'red'}}>
-          {arr.map((tr) => {
-           renderTR(tr)
-          })}
-        </View>
-      </ScrollView> */}
-
-
-      {/* <ScrollView horizontal>
-        {arr.map((tr) => {
-          return <View key={guidGenerator()} style={{ width: 200, height: 200, backgroundColor: getRandomColor() }}></View>
-        })}
-      </ScrollView> */}
-
-
-      <HomeHeader title={'Ibadan Fresh'} subTitle={'520 W kennedy Blvd, Tampa, FL33606'} />
+      <HomeHeader title={restaurant && restaurant.name} subTitle={restaurant && restaurant.address} />
       <FlatList
-        data={categories}
+        data={menu}
         style={styles.list}
         columnWrapperStyle={{ justifyContent: 'space-around' }}
         renderItem={(item) => renderItem(item)}

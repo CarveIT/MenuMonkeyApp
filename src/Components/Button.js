@@ -14,17 +14,29 @@ import {
     Image,
     Text,
     Dimensions,
-    ImageBackground
+    ActivityIndicator
 } from 'react-native';
 
 import Color from '../Utilities/Color';
 
 const Button = (props) => {
-    const { title, style, onPress } = props
+    const { title, style, onPress, loading = false } = props
+
+    const Loader = () => {
+        return (
+            <View style={[styles.container, style]} onPress={onPress}>
+                <ActivityIndicator size={'large'}  color={Color.WHITE} />
+            </View>
+    
+        )
+    }
+    
     return (
-        <TouchableOpacity style={[styles.container, style]} onPress={onPress}>
+        !loading ? <TouchableOpacity style={[styles.container, style]} onPress={onPress}>
             <Text style={styles.title}>{title}</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> :
+        <Loader/>
+
     );
 };
 
