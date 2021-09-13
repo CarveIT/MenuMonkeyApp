@@ -28,7 +28,7 @@ import SocialButton from '../Components/SocialButton';
 import ApiCalls from '../Services/ApiCalls';
 import Constants from '../Utilities/Constants';
 
-const backIcon = require('../../assets/back.png')
+const backIcon = require('../../assets/left-arrow.png')
 const monkeyImage = require('../../assets/monkey-bg.jpeg')
 const googleIcon = require('../../assets/google.png')
 const facebookIcon = require('../../assets/fb.png')
@@ -99,9 +99,11 @@ const Login = (props) => {
       <StatusBar barStyle={'dark-content'} />
       <View style={styles.container}>
         <View style={styles.header}>
-          <Image resizeMode='stretch' style={styles.monkeyImage} source={monkeyImage} />
+
+          <Image style={styles.banner} resizeMode='contain' source={require('../../assets/banner.png')} />
+          <Image resizeMode='contain' style={styles.monkeyImage} source={monkeyImage} />
           <TouchableOpacity style={styles.backButton} onPress={() => props.navigation.goBack()}>
-            <Image source={backIcon} />
+            <Image source={backIcon} style={styles.backImage} />
           </TouchableOpacity>
         </View>
         <View style={styles.formContainer}>
@@ -158,19 +160,27 @@ const styles = StyleSheet.create({
     backgroundColor: Color.WHITE
   },
   header: {
-    flexDirection: 'row',
+    // flexDirection: 'row',
     width: '100%',
-    height: 170,
-    backgroundColor: 'red'
+    height: 230,
+    backgroundColor: Color.BG_BLUE
+  },
+  banner: {
+    height: 70,
+    width: '80%',
+    marginTop: 5,
+    alignSelf: 'center'
   },
   monkeyImage: {
     width: '100%',
-    height: 170
+    marginTop: 20,
+    height: '100%'
   },
   backButton: {
     position: 'absolute',
-    top: 10,
-    left: 10
+    top: 5,
+    left: 0,
+    marginRight:0,
   },
   formContainer: {
     flex: 1,
@@ -213,6 +223,12 @@ const styles = StyleSheet.create({
     marginRight: 5,
     fontSize: 16,
     fontWeight: '600'
+  },
+  backImage: {
+    marginStart: 20,
+    marginTop:10,
+    height: 15,
+    width: 15
   }
 });
 

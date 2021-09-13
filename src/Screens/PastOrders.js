@@ -12,13 +12,15 @@ import {
   StatusBar,
   StyleSheet,
   FlatList,
-  Alert
+  Alert,
+  View
 } from 'react-native';
 
 import Color from '../Utilities/Color';
 import PastOrderCell from '../Components/PastOrderCell';
 import ApiCalls from '../Services/ApiCalls';
 import { pastOrders } from '../Data';
+import SubCatHeader from '../Components/SubCatHeader';
 
 const PastOrders = (props) => {
   const [orders, setOrders] = useState([])
@@ -52,6 +54,12 @@ const PastOrders = (props) => {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle={'dark-content'} />
+      <View style={{ backgroundColor: Color.WHITE }}>
+      <SubCatHeader
+      subTitlestyle={styles.title}
+        title={"Past Orders"}
+        cartimgstyle={{ tintColor: Color.BLACK }} />
+      </View>
       <FlatList
         data={orders}
         style={styles.list}
@@ -71,7 +79,14 @@ const styles = StyleSheet.create({
     backgroundColor: Color.BG_GRAY
   },
   list: {
-    backgroundColor: Color.BG_GRAY
+    position:'absolute',
+    top:40,
+    width:'78%',
+    alignSelf:'center',
+    backgroundColor: Color.WHITE
+  },
+  title:{
+    color:Color.BLACK,fontWeight:'bold'
   }
 });
 export default PastOrders;

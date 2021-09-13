@@ -19,31 +19,28 @@ import {
 
 import Color from '../Utilities/Color';
 const cartImg = require('../../assets/cart.png')
-const backImg = require('../../assets/back.png')
+const backImg = require('../../assets/left-arrow.png')
 const searchImg = require('../../assets/search.png')
 
 const SubCatHeader = (props) => {
-    const { title, subTitle } = props
+    const { title, backbtnstyle, subTitlestyle,cartimgstyle } = props
     return (
         <View style={styles.main}>
             <View style={styles.container}>
+
                 <TouchableOpacity style={styles.backBtnView} onPress={() => props.navigation.goBack()}>
-                    <Image resizeMode='contain' style={styles.backBtn} source={backImg}></Image>
+                    <Image resizeMode='contain' style={[styles.backBtn , backbtnstyle]} source={backImg}></Image>
                 </TouchableOpacity>
-                <View style={styles.searchView}>
-                    <TextInput
-                        style={styles.input}
-                        placeholder={'Search by name'}
-                    />
-                    <Image style={styles.searchIcon} source={searchImg} />
+
+                <View style={styles.titleView}>
+                    <Text style={[styles.subTitle,subTitlestyle]}>{title}</Text>
                 </View>
                 <View style={styles.cartView}>
-                    <Image resizeMode='contain' style={styles.cartIcon} source={cartImg} />
+                    <Image resizeMode='contain' style={[styles.cartIcon,cartimgstyle]} source={cartImg} />
                     <Text style={styles.counter}>{'2'}</Text>
                 </View>
-                
+
             </View>
-            <Text style={styles.subTitle}>{'FOOD ITEMS'}</Text>
         </View>
 
     );
@@ -51,34 +48,40 @@ const SubCatHeader = (props) => {
 
 const styles = StyleSheet.create({
     main: {
-        height: 100,
-        backgroundColor: Color.WHITE,
+        height: 60,
         alignItems: 'center',
         justifyContent: 'center',
     },
     container: {
-        flexDirection: 'row',  
+        flexDirection: 'row',
+        height: 50,
+
+        alignItems: 'center',
+        justifyContent: 'center',
+
     },
     backBtnView: {
         flex: 1,
+        justifyContent: 'center',
+        marginStart: 10,
     },
     backBtn: {
-        width: 25,
-        height: 25
+        width: 15,
+        height: 15,
+        alignSelf: 'center',
+        tintColor: Color.BLACK
     },
-    searchView: {
+    titleView: {
         flexDirection: 'row',
-        flex: 7,
-        height: 30,
+        flex: 8,
         justifyContent: 'center',
         alignItems: 'center',
-        borderRadius: 15,
-        marginRight: 10,
-        backgroundColor: Color.BG_BLUE
+
+
     },
     input: {
         flex: 1,
-        height: 30,
+        height: 60,
         marginLeft: 10,
         fontSize: 16,
         fontWeight: '500',
@@ -94,10 +97,13 @@ const styles = StyleSheet.create({
         width: '100%',
         fontSize: 30,
         fontWeight: '700',
+        fontWeight:'bold',
         color: Color.RED
     },
     cartView: {
         flex: 1,
+        marginRight: 15,
+        alignSelf: 'center',
         // position: 'absolute',
         flexDirection: 'row',
         alignItems: 'center',
@@ -112,9 +118,9 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: '600'
     },
-    subTitle:{
-        marginTop: 15,
-        color: Color.BG_BLUE
-    }
+    subTitle: {
+        color: Color.RED, fontWeight: 'bold'
+    },
+    
 });
 export default SubCatHeader;

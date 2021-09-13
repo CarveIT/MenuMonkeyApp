@@ -23,6 +23,7 @@ import { favourites } from '../Data';
 import FavouriteCell from '../Components/FavouriteCell';
 import HomeHeader from '../Components/HomeHeader';
 import ApiCalls from '../Services/ApiCalls';
+import SubCatHeader from '../Components/SubCatHeader';
 
 const Favourites = (props) => {
 
@@ -57,14 +58,21 @@ const Favourites = (props) => {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle={'dark-content'} />
+      <View style={{ backgroundColor: Color.BG_ORANGE }}>
+        <SubCatHeader
+          title={"Favourites"}
+          backbtnstyle={{ tintColor: Color.WHITE }}
+          cartimgstyle={{ tintColor: Color.WHITE }}
+          subTitlestyle={styles.title} ></SubCatHeader>
+      </View>
       <FlatList
         data={favorites}
         style={styles.list}
         renderItem={(item) => renderItem(item)}
         keyExtractor={(item) => item.id}
-        ListHeaderComponent={this.headerView}
-        // onEndReached={this.loadMore()}
-        ListFooterComponent={this.footerView}
+      ListHeaderComponent={this.headerView}
+      // onEndReached={this.loadMore()}
+      ListFooterComponent={this.footerView}
       />
     </SafeAreaView>
   );
@@ -77,6 +85,7 @@ const styles = StyleSheet.create({
   },
   list: {
     backgroundColor: Color.BG_ORANGE
-  }
+  },
+  title: { color: Color.WHITE, fontWeight: 'bold' }
 });
 export default Favourites;

@@ -48,10 +48,10 @@ const Landing = (props) => {
                 </View>
                 <View style={styles.splitBtnView}>
                     <TouchableOpacity style={yesBtn ? styles.selectedSplitBtn : styles.splitBtn} onPress={() => setYesBtn(true)}>
-                        <Text style={styles.btnTxt}>Yes</Text>
+                        <Text style={yesBtn ? styles.btnTxtSelected : styles.btnTxt}>Yes</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={yesBtn ? styles.splitBtn : styles.selectedSplitBtn} onPress={() => setYesBtn(false)}>
-                        <Text style={styles.btnTxt}>No</Text>
+                        <Text style={yesBtn ? styles.btnTxt : styles.btnTxtSelected}>No</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.locationSplitBtnView}>
@@ -63,11 +63,13 @@ const Landing = (props) => {
                     </TouchableOpacity>
                 </View>
                 <ProfileInput
+                    inputview={styles.inputview}
+                    style={styles.profileInput}
                     placeholder={'Enter Address or location'}
                     onChangeText={(text) => setLocation(text)}
                 />
                 {!yesBtn && <DropDownPicker
-                    style={{ borderWidth: 0 }}
+                    style={{ borderWidth: 0,width:'90%',alignSelf:'center',borderRadius:1}}
                     containerStyle={styles.dropDown}
                     placeholder={'Select Restaurant'}
                     open={open}
@@ -106,7 +108,8 @@ const styles = StyleSheet.create({
     },
     banner: {
         height: 70,
-        width: '90%',
+        width: '70%',
+        marginTop: 5,
         alignSelf: 'center'
     },
     titleView: {
@@ -140,7 +143,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         borderRadius: 20,
         justifyContent: 'center',
-        backgroundColor: Color.GREEN
+        backgroundColor: Color.WHITE
     },
     splitBtn: {
         flex: 1,
@@ -154,10 +157,16 @@ const styles = StyleSheet.create({
         color: Color.WHITE,
         textAlign: 'center'
     },
+    btnTxtSelected: {
+        fontSize: 20,
+        fontWeight: '500',
+        color: Color.BLACK,
+        textAlign: 'center'
+    },
     locationSplitBtnView: {
         flexDirection: 'row',
         height: 50,
-        width: '80%',
+        width: '70%',
         marginTop: 40,
         alignSelf: 'center',
         justifyContent: 'center',
@@ -188,19 +197,19 @@ const styles = StyleSheet.create({
         textAlign: 'center'
     },
     menuImgView: {
-        width: 350,
-        height: 350,
-        marginTop: 80,
+        width: 300,
+        height: 300,
+        marginTop: 60,
         alignSelf: 'center',
         justifyContent: 'center',
         alignItems: 'center',
-        borderRadius: 170,
+        borderRadius: 150,
         backgroundColor: 'red'
     },
     menuImg: {
-        width: 350,
-        height: 350,
-        borderRadius: 170
+        width: 300,
+        height: 300,
+        borderRadius: 150
     },
     signinBtn: {
         position: 'absolute',
@@ -221,7 +230,21 @@ const styles = StyleSheet.create({
         width: '90%',
         marginTop: 15,
         alignSelf: 'center',
-    }
+    },
+    profileInput: {
+        width: '80%',
+        borderRadius:3,
+        color:Color.BLACK
+    },
+     inputview: {
+        width: '80%',
+        height: 50,
+        alignSelf: 'center',
+        paddingHorizontal: 20,
+        marginTop: 20,
+        borderRadius: 1,
+        backgroundColor: Color.WHITE
+    },
 });
 
 const mapStateToProps = (state) => {

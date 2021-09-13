@@ -18,7 +18,7 @@ const Stack = createStackNavigator();
 export const LandingStack = () => {
     return (
         <Stack.Navigator>
-            <Stack.Screen name="Landing" component={Landing} options={{ headerShown: false }} />
+            <Stack.Screen name="Landing" component={PastOrders} options={{ headerShown: false }} />
             <Stack.Screen name="BottomNavigation" component={BottomNavigation} options={{ headerShown: false }} />
         </Stack.Navigator>
     );

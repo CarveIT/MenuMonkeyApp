@@ -14,7 +14,9 @@ import {
   Text,
   FlatList,
   TouchableOpacity,
-  Alert
+  Alert,
+  View,
+  Image
 } from 'react-native';
 
 import Color from '../Utilities/Color';
@@ -22,7 +24,9 @@ import { favourites } from '../Data';
 import SubCategoryCell from '../Components/SubCategoryCell';
 import SubCatHeader from '../Components/SubCatHeader';
 import ApiCalls from '../Services/ApiCalls';
+import { TextInput } from 'react-native-gesture-handler';
 
+const searchImg = require('../../assets/search.png')
 const SubCategory = (props) => {
 
   const [dishes, setDishes] = useState([])
@@ -57,14 +61,24 @@ const SubCategory = (props) => {
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle={'dark-content'} />
       <SubCatHeader title={'Search'} {...props} />
+
+      <View style={styles.searchcontainer}>
+        <View style={styles.searchView}>
+          <TextInput
+            style={styles.input}
+            placeholder={'Search by name'}
+          />
+          <Image style={styles.searchIcon} source={searchImg} />
+        </View>
+      </View>
       <FlatList
         data={dishes}
         style={styles.list}
         renderItem={(item) => renderItem(item)}
         keyExtractor={(item) => item.id}
-        ListHeaderComponent={this.headerView}
-        // onEndReached={this.loadMore()}
-        ListFooterComponent={this.footerView}
+      // ListHeaderComponent={this.headerView}
+      // // onEndReached={this.loadMore()}
+      // ListFooterComponent={this.footerView}
       />
       <TouchableOpacity style={styles.addCartBtn}>
         <Text style={styles.addCartTxt}>{'Add to Cart $60'}</Text>
@@ -96,6 +110,42 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     color: Color.WHITE
+  },
+  searchView: {
+    flexDirection: 'row',
+    flex: 7,
+    height: 30,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 15,
+    marginRight: 10,
+    backgroundColor: Color.BG_BLUE
+  },
+  searchIcon: {
+    width: 25,
+    height: 25,
+    marginRight: 10,
+    tintColor: Color.WHITE
+  },
+  searchView: {
+    flexDirection: 'row',
+    flex: 6,
+    height: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 5,
+    marginTop: 5,
+    marginLeft: 50, marginRight: 50,
+    backgroundColor: Color.BLUE
+  },
+  searchcontainer: { backgroundColor: Color.BG_GRAY, flex: 6, flexDirection: 'row', height: 60 },
+  input: {
+    flex: 1,
+    height: 60,
+    marginLeft: 10,
+    fontSize: 16,
+    fontWeight: '500',
+    color: Color.WHITE,
   }
 });
 export default SubCategory;

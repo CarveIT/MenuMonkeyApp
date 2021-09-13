@@ -59,7 +59,7 @@ const Home = (props) => {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle={'dark-content'} />
-      <HomeHeader title={restaurant && restaurant.name} subTitle={restaurant && restaurant.address} />
+      <HomeHeader onbackpress={()=>props.navigation.goBack()} title={restaurant && restaurant.name} subTitle={restaurant && restaurant.address} />
       <FlatList
         data={menu}
         style={styles.list}

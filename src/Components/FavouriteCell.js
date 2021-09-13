@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     },
     title: {
         marginLeft: 20,
-        marginTop: 10,
+        marginTop: 5,
         fontSize: 30,
         fontWeight: '700'
     },

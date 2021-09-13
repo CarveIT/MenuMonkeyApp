@@ -16,11 +16,11 @@ import {
 import Color from '../Utilities/Color';
 
 const ProfileInput = (props) => {
-    const { placeholder, secureTextEntry, onChangeText } = props;
+    const { placeholder, secureTextEntry, onChangeText, style,inputview} = props;
     return (
-        <View style={styles.inputView}>
+        <View style={styles.inputView,inputview}>
             <TextInput
-                style={styles.input}
+                style={styles.input , style}
                 placeholder={placeholder}
                 placeholderTextColor='gray'
                 secureTextEntry={secureTextEntry}
@@ -32,16 +32,17 @@ const ProfileInput = (props) => {
 
 const styles = StyleSheet.create({
     inputView: {
-        width: '90%',
+        width: '80%',
         height: 50,
         alignSelf: 'center',
         paddingHorizontal: 20,
         marginTop: 20,
-        borderRadius: 5,
+        borderRadius: 3,
         backgroundColor: Color.WHITE
     },
     input: {
         height: '100%',
+        width:'80%',
         paddingHorizontal: 10,
         fontSize: 16,
         textAlign: 'center'
