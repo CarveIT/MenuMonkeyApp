@@ -23,22 +23,22 @@ const backImg = require('../../assets/left-arrow.png')
 const searchImg = require('../../assets/search.png')
 
 const SubCatHeader = (props) => {
-    const { title, backbtnstyle, subTitlestyle,cartimgstyle } = props
+    const { title, backbtnstyle, subTitlestyle, cartimgstyle, hideCart = false, navigation } = props
     return (
         <View style={styles.main}>
             <View style={styles.container}>
 
-                <TouchableOpacity style={styles.backBtnView} onPress={() => props.navigation.goBack()}>
+                <TouchableOpacity style={styles.backBtnView} onPress={() => navigation.goBack()}>
                     <Image resizeMode='contain' style={[styles.backBtn , backbtnstyle]} source={backImg}></Image>
                 </TouchableOpacity>
 
                 <View style={styles.titleView}>
                     <Text style={[styles.subTitle,subTitlestyle]}>{title}</Text>
                 </View>
-                <View style={styles.cartView}>
+                {!hideCart && <View style={styles.cartView}>
                     <Image resizeMode='contain' style={[styles.cartIcon,cartimgstyle]} source={cartImg} />
                     <Text style={styles.counter}>{'2'}</Text>
-                </View>
+                </View>}
 
             </View>
         </View>

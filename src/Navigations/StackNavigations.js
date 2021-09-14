@@ -12,13 +12,14 @@ import Login from '../Screens/Login';
 import Register from '../Screens/Register';
 import Landing from '../Screens/Landing';
 import BottomNavigation from './BottomNavigation';
+import Payment from '../Screens/Payment';
 
 const Stack = createStackNavigator();
 
 export const LandingStack = () => {
     return (
         <Stack.Navigator>
-            <Stack.Screen name="Landing" component={PastOrders} options={{ headerShown: false }} />
+            <Stack.Screen name="Landing" component={Landing} options={{ headerShown: false }} />
             <Stack.Screen name="BottomNavigation" component={BottomNavigation} options={{ headerShown: false }} />
         </Stack.Navigator>
     );
@@ -64,6 +65,7 @@ export const AccountStack = () => {
             <Stack.Screen name="Account" component={Account} options={{ headerShown: false }} />
             <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
             <Stack.Screen name="Register" component={Register} options={{ headerShown: false }} />
+            <Stack.Screen name="Payment" component={Payment} options={{ headerShown: false }} />
         </Stack.Navigator>
     );
 }
