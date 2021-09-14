@@ -25,9 +25,11 @@ import { pastOrders } from '../Data';
 import SubCatHeader from '../Components/SubCatHeader';
 import PaymentCell from '../Components/PaymentCell';
 import color from '../Utilities/Color';
+import AddPaymentMethod from '../Components/AddPaymentMethod';
 
 const Payment = (props) => {
   const [orders, setOrders] = useState([])
+  const [addPayment, setAddPayment] = useState(false)
 
   useEffect(() => {
     fetchOrders('past-orders')
@@ -41,7 +43,7 @@ const Payment = (props) => {
 
   const footerView = () => {
     return (
-      <TouchableOpacity style={styles.addButton}>
+      <TouchableOpacity style={styles.addButton} onPress={() => setAddPayment(true)}>
         <Text style={styles.addButtonTxt}>{'Add Payment Method'}</Text>
       </TouchableOpacity>
     )
@@ -83,6 +85,7 @@ const Payment = (props) => {
         // onEndReached={this.loadMore()}
         ListFooterComponent={footerView}
       />
+      {addPayment && <AddPaymentMethod callback={(data) => { setAddPayment(data) }} />}
     </SafeAreaView>
   );
 };

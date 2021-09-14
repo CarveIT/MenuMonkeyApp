@@ -35,7 +35,16 @@ const Favourites = (props) => {
 
   renderItem = ({ item }) => {
     return (
-      <FavouriteCell item={item} />
+      <FavouriteCell
+        item={item}
+        onDelete={(data) => {
+          // console.log('DELETED')
+          // console.log(data)
+          // let tmp = [...favorites]
+          // tmp.splice(0, 1)
+          // setFavorites(tmp)
+        }}
+      />
     );
   }
 
@@ -70,9 +79,9 @@ const Favourites = (props) => {
         style={styles.list}
         renderItem={(item) => renderItem(item)}
         keyExtractor={(item) => item.id}
-      ListHeaderComponent={this.headerView}
-      // onEndReached={this.loadMore()}
-      ListFooterComponent={this.footerView}
+        // ListHeaderComponent={this.headerView}
+        // onEndReached={this.loadMore()}
+        // ListFooterComponent={this.footerView}
       />
     </SafeAreaView>
   );

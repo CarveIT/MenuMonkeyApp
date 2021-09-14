@@ -26,18 +26,19 @@ const CartCell = (props) => {
     return (
         <View style={styles.container}>
             <View style={styles.row}>
-                <View style={styles.inputView}>
+                {/* <View style={styles.inputView}>
                     <Text>{item.id}</Text>
                     <QuantityInput/>
-                </View>
-                <View style={styles.priceView}>
+                </View> */}
+                {/* <View style={styles.priceView}>
                     <Text style={styles.priceTxt}>{item.price}</Text>
                     <TouchableOpacity>
                         <Image source={image} />
                     </TouchableOpacity>
-                </View>
+                </View> */}
             </View>
-            <Text style={styles.title}>{item.itemName}</Text>
+
+            <Text style={styles.title}>{item.id + "X " + item.itemName}</Text>
             <Text style={styles.tagline}>{'code best brewed fase help'}</Text>
             <View style={styles.separator}></View>
         </View>
@@ -70,6 +71,7 @@ const styles = StyleSheet.create({
         fontWeight: '700'
     },
     title: {
+        width:'50%',
         marginTop: 10,
         fontSize: 18,
         fontWeight: '700'
@@ -85,6 +87,6 @@ const styles = StyleSheet.create({
         marginTop: 30,
         backgroundColor: Color.SEPARATOR
     },
-    
+
 });
 export default CartCell;

@@ -21,6 +21,7 @@ import Button from './Button';
 import ProfileInput from './ProfileInput';
 import { ChangePasswordStatus } from '../Utilities/Enums';
 import ApiCalls from '../Services/ApiCalls';
+import Constants from '../Utilities/Constants';
 
 const validation = (password, email) => {
     if (password == '' || email == '') {

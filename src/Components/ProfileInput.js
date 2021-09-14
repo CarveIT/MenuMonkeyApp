@@ -16,11 +16,11 @@ import {
 import Color from '../Utilities/Color';
 
 const ProfileInput = (props) => {
-    const { placeholder, secureTextEntry, onChangeText, style,inputview} = props;
+    const { placeholder, secureTextEntry, onChangeText, input,inputview} = props;
     return (
-        <View style={styles.inputView,inputview}>
+        <View style={[styles.inputView,inputview]}>
             <TextInput
-                style={styles.input , style}
+                style={[styles.input , input]}
                 placeholder={placeholder}
                 placeholderTextColor='gray'
                 secureTextEntry={secureTextEntry}

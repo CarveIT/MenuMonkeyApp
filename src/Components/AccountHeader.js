@@ -15,7 +15,7 @@ import {
 } from 'react-native';
 
 import Color from '../Utilities/Color';
-const image = require('../../assets/account-bg.jpeg')
+const image = require('../../assets/profile-bg.jpg')
 
 const AccountHeader = (props) => {
     const { title, subTitle } = props
