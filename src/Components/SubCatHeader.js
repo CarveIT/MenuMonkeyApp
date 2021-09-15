@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
     cartIcon: {
         width: 25,
         height: 25,
-        tintColor: Color.BG_BLUE
+        tintColor: Color.BLACK
     },
     counter: {
         fontSize: 18,

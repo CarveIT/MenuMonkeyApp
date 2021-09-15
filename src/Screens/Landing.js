@@ -64,12 +64,12 @@ const Landing = (props) => {
                 </View>
                 <ProfileInput
                     inputview={styles.inputview}
-                    style={styles.profileInput}
+                    input={styles.profileInput}
                     placeholder={'Enter Address or location'}
                     onChangeText={(text) => setLocation(text)}
                 />
                 {!yesBtn && <DropDownPicker
-                    style={{ borderWidth: 0,width:'90%',alignSelf:'center',borderRadius:1}}
+                    style={{ borderWidth: 0, width: '90%', alignSelf: 'center', borderRadius: 1 }}
                     containerStyle={styles.dropDown}
                     placeholder={'Select Restaurant'}
                     open={open}
@@ -227,20 +227,21 @@ const styles = StyleSheet.create({
         color: Color.WHITE
     },
     dropDown: {
-        width: '90%',
+        width: '89%',
         marginTop: 15,
         alignSelf: 'center',
     },
     profileInput: {
-        width: '80%',
-        borderRadius:3,
-        color:Color.BLACK
+        width:'100%',
+        borderRadius: 3,
+        color: Color.BLACK,
+        textAlign: 'center'
+        
     },
-     inputview: {
+    inputview: {
         width: '80%',
         height: 50,
-        alignSelf: 'center',
-        paddingHorizontal: 20,
+   
         marginTop: 20,
         borderRadius: 1,
         backgroundColor: Color.WHITE

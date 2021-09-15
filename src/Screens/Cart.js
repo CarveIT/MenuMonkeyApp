@@ -33,7 +33,7 @@ const Cart = (props) => {
 
   const footerView = () => {
     return (
-      <View>
+      <View style={{marginLeft:30,marginRight:30}}>
         <TouchableOpacity style={styles.addMore}>
           <Text style={styles.addMoreTxt}>{'Add More Items'}</Text>
         </TouchableOpacity>
@@ -68,7 +68,7 @@ const Cart = (props) => {
         style={styles.list}
         renderItem={(item) => renderItem(item)}
         keyExtractor={(item) => item.id}
-        ListHeaderComponent={this.headerView}
+        // ListHeaderComponent={this.headerView}
         ListFooterComponentStyle={styles.footer}
         ListFooterComponent={footerView}
       />
@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
     marginTop: 20
   },
   addMore: {
-    width: 250,
+    width: 180,
     height: 30,
     borderRadius: 15,
     justifyContent: 'center',
@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
   },
   costView: {
     flexDirection: 'row',
-    marginVertical: 20
+    marginVertical: 8
   },
   costTxt:{
     fontSize: 18,
@@ -123,8 +123,9 @@ const styles = StyleSheet.create({
     marginLeft: 'auto'
   },
   continue: {
-    width: 300,
+    width: 180,
     height: 40,
+    marginTop:10,
     borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',

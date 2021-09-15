@@ -81,7 +81,7 @@ const SubCategory = (props) => {
       // ListFooterComponent={this.footerView}
       />
       <TouchableOpacity style={styles.addCartBtn}>
-        <Text style={styles.addCartTxt}>{'Add to Cart $60'}</Text>
+        <Text style={styles.addCartTxt}>{'Continue'}</Text>
       </TouchableOpacity>
     </SafeAreaView>
   );
@@ -134,14 +134,19 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 5,
+    backgroundColor: 'red',
     marginTop: 5,
     marginLeft: 50, marginRight: 50,
     backgroundColor: Color.BLUE
   },
-  searchcontainer: { backgroundColor: Color.BG_GRAY, flex: 6, flexDirection: 'row', height: 60 },
+  searchcontainer: {
+    backgroundColor: Color.BG_GRAY,
+    flexDirection: 'row',
+    height: 60
+  },
   input: {
     flex: 1,
-    height: 60,
+    height: 40,
     marginLeft: 10,
     fontSize: 16,
     fontWeight: '500',
