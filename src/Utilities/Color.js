@@ -11,6 +11,7 @@ const color = Object.freeze({
     SEPARATOR: '#D3D3D3',
     WHITE: '#fff',
     GRAY: '#566e7a',
+    LIGHTGRAY: '#c4c2bb',
     YELLOW: '#E0A800'
 })
 
