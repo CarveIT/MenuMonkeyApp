@@ -81,7 +81,6 @@ const styles = StyleSheet.create({
     },
     backBtnView: {
         flex:1,
-
     },
     backBtn: {
         width: 15,

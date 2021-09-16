@@ -19,12 +19,13 @@ import {
     FlatList,
     TouchableOpacity
 } from 'react-native';
-import { connect } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import DropDownPicker from 'react-native-dropdown-picker';
 import Color from '../Utilities/Color';
 import SigninDialogue from '../Components/SigninDialogue';
 import ProfileInput from '../Components/ProfileInput';
 import Constants from '../Utilities/Constants';
+import { setcartCount } from '../Actions/updatecardactions';
 
 const Landing = (props) => {
     const [signinForm, setSigninForm] = useState(false)
@@ -38,6 +39,16 @@ const Landing = (props) => {
         { label: 'French', value: 'French' }
     ]);
 
+
+
+    const cartcount = useSelector(state => state.cartcount)
+    // const { user } = useSelector(state => state.user)
+    const dispatch = useDispatch()
+
+    const setcount = () => {
+        dispatch(setcartCount(cartcount + 1))
+        console.log({ cartcount })
+    }
     return (
         <SafeAreaView style={styles.container}>
             <StatusBar barStyle={'dark-content'} />
@@ -69,9 +80,10 @@ const Landing = (props) => {
                     onChangeText={(text) => setLocation(text)}
                 />
                 {!yesBtn && <DropDownPicker
-                    style={{ borderWidth: 0, width: '90%', alignSelf: 'center', borderRadius: 1 }}
+                    style={styles.dropDownview}
                     containerStyle={styles.dropDown}
                     placeholder={'Select Restaurant'}
+                    dropDownContainerStyle={{ width: '90%', alignSelf: 'center' }}
                     open={open}
                     value={value}
                     items={items}
@@ -89,13 +101,15 @@ const Landing = (props) => {
                 />}
                 <View style={styles.menuImgView}>
                     <Image style={styles.menuImg} source={require('../../assets/menu_caption.jpeg')} />
-                    <TouchableOpacity style={styles.signinBtn} onPress={() => setSigninForm(true)}>
+                    {/* <TouchableOpacity style={styles.signinBtn} onPress={() => setSigninForm(true)}> */}
+                    <TouchableOpacity style={styles.signinBtn} onPress={() => { setcount() }}>
                         <Text style={styles.signin}>Sign in</Text>
                     </TouchableOpacity>
                 </View>
 
             </ScrollView>
             {signinForm && <SigninDialogue callback={(data) => { setSigninForm(data) }} />}
+
         </SafeAreaView>
     );
 };
@@ -231,22 +245,29 @@ const styles = StyleSheet.create({
         marginTop: 15,
         alignSelf: 'center',
     },
+    dropDownview: {
+        borderWidth: 0,
+        width: '90%',
+        alignSelf: 'center',
+        borderRadius: 1
+    },
     profileInput: {
-        width:'100%',
+        width: '100%',
         borderRadius: 3,
         color: Color.BLACK,
         textAlign: 'center'
-        
+
     },
     inputview: {
         width: '80%',
         height: 50,
-   
+
         marginTop: 20,
         borderRadius: 1,
         backgroundColor: Color.WHITE
     },
 });
+
 
 const mapStateToProps = (state) => {
     return {
@@ -254,4 +275,5 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps)(Landing);
+// export default connect(mapStateToProps)(Landing);
+export default Landing;
