@@ -28,7 +28,7 @@ const Home = (props) => {
 
   const [menu, setMenu] = useState([])
   const [restaurant, setRestaurant] = useState(null)
-  const [isloggedin, setisloggedin] = useState(false)
+
 
   useEffect(() => {
     fetchMenu('welcome/1')
