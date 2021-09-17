@@ -17,32 +17,24 @@ import {
   View,
   FlatList
 } from 'react-native';
-import { useIsFocused } from "@react-navigation/native";
 
 import Color from '../Utilities/Color';
-import { favourites } from '../Data';
-import FavouriteCell from '../Components/FavouriteCell';
-import HomeHeader from '../Components/HomeHeader';
+import RestaurantSearchCell from '../Components/RestaurantSearchCell';
 import ApiCalls from '../Services/ApiCalls';
 import SubCatHeader from '../Components/SubCatHeader';
+import ProfileInput from '../Components/ProfileInput';
 
-const Favourites = (props) => {
-  const isFocused = useIsFocused();
+const SearchRestaurant = (props) => {
   const [favorites, setFavorites] = useState([])
 
   useEffect(() => {
     fetchFavorites('favorite')
-  }, [isFocused]);
+  }, []);
 
   renderItem = ({ item }) => {
     return (
-      <FavouriteCell
+      <RestaurantSearchCell
         item={item}
-        onDelete={(data) => {
-          let tmp = [...favorites]
-          tmp = tmp.filter(obj => obj.id != data)
-          setFavorites(tmp)
-        }}
       />
     );
   }
@@ -66,13 +58,19 @@ const Favourites = (props) => {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle={'dark-content'} />
-      <View style={{ backgroundColor: Color.BG_ORANGE }}>
+      <View style={{ backgroundColor: Color.BG_GRAY }}>
         <SubCatHeader
-          title={"Favourites"}
+          title={"Search Result"}
           backbtnstyle={{ tintColor: Color.WHITE }}
           cartimgstyle={{ tintColor: Color.WHITE }}
           subTitlestyle={styles.title} ></SubCatHeader>
       </View>
+      <ProfileInput
+        inputview={styles.inputview}
+        input={styles.profileInput}
+        placeholder={'Enter Address or location'}
+      // onChangeText={(text) => setLocation(text)} 
+      />
       <FlatList
         data={favorites}
         style={styles.list}
@@ -86,11 +84,29 @@ const Favourites = (props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Color.BG_ORANGE
+    backgroundColor: Color.BG_GRAY
   },
   list: {
-    backgroundColor: Color.BG_ORANGE
+    marginTop: 10,
+    backgroundColor: Color.BG_GRAY
   },
-  title: { color: Color.WHITE, fontWeight: 'bold' }
+  title: {
+    color: Color.WHITE,
+    fontWeight: 'bold'
+  },
+  profileInput: {
+    width: '100%',
+    borderRadius: 3,
+    color: Color.BLACK,
+    textAlign: 'center'
+
+  },
+  inputview: {
+    width: '80%',
+    height: 50,
+    marginTop: 20,
+    borderRadius: 4,
+    backgroundColor: Color.WHITE
+  },
 });
-export default Favourites;
+export default SearchRestaurant;

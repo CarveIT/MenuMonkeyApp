@@ -15,6 +15,7 @@ import {
 } from 'react-native';
 
 import Color from '../Utilities/Color';
+import Constants from '../Utilities/Constants';
 const image = require('../../assets/profile-bg.jpg')
 
 const AccountHeader = (props) => {
@@ -22,11 +23,11 @@ const AccountHeader = (props) => {
     return (
         <ImageBackground style={styles.image} source={image}>
             <View style={styles.profileView}>
-                <Text style={styles.alphabet}>{'U'}</Text>
+                <Text style={styles.alphabet}>{Constants.user.name[0]}</Text>
             </View>
             <View style={styles.nameView}>
-                <Text style={styles.fname}>{'Ahmed'}</Text>
-                <Text style={styles.sname}>{'Uzair'}</Text>
+                <Text style={styles.fname}>{Constants.user.name}</Text>
+                <Text style={styles.sname}>{Constants.user.name}</Text>
             </View>
         </ImageBackground>
     );

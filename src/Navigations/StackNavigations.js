@@ -13,6 +13,7 @@ import Register from '../Screens/Register';
 import Landing from '../Screens/Landing';
 import BottomNavigation from './BottomNavigation';
 import Payment from '../Screens/Payment';
+import SearchRestaurant from '../Screens/SearchRestaurant';
 
 const Stack = createStackNavigator();
 
@@ -28,6 +29,7 @@ export const LandingStack = () => {
 export const HomeStack = () => {
     return (
         <Stack.Navigator>
+            <Stack.Screen name="SearchRestaurant" component={SearchRestaurant} options={{ headerShown: false }} />
             <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
             <Stack.Screen name="SubCategory" component={SubCategory} options={{ headerShown: false }} />
             <Stack.Screen name="ItemDetail" component={ItemDetail} options={{ headerShown: false }} />

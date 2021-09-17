@@ -16,6 +16,9 @@ import {
     Image
 } from 'react-native';
 
+import Key from '../Utilities/Keys';
+import { saveData, getData, saveObjectData } from '../Utilities/Storage';
+
 import Color from '../Utilities/Color';
 import Button from './Button';
 import ProfileInput from './ProfileInput';
@@ -58,15 +61,19 @@ const SigninDialogue = (props) => {
         // callback(false)
     }
 
-    const loginApi = (params, endPoint) => {
+    const loginApi = async (params, endPoint) => {
         setLoading(true)
         ApiCalls.postApiCall(params, endPoint).then(data => {
             console.log("DATA");
             console.log(data)
             setLoading(false)
             if (data.success) {
-                Constants.user = data.success.user
-                Constants.token = data.success.token
+                let user = data.success.user
+                user['token'] = data.success.token
+                Constants.user = user
+                saveData(Key.ACCESS_TOKEN, data.success.token)
+                saveObjectData(Key.USER, user)
+                
             } else {
                 Alert.alert('Error', data.error);
             }
