@@ -18,34 +18,10 @@ import {
 } from 'react-native';
 
 import Color from '../Utilities/Color';
-import ApiCalls from '../Services/ApiCalls';
 const image = require('../../assets/heart.png')
 
-const FavouriteCell = (props) => {
-    const { item, onDelete } = props
-    const [loading, setLoading] = useState(false)
-
-    const removeFavoriteApi = (params, endPoint) => {
-        setLoading(true)
-        ApiCalls.postApiCall(params, endPoint).then(data => {
-            console.log("DATA");
-            console.log(data)
-            setLoading(false)
-            if (data.message == "success") {
-                onDelete(item.id)
-            } else {
-                Alert.alert('Error', data.message);
-            }
-        }, error => {
-            Alert.alert('Error', error);
-        })
-    }
-
-    const remove = () => {
-        var formData = new FormData();
-        formData.append('id', item.id)
-        removeFavoriteApi(formData, 'remove-favorite')
-    }
+const RestaurantSearchCell = (props) => {
+    const { item } = props
 
     return (
         <View style={styles.container}>
@@ -53,12 +29,6 @@ const FavouriteCell = (props) => {
                 <Text style={styles.title}>{item.restaurant.name}</Text>
                 <Text style={styles.subTitle}>{item.restaurant.address}</Text>
             </View>
-            {!loading ? <TouchableOpacity style={styles.heartView} onPress={() => remove()}>
-                <Image style={styles.heart} source={image} />
-            </TouchableOpacity> :
-                <View style={styles.heartView}>
-                    <ActivityIndicator size={'large'} color={Color.BG_BLUE} />
-                </View>}
         </View>
     );
 };
@@ -66,10 +36,12 @@ const FavouriteCell = (props) => {
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
+        width: '80%',
         marginVertical: 5,
         marginHorizontal: 20,
         borderRadius: 7,
         alignItems: 'center',
+        alignSelf: 'center',
         backgroundColor: Color.WHITE
     },
     title: {
@@ -80,7 +52,6 @@ const styles = StyleSheet.create({
     },
     subTitle: {
         marginLeft: 20,
-        marginTop: 8,
         marginBottom: 5,
         fontSize: 15,
         color: 'gray'
@@ -94,4 +65,4 @@ const styles = StyleSheet.create({
         height: 30,
     }
 });
-export default FavouriteCell;
+export default RestaurantSearchCell;

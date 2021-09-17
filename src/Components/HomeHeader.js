@@ -6,23 +6,48 @@
  * @flow strict-local
  */
 
-import React from 'react';
+import React, { useState } from 'react';
 import {
     StyleSheet,
     View,
     TouchableOpacity,
     Image,
     Text,
-    Dimensions,
-    ImageBackground
+    ActivityIndicator,
+    Alert
 } from 'react-native';
 
 import Color from '../Utilities/Color';
 const image = require('../../assets/heart.png')
 const imageback = require('../../assets/left-arrow.png')
+import ApiCalls from '../Services/ApiCalls';
 
 const HomeHeader = (props) => {
     const { title, subTitle, onbackpress } = props
+
+    // const [loading, setLoading] = useState(false)
+
+    const addFavoriteApi = (params, endPoint) => {
+        // setLoading(true)
+        ApiCalls.postApiCall(params, endPoint).then(data => {
+            // console.log("DATA");
+            // console.log(data)
+            // setLoading(false)
+            if (data.success) {
+            } else {
+                Alert.alert('Error', data.error);
+            }
+        }, error => {
+            Alert.alert('Error', error);
+        })
+    }
+
+    const add = () => {
+        var formData = new FormData();
+        formData.append('id', 1)
+        addFavoriteApi(formData, 'add-favorite')
+    }
+
     return (
         <View style={styles.container}>
             <View>
@@ -31,12 +56,12 @@ const HomeHeader = (props) => {
 
             </View>
 
-            <TouchableOpacity style={styles.heartView}>
+            <TouchableOpacity style={styles.heartView} onPress={() => add()}>
                 <Image style={styles.heart} source={image} />
             </TouchableOpacity>
             <TouchableOpacity onPress={onbackpress} style={styles.backimageBG}>
                 <Image style={styles.backimage} source={imageback}></Image>
-                <Text style={{ color: Color.WHITE, marginStart: 2 ,alignSelf:'center'}} >Back</Text>
+                <Text style={{ color: Color.WHITE, marginStart: 2, alignSelf: 'center' }} >Back</Text>
             </TouchableOpacity>
 
         </View>
@@ -69,22 +94,22 @@ const styles = StyleSheet.create({
     heartView: {
         marginLeft: 'auto',
         marginRight: 10,
-        height:30,width:30,
-        borderRadius:15,
+        height: 30, width: 30,
+        borderRadius: 15,
         position: 'absolute',
-        justifyContent:'center',
-        backgroundColor:"red",
+        justifyContent: 'center',
+        backgroundColor: "red",
         bottom: 7,
         right: 2,
     },
     heart: {
         width: 20,
         height: 20,
-        alignSelf:"center",
-        tintColor:Color.WHITE
+        alignSelf: "center",
+        tintColor: Color.WHITE
     },
     backimage: {
-        height: 8, width: 8, alignSelf:"center"
+        height: 8, width: 8, alignSelf: "center"
     },
     backimageBG: {
         flexDirection: 'row',

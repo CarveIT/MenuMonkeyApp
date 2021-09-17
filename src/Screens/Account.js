@@ -42,6 +42,7 @@ const Account = (props) => {
         props.navigation.navigate('PastOrdersTab')
         return
       case AccountTitle.BILL_PAYMENT:
+        props.navigation.navigate('Payment')
         return
       case AccountTitle.CHANGE_PASSWORD:
         setChangePassword(true)
@@ -61,9 +62,9 @@ const Account = (props) => {
         style={styles.list}
         renderItem={(item) => renderItem(item)}
         keyExtractor={(item) => item.title}
-        ListHeaderComponent={this.headerView}
+        // ListHeaderComponent={this.headerView}
         // onEndReached={this.loadMore()}
-        ListFooterComponent={this.footerView}
+        // ListFooterComponent={this.footerView}
       />
       {changePassord && <ChangePasswordDialogue callback={(data) => { setChangePassword(data) }} />}
     </SafeAreaView>

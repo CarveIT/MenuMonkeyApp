@@ -41,7 +41,7 @@ const validation = (password, email) => {
     return obj
 }
 
-const SigninDialogue = (props) => {
+const PickupDialogue = (props) => {
     const { callback } = props;
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -73,7 +73,7 @@ const SigninDialogue = (props) => {
                 Constants.user = user
                 saveData(Key.ACCESS_TOKEN, data.success.token)
                 saveObjectData(Key.USER, user)
-                
+
             } else {
                 Alert.alert('Error', data.error);
             }
@@ -86,33 +86,35 @@ const SigninDialogue = (props) => {
         <View style={styles.container}>
             <View style={styles.form}>
                 <View style={styles.headingView}>
-                    <Text style={styles.heading}>{'Login'}</Text>
-                    <TouchableOpacity style={styles.closeBtn} onPress={() => callback(false)}>
+                    <Text style={styles.heading}>{'Pickup Time'}</Text>
+                    <TouchableOpacity style={styles.closeBtn} onPress={() => callback(true)}>
                         <Image resizeMode='contain' style={styles.closeImg} source={require('../../assets/red-cross.png')} />
                     </TouchableOpacity>
                 </View>
-                <ProfileInput
-                    placeholder={'Email Address'}
-                    onChangeText={(email) => setEmail(email)}
-                />
-                <ProfileInput
-                    placeholder={'Password'}
-                    secureTextEntry={true}
-                    onChangeText={(pass) => setPassword(pass)}
-                />
-                <View style={styles.btnRow}>
-                    <Button
-                        style={styles.btnContinue}
-                        title={'Sign in'}
-                        loading={loading}
-                        onPress={() => continueTapped()}
-                    />
-                    {/* <Button
-                        style={styles.btnCancel}
-                        title={'Cancel'}
-                        onPress={() => callback(false)}
-                    /> */}
+                <View style={styles.btnRow1}>
+                    <TouchableOpacity style={styles.button} onPress={() => callback(true)}>
+                        <Text style={styles.buttonTxt}>{'ASAP'}</Text>
+                    </TouchableOpacity>
+                    <View style={{ width: 20 }}></View>
+                    <TouchableOpacity style={styles.button} onPress={() => callback(true)}>
+                        <Text style={styles.buttonTxt}>{'Scheduled'}</Text>
+                    </TouchableOpacity>
                 </View>
+                <View style={styles.btnRow1}>
+                    <TouchableOpacity style={styles.button2} onPress={() => callback(true)}>
+                        <Text style={styles.buttonTxt2}>{'DAY'}</Text>
+                    </TouchableOpacity>
+                    <View style={{ width: 20 }}></View>
+                    <TouchableOpacity style={styles.button2} onPress={() => callback(true)}>
+                        <Text style={styles.buttonTxt2}>{'TIME'}</Text>
+                    </TouchableOpacity>
+                </View>
+                <Button
+                    style={styles.btnContinue}
+                    title={'Apply'}
+                    loading={loading}
+                    onPress={() => continueTapped()}
+                />
             </View>
         </View>
     );
@@ -132,19 +134,20 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: Color.BLUE
+        backgroundColor: Color.WHITE
     },
     headingView: {
         flexDirection: 'row',
         width: '100%',
-        justifyContent: 'center',
+        // justifyContent: 'center',
     },
     heading: {
         fontSize: 20,
         fontWeight: 'bold',
         marginTop: 20,
-        alignSelf: 'center',
-        color: Color.WHITE
+        marginLeft: 20,
+        // alignSelf: 'center',
+        color: Color.BLACK
     },
     closeBtn: {
         position: 'absolute',
@@ -160,16 +163,52 @@ const styles = StyleSheet.create({
     btnRow: {
         flexDirection: 'row',
         marginHorizontal: 15,
-        marginVertical: 20
+        marginVertical: 20,
+        backgroundColor: 'red',
+        width: 300
     },
     btnContinue: {
-        flex: 1,
-        marginRight: 5
+        // flex: 1,
+        // marginRight: 5
+        width: '70%',
+        height: 35,
+        marginVertical: 20
     },
     btnCancel: {
         flex: 1,
         marginLeft: 5
-    }
+    },
+    btnRow1: {
+        flexDirection: 'row',
+        marginTop: 20,
+        paddingHorizontal: 20,
+    },
+    button: {
+        flex: 1,
+        height: 25,
+        width: 200,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 5,
+        backgroundColor: Color.BG_BLUE
+    },
+    button2: {
+        flex: 1,
+        height: 25,
+        width: 200,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 5,
+        backgroundColor: Color.BG_GRAY
+    },
+    buttonTxt: {
+        fontWeight: '700',
+        color: Color.WHITE
+    },
+    buttonTxt2: {
+        fontWeight: '700',
+        color: Color.GRAY
+    },
 
 });
-export default SigninDialogue;
+export default PickupDialogue;

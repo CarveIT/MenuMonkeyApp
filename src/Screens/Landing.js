@@ -6,7 +6,7 @@
  * @flow strict-local
  */
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     SafeAreaView,
     ScrollView,
@@ -16,21 +16,26 @@ import {
     Text,
     useColorScheme,
     View,
-    FlatList,
+    Alert,
     TouchableOpacity
 } from 'react-native';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import DropDownPicker from 'react-native-dropdown-picker';
+import GetLocation from 'react-native-get-location'
 import Color from '../Utilities/Color';
-import SigninDialogue from '../Components/SigninDialogue';
+import SigninDialogue from '../Components/SigninDialogue'; 
+import PickupDialogue from '../Components/PickupDialogue';
 import ProfileInput from '../Components/ProfileInput';
 import Constants from '../Utilities/Constants';
 import { setcartCount } from '../Actions/updatecardactions';
+import { getObjectData } from '../Utilities/Storage';
+import Key from '../Utilities/Keys';
+import ApiCalls from '../Services/ApiCalls';
 
 const Landing = (props) => {
     const [signinForm, setSigninForm] = useState(false)
     const [yesBtn, setYesBtn] = useState(false)
-    const [dineIn, setDineIn] = useState(false)
+    const [dineIn, setDineIn] = useState(true)
     const [location, setLocation] = useState('')
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState(null);
@@ -39,13 +44,54 @@ const Landing = (props) => {
         { label: 'French', value: 'French' }
     ]);
 
+    useEffect(() => {
+        loadData()
+        getLocation()
+    }, []);
 
+    const loadData = async () => {
+        let user = await getObjectData(Key.USER);
+        Constants.user = user
+        console.log(Constants.user)
+    }
+
+    const getLocation = () => {
+        GetLocation.getCurrentPosition({
+            enableHighAccuracy: true,
+            timeout: 15000,
+        })
+            .then(location => {
+                var formData = new FormData();
+                formData.append('latitude', location.latitude)
+                formData.append('longitude', location.longitude)
+                getRestaurantByLocation(formData, 'getRestaurantLocation')
+            })
+            .catch(error => {
+                const { code, message } = error;
+                console.warn(code, message);
+            })
+    }
+
+    const getRestaurantByLocation = (params, endPoint) => {
+        // setLoading(true)
+        ApiCalls.postApiCall(params, endPoint).then(data => {
+            console.log("DATA");
+            console.log(data)
+            // setLoading(false)
+            if (data.location != "error") {
+            } else {
+                Alert.alert('Error', data.message);
+            }
+        }, error => {
+            Alert.alert('Error', error);
+        })
+    }
 
     const cartcount = useSelector(state => state.cartcount)
     // const { user } = useSelector(state => state.user)
     const dispatch = useDispatch()
 
-    const setcount = () => {
+    const setcount = async () => {
         dispatch(setcartCount(cartcount + 1))
         console.log({ cartcount })
     }
@@ -101,14 +147,17 @@ const Landing = (props) => {
                 />}
                 <View style={styles.menuImgView}>
                     <Image style={styles.menuImg} source={require('../../assets/menu_caption.jpeg')} />
-                    {/* <TouchableOpacity style={styles.signinBtn} onPress={() => setSigninForm(true)}> */}
-                    <TouchableOpacity style={styles.signinBtn} onPress={() => { setcount() }}>
-                        <Text style={styles.signin}>Sign in</Text>
+                    <TouchableOpacity style={styles.signinBtn} onPress={() => setSigninForm(true)}>
+                        <Text style={styles.signin}>{Constants.user == null ? 'Sign in' : 'Sign Out'}</Text>
                     </TouchableOpacity>
+                    {/* <TouchableOpacity style={styles.signinBtn} onPress={() => { setcount() }}>
+                        <Text style={styles.signin}>{Constants.user == null ? 'Sign in' : 'Sign Out'}</Text>
+                    </TouchableOpacity> */}
                 </View>
 
             </ScrollView>
             {signinForm && <SigninDialogue callback={(data) => { setSigninForm(data) }} />}
+            {!dineIn && <PickupDialogue callback={(data) => { setDineIn(data) }} />}
 
         </SafeAreaView>
     );

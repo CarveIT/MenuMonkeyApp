@@ -12,13 +12,15 @@ import Login from '../Screens/Login';
 import Register from '../Screens/Register';
 import Landing from '../Screens/Landing';
 import BottomNavigation from './BottomNavigation';
+import Payment from '../Screens/Payment';
+import SearchRestaurant from '../Screens/SearchRestaurant';
 
 const Stack = createStackNavigator();
 
 export const LandingStack = () => {
     return (
         <Stack.Navigator>
-            <Stack.Screen name="Landing" component={BottomNavigation}  options={{ headerShown: false }} />
+            <Stack.Screen name="Landing" component={Landing} options={{ headerShown: false }} />
             <Stack.Screen name="BottomNavigation" component={BottomNavigation} options={{ headerShown: false }} />
         </Stack.Navigator>
     );
@@ -27,6 +29,7 @@ export const LandingStack = () => {
 export const HomeStack = () => {
     return (
         <Stack.Navigator>
+            <Stack.Screen name="SearchRestaurant" component={SearchRestaurant} options={{ headerShown: false }} />
             <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
             <Stack.Screen name="SubCategory" component={SubCategory} options={{ headerShown: false }} />
             <Stack.Screen name="ItemDetail" component={ItemDetail} options={{ headerShown: false }} />
@@ -64,6 +67,7 @@ export const AccountStack = () => {
             <Stack.Screen name="Account" component={Account} options={{ headerShown: false }} />
             <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
             <Stack.Screen name="Register" component={Register} options={{ headerShown: false }} />
+            <Stack.Screen name="Payment" component={Payment} options={{ headerShown: false }} />
         </Stack.Navigator>
     );
 }

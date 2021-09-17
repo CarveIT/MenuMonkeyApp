@@ -20,7 +20,7 @@ const ProfileInput = (props) => {
     return (
         <View style={[styles.inputView,inputview]}>
             <TextInput
-                style={[styles.input , input]}
+                style={[styles.input, input]}
                 placeholder={placeholder}
                 placeholderTextColor='gray'
                 secureTextEntry={secureTextEntry}
@@ -45,7 +45,8 @@ const styles = StyleSheet.create({
         width:'80%',
         paddingHorizontal: 10,
         fontSize: 16,
-        textAlign: 'center'
+        textAlign: 'center',
+        backgroundColor: Color.WHITE
     }
 });
 export default ProfileInput;
