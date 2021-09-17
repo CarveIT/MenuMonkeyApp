@@ -23,7 +23,8 @@ import { connect, useDispatch, useSelector } from 'react-redux';
 import DropDownPicker from 'react-native-dropdown-picker';
 import GetLocation from 'react-native-get-location'
 import Color from '../Utilities/Color';
-import SigninDialogue from '../Components/SigninDialogue';
+import SigninDialogue from '../Components/SigninDialogue'; 
+import PickupDialogue from '../Components/PickupDialogue';
 import ProfileInput from '../Components/ProfileInput';
 import Constants from '../Utilities/Constants';
 import { setcartCount } from '../Actions/updatecardactions';
@@ -156,7 +157,7 @@ const Landing = (props) => {
 
             </ScrollView>
             {signinForm && <SigninDialogue callback={(data) => { setSigninForm(data) }} />}
-            {signinForm && <SigninDialogue callback={(data) => { setSigninForm(data) }} />}
+            {!dineIn && <PickupDialogue callback={(data) => { setDineIn(data) }} />}
 
         </SafeAreaView>
     );
