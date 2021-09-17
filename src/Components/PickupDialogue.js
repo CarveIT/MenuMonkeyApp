@@ -92,23 +92,29 @@ const PickupDialogue = (props) => {
                     </TouchableOpacity>
                 </View>
                 <View style={styles.btnRow1}>
-                    <TouchableOpacity style={styles.closeBtn} onPress={() => callback(true)}>
-                        <Image resizeMode='contain' style={styles.closeImg} source={require('../../assets/red-cross.png')} />
+                    <TouchableOpacity style={styles.button} onPress={() => callback(true)}>
+                        <Text style={styles.buttonTxt}>{'ASAP'}</Text>
+                    </TouchableOpacity>
+                    <View style={{ width: 20 }}></View>
+                    <TouchableOpacity style={styles.button} onPress={() => callback(true)}>
+                        <Text style={styles.buttonTxt}>{'Scheduled'}</Text>
                     </TouchableOpacity>
                 </View>
-                <View style={styles.btnRow}>
-                    <Button
-                        style={styles.btnContinue}
-                        title={'Apply'}
-                        loading={loading}
-                        onPress={() => continueTapped()}
-                    />
-                    {/* <Button
-                        style={styles.btnCancel}
-                        title={'Cancel'}
-                        onPress={() => callback(false)}
-                    /> */}
+                <View style={styles.btnRow1}>
+                    <TouchableOpacity style={styles.button2} onPress={() => callback(true)}>
+                        <Text style={styles.buttonTxt2}>{'DAY'}</Text>
+                    </TouchableOpacity>
+                    <View style={{ width: 20 }}></View>
+                    <TouchableOpacity style={styles.button2} onPress={() => callback(true)}>
+                        <Text style={styles.buttonTxt2}>{'TIME'}</Text>
+                    </TouchableOpacity>
                 </View>
+                <Button
+                    style={styles.btnContinue}
+                    title={'Apply'}
+                    loading={loading}
+                    onPress={() => continueTapped()}
+                />
             </View>
         </View>
     );
@@ -128,7 +134,7 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: Color.BLUE
+        backgroundColor: Color.WHITE
     },
     headingView: {
         flexDirection: 'row',
@@ -157,19 +163,52 @@ const styles = StyleSheet.create({
     btnRow: {
         flexDirection: 'row',
         marginHorizontal: 15,
-        marginVertical: 20
+        marginVertical: 20,
+        backgroundColor: 'red',
+        width: 300
     },
     btnContinue: {
-        flex: 1,
-        marginRight: 5
+        // flex: 1,
+        // marginRight: 5
+        width: '70%',
+        height: 35,
+        marginVertical: 20
     },
     btnCancel: {
         flex: 1,
         marginLeft: 5
     },
     btnRow1: {
-        flexDirection: 'row'
-    }
+        flexDirection: 'row',
+        marginTop: 20,
+        paddingHorizontal: 20,
+    },
+    button: {
+        flex: 1,
+        height: 25,
+        width: 200,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 5,
+        backgroundColor: Color.BG_BLUE
+    },
+    button2: {
+        flex: 1,
+        height: 25,
+        width: 200,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 5,
+        backgroundColor: Color.BG_GRAY
+    },
+    buttonTxt: {
+        fontWeight: '700',
+        color: Color.WHITE
+    },
+    buttonTxt2: {
+        fontWeight: '700',
+        color: Color.GRAY
+    },
 
 });
 export default PickupDialogue;
