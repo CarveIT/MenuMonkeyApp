@@ -1,10 +1,20 @@
+import { SET_COUNT } from '../Actions/updatecardactions'
 
 const initialState = {
-    "name" : "Ibadan Fresh"
+    name: "Ibadan Fresh",
+    cartcount: 0
 }
 
 const reducer = (state = initialState, action) => {
-    return state
+    switch (action.type) {
+        case SET_COUNT:
+            {
+                return { ...state, cartcount: action.payload }
+            }
+        default:
+            return state
+}
+
 }
 
 export default reducer;

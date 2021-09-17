@@ -70,9 +70,9 @@ const Favourites = (props) => {
         style={styles.list}
         renderItem={(item) => renderItem(item)}
         keyExtractor={(item) => item.id}
-      ListHeaderComponent={this.headerView}
-      // onEndReached={this.loadMore()}
-      ListFooterComponent={this.footerView}
+        ListHeaderComponent={this.headerView}
+        // onEndReached={this.loadMore()}
+        ListFooterComponent={this.footerView}
       />
     </SafeAreaView>
   );

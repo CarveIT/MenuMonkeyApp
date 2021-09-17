@@ -12,9 +12,10 @@ import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import reducer from './src/reducers/reducer';
 
-const store = createStore(reducer)
+
 
 const App = () => {
+  const store = createStore(reducer)
   return (
     <Provider store={store}>
       <Starter />

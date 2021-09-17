@@ -28,6 +28,7 @@ const Home = (props) => {
 
   const [menu, setMenu] = useState([])
   const [restaurant, setRestaurant] = useState(null)
+  const [isloggedin, setisloggedin] = useState(false)
 
   useEffect(() => {
     fetchMenu('welcome/1')
@@ -67,9 +68,9 @@ const Home = (props) => {
         renderItem={(item) => renderItem(item)}
         keyExtractor={(item) => item.id}
         numColumns={2}
-        ListHeaderComponent={this.headerView}
+        // ListHeaderComponent={this.headerView}
         // onEndReached={this.loadMore()}
-        ListFooterComponent={this.footerView}
+        // ListFooterComponent={this.footerView}
       />
     </SafeAreaView>
   );

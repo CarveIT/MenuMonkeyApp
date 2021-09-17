@@ -13,7 +13,6 @@ import Login from '../Screens/Login';
 import Register from '../Screens/Register';
 import { LandingStack } from '../Navigations/StackNavigations';
 import { NavigationContainer } from '@react-navigation/native';
-
 const Starter = () => {
     return (
         // <BottomNavigation/>
