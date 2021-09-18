@@ -11,6 +11,7 @@ import ItemDetail from '../Screens/ItemDetail';
 import Login from '../Screens/Login';
 import Register from '../Screens/Register';
 import Landing from '../Screens/Landing';
+import CheckOut from '../Screens/CheckOut';
 import BottomNavigation from './BottomNavigation';
 import Payment from '../Screens/Payment';
 import SearchRestaurant from '../Screens/SearchRestaurant';
@@ -20,7 +21,7 @@ const Stack = createStackNavigator();
 export const LandingStack = () => {
     return (
         <Stack.Navigator>
-            <Stack.Screen name="Landing" component={Landing} options={{ headerShown: false }} />
+            <Stack.Screen name="Landing" component={CheckOut} options={{ headerShown: false }} />
             <Stack.Screen name="BottomNavigation" component={BottomNavigation} options={{ headerShown: false }} />
         </Stack.Navigator>
     );

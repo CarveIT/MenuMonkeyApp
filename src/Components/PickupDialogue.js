@@ -15,7 +15,7 @@ import {
     TouchableOpacity,
     Image
 } from 'react-native';
-
+import moment from 'moment';
 import Key from '../Utilities/Keys';
 import { saveData, getData, saveObjectData } from '../Utilities/Storage';
 
@@ -42,7 +42,7 @@ const validation = (password, email) => {
 }
 
 const PickupDialogue = (props) => {
-    const { callback } = props;
+    const { callback,callbackdatepicker,callbacktimepicker,time,date } = props;
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [loading, setLoading] = useState(false)
@@ -101,13 +101,14 @@ const PickupDialogue = (props) => {
                     </TouchableOpacity>
                 </View>
                 <View style={styles.btnRow1}>
-                    <TouchableOpacity style={styles.button2} onPress={() => callback(true)}>
-                        <Text style={styles.buttonTxt2}>{'DAY'}</Text>
+                    <TouchableOpacity style={styles.button2} onPress={() => callbackdatepicker(true)}>
+                        <Text style={styles.buttonTxt2}>{moment(date).format('DD-MM-YYYY')}</Text>
                     </TouchableOpacity>
                     <View style={{ width: 20 }}></View>
-                    <TouchableOpacity style={styles.button2} onPress={() => callback(true)}>
-                        <Text style={styles.buttonTxt2}>{'TIME'}</Text>
+                    <TouchableOpacity style={styles.button2} onPress={() => callbacktimepicker(true)}>
+                        <Text style={styles.buttonTxt2}>{moment(date).format('HH:mm:ss')}</Text>
                     </TouchableOpacity>
+                    
                 </View>
                 <Button
                     style={styles.btnContinue}

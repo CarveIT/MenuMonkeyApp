@@ -17,13 +17,14 @@ import {
     useColorScheme,
     View,
     Alert,
-    TouchableOpacity
+    TouchableOpacity,
+    Platform
 } from 'react-native';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import DropDownPicker from 'react-native-dropdown-picker';
 import GetLocation from 'react-native-get-location'
 import Color from '../Utilities/Color';
-import SigninDialogue from '../Components/SigninDialogue'; 
+import SigninDialogue from '../Components/SigninDialogue';
 import PickupDialogue from '../Components/PickupDialogue';
 import ProfileInput from '../Components/ProfileInput';
 import Constants from '../Utilities/Constants';
@@ -31,6 +32,9 @@ import { setcartCount } from '../Actions/updatecardactions';
 import { getObjectData } from '../Utilities/Storage';
 import Key from '../Utilities/Keys';
 import ApiCalls from '../Services/ApiCalls';
+
+import DateTimePicker from '@react-native-community/datetimepicker';
+import moment from 'moment';
 
 const Landing = (props) => {
     const [signinForm, setSigninForm] = useState(false)
@@ -44,10 +48,38 @@ const Landing = (props) => {
         { label: 'French', value: 'French' }
     ]);
 
+    const [date, setDate] = useState(moment().toDate());
+    
+    const [time, setTime] = useState();
+    const [mode, setMode] = useState('date');
+    const [show, setShow] = useState(false);
+
+
     useEffect(() => {
         loadData()
         getLocation()
     }, []);
+
+
+    const onChange = (event, selectedDate) => {
+        const currentDate = selectedDate || date;
+        setShow(Platform.OS === 'ios');
+        setDate(currentDate);
+      };
+
+      const showDatepicker = () => {
+          console.log("Here")
+        showMode('date');
+      };
+    
+      const showTimepicker = () => {
+        showMode('time');
+      };
+
+ const showMode = (currentMode) => {
+    setShow(true);
+    setMode(currentMode);
+  };
 
     const loadData = async () => {
         let user = await getObjectData(Key.USER);
@@ -157,11 +189,27 @@ const Landing = (props) => {
 
             </ScrollView>
             {signinForm && <SigninDialogue callback={(data) => { setSigninForm(data) }} />}
-            {!dineIn && <PickupDialogue callback={(data) => { setDineIn(data) }} />}
+            {!dineIn && <PickupDialogue  date={date} callback={(data) => { setDineIn(data) }} callbackdatepicker={()=>{showDatepicker() }} callbacktimepicker={()=>showTimepicker()} />}
+
+            {show && (
+                <DateTimePicker
+                    testID="dateTimePicker"
+                    value={date}
+                    mode={mode}
+                    minimumDate={moment().toDate()}
+                    is24Hour={true}
+                    display="default"
+                    onChange={onChange}
+                />
+            )}
 
         </SafeAreaView>
     );
+
+    
 };
+
+
 
 const styles = StyleSheet.create({
     container: {
