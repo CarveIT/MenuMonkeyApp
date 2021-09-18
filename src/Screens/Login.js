@@ -20,16 +20,16 @@ import {
   TouchableOpacity
 } from 'react-native';
 import { connect } from 'react-redux';
-import color from '../Utilities/Color';
 import Color from '../Utilities/Color';
 import LoginInput from '../Components/LoginInput';
 import Button from '../Components/Button';
 import SocialButton from '../Components/SocialButton';
 import ApiCalls from '../Services/ApiCalls';
 import Constants from '../Utilities/Constants';
+import GuestSigninDialogue from '../Components/GuestSigninDialogue';
 
 const backIcon = require('../../assets/left-arrow.png')
-const monkeyImage = require('../../assets/monkey-bg.jpeg')
+const monkeyImage = require('../../assets/monkey-2.jpg')
 const googleIcon = require('../../assets/google.png')
 const facebookIcon = require('../../assets/fb.png')
 const guestIcon = require('../../assets/guest.png')
@@ -40,6 +40,7 @@ const Login = (props) => {
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [signinForm, setSigninForm] = useState(false)
 
   const validation = (password, confirmPassword) => {
     if (email == '' || password == '') {
@@ -100,8 +101,8 @@ const Login = (props) => {
       <View style={styles.container}>
         <View style={styles.header}>
 
-          <Image style={styles.banner} resizeMode='contain' source={require('../../assets/banner.png')} />
-          <Image resizeMode='contain' style={styles.monkeyImage} source={monkeyImage} />
+          {/* <Image style={styles.banner} resizeMode='contain' source={require('../../assets/banner.png')} /> */}
+          <Image resizeMode='stretch' style={styles.monkeyImage} source={monkeyImage} />
           <TouchableOpacity style={styles.backButton} onPress={() => props.navigation.goBack()}>
             <Image source={backIcon} style={styles.backImage} />
           </TouchableOpacity>
@@ -141,6 +142,7 @@ const Login = (props) => {
           <SocialButton
             icon={guestIcon}
             title={'Guest'}
+            onPress={() => setSigninForm(true)}
           />
           <View style={styles.signupView}>
             <Text style={styles.signupTitle}>{'Don\'t have an account?'}</Text>
@@ -150,6 +152,7 @@ const Login = (props) => {
           </View>
         </View>
       </View>
+      {signinForm && <GuestSigninDialogue callback={(data) => { setSigninForm(data) }} />}
     </SafeAreaView>
   );
 };
@@ -173,7 +176,6 @@ const styles = StyleSheet.create({
   },
   monkeyImage: {
     width: '100%',
-    marginTop: 20,
     height: '100%'
   },
   backButton: {

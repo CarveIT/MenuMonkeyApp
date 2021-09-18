@@ -80,7 +80,7 @@ const SubCategory = (props) => {
       // // onEndReached={this.loadMore()}
       // ListFooterComponent={this.footerView}
       />
-      <TouchableOpacity style={styles.addCartBtn}>
+      <TouchableOpacity style={styles.addCartBtn} onPress={() => props.navigation.navigate('CartTab')}>
         <Text style={styles.addCartTxt}>{'Continue'}</Text>
       </TouchableOpacity>
     </SafeAreaView>

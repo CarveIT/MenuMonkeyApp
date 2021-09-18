@@ -12,11 +12,13 @@ import {
 import SubCatHeader from '../Components/SubCatHeader';
 import ProfileInput from '../Components/ProfileInput';
 import Color from '../Utilities/Color';
+import AddPaymentMethod from '../Components/AddPaymentMethod';
 
 const cardsImg = require('../../assets/cards.jpg')
 
 const CheckOut = (props) => {
     const [tip, setTip] = useState(0)
+    const [addPayment, setAddPayment] = useState(false)
 
     return (
         <SafeAreaView style={styles.container}>
@@ -74,7 +76,7 @@ const CheckOut = (props) => {
                         <Text style={styles.rightTxt}>{'$4.2'}</Text>
                     </View>
                 </View>
-                <TouchableOpacity style={styles.creditButton}>
+                <TouchableOpacity style={styles.creditButton} onPress={() => setAddPayment(true)}>
                     <Text style={styles.addMoreTxt}>{'Enter Credit Card'}</Text>
                 </TouchableOpacity>
                 <ProfileInput
@@ -87,7 +89,12 @@ const CheckOut = (props) => {
                     <Text style={styles.addMoreTxt}>{'Submit Order'}</Text>
                 </TouchableOpacity>
             </ScrollView>
-
+            {addPayment &&
+                <AddPaymentMethod
+                    previousScreen={'Checkout'}
+                    // cardInfo={}
+                    callback={(data) => { setAddPayment(data) }}
+                />}
         </SafeAreaView>
     )
 }

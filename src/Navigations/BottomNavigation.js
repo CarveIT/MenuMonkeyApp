@@ -4,7 +4,8 @@ import {
   Image,
   Text,
   View,
-  Alert
+  Alert,
+  TouchableOpacity
 } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -12,7 +13,7 @@ import { HomeStack, CartStack, FavoriteStack, OrdersStack, AccountStack } from '
 import Color from '../Utilities/Color';
 import { useDispatch, useSelector } from 'react-redux';
 import { is } from '@babel/types';
-
+import Constants from '../Utilities/Constants';
 
 const searchIcon = require('../../assets/search.png')
 const cartIcon = require('../../assets/cart.png')
@@ -22,11 +23,18 @@ const accountIcon = require('../../assets/account.png')
 
 const Tab = createBottomTabNavigator();
 
-
-
 const BottomNavigation = (props) => {
-  const [islogin, setislogin] = useState(true)
   const cartcount = useSelector(state => state.cartcount)
+  const [tab, setTab] = useState('')
+
+  const LoginButton = () => {
+    return (
+      <TouchableOpacity style={styles.loginButton} onPress={() => props.navigation.navigate('Login')}>
+        <Text style={styles.loginLbl}>{'Sign in'}</Text>
+      </TouchableOpacity>
+    )
+  }
+
   return (
     // <NavigationContainer>
     <Tab.Navigator>
@@ -74,7 +82,10 @@ const BottomNavigation = (props) => {
 
           tabBarLabel: ({ focused }) => {
             return (
-              <Text style={focused ? styles.activeLabel : styles.label}>{'Favorites'}</Text>
+              (Constants.user == null && tab == 'Favorites') ?
+                <LoginButton />
+                :
+                <Text style={focused ? styles.activeLabel : styles.label}>{'Favorites'}</Text>
             )
           },
           tabBarIcon: ({ focused, color, size }) => {
@@ -84,14 +95,27 @@ const BottomNavigation = (props) => {
               </View>
             )
           }
-        }} />
+        }}
+        listeners={{
+          tabPress: e => {
+            setTab('Favorites')
+            if (Constants.user == null) {
+              Alert.alert('Error', 'Sign in to view your past restaurants')
+              e.preventDefault()
+            }
+          },
+        }}
+      />
       <Tab.Screen
         name="PastOrdersTab"
         component={OrdersStack}
         options={{
           tabBarLabel: ({ focused }) => {
             return (
-              <Text numberOfLines={1} style={focused ? styles.activeLabel : styles.label}>{'Past Orders'}</Text>
+              (Constants.user == null && tab == 'Past Orders') ?
+                <LoginButton />
+                :
+                <Text numberOfLines={1} style={focused ? styles.activeLabel : styles.label}>{'Past Orders'}</Text>
             )
           },
           tabBarIcon: ({ focused, color, size }) => {
@@ -101,6 +125,15 @@ const BottomNavigation = (props) => {
               </View>
             )
           }
+        }}
+        listeners={{
+          tabPress: e => {
+            setTab('Past Orders')
+            if (Constants.user == null) {
+              Alert.alert('Error', 'Sign in to cure your past orders')
+              e.preventDefault()
+            }
+          },
         }} />
       <Tab.Screen
         name="AccountTab"
@@ -108,9 +141,10 @@ const BottomNavigation = (props) => {
         options={{
           tabBarLabel: ({ focused }) => {
             return (
-
-              <Text style={focused ? styles.activeLabel : styles.label}>{'Account'}</Text>
-
+              (Constants.user == null && tab == 'Account') ?
+                <LoginButton />
+                :
+                <Text style={focused ? styles.activeLabel : styles.label}>{'Account'}</Text>
             )
           },
           tabBarIcon: ({ focused, color, size }) => {
@@ -120,6 +154,15 @@ const BottomNavigation = (props) => {
               </View>
             )
           }
+        }}
+        listeners={{
+          tabPress: e => {
+            setTab('Account')
+            if (Constants.user == null) {
+              Alert.alert('Error', 'Sign in to view your profile')
+              e.preventDefault()
+            }
+          },
         }} />
     </Tab.Navigator>
     // </NavigationContainer>
@@ -179,7 +222,21 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     backgroundColor: Color.RED
   },
-  cartqty: { color: Color.WHITE, fontStyle: 'italic', fontSize: 12, fontWeight: 'bold' }
+  cartqty: {
+    color: Color.WHITE,
+    fontStyle: 'italic',
+    fontSize: 12,
+    fontWeight: 'bold'
+  },
+  loginButton: {
+    height: 20,
+    paddingHorizontal: 5,
+    borderRadius: 10,
+    backgroundColor: Color.GREEN
+  },
+  loginLbl: {
+    color: Color.WHITE
+  }
 });
 
 export default BottomNavigation;

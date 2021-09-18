@@ -23,11 +23,11 @@ import PastOrderCell from '../Components/PastOrderCell';
 import ApiCalls from '../Services/ApiCalls';
 import { pastOrders } from '../Data';
 import SubCatHeader from '../Components/SubCatHeader';
-import PaymentCell from '../Components/PaymentCell';
+import CustomerFavoriteCell from '../Components/CustomerFavoriteCell';
 import color from '../Utilities/Color';
 import AddPaymentMethod from '../Components/AddPaymentMethod';
 
-const Payment = (props) => {
+const CustomerFavorite = (props) => {
   const [orders, setOrders] = useState([])
   const [addPayment, setAddPayment] = useState(false)
 
@@ -37,14 +37,15 @@ const Payment = (props) => {
 
   renderItem = ({ item }) => {
     return (
-      <PaymentCell item={item} />
+      <CustomerFavoriteCell item={item} />
     );
   }
 
   const footerView = () => {
     return (
       <TouchableOpacity style={styles.addButton} onPress={() => setAddPayment(true)}>
-        <Text style={styles.addButtonTxt}>{'Add Payment Method'}</Text>
+        <Text style={styles.addButtonTxt}>{'Continue'}</Text>
+        <Text style={styles.buttonPrice}>{'$2'}</Text>
       </TouchableOpacity>
     )
   }
@@ -71,7 +72,7 @@ const Payment = (props) => {
       <View style={{ backgroundColor: Color.WHITE }}>
         <SubCatHeader
           subTitlestyle={styles.title}
-          title={"Payments"}
+          title={"Add These To Your Order"}
           cartimgstyle={{ tintColor: Color.BLACK }}
           hideCart={true}
           navigation={props.navigation} />
@@ -85,11 +86,7 @@ const Payment = (props) => {
         // onEndReached={this.loadMore()}
         ListFooterComponent={footerView}
       />
-      {addPayment &&
-        <AddPaymentMethod
-          previousScreen={'Payment'}
-          callback={(data) => { setAddPayment(data) }}
-        />}
+      {addPayment && <AddPaymentMethod callback={(data) => { setAddPayment(data) }} />}
     </SafeAreaView>
   );
 };
@@ -97,21 +94,23 @@ const Payment = (props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Color.BG_GRAY
+    backgroundColor: Color.WHITE
   },
   list: {
     // position: 'absolute',
     // top: 40,
     marginTop: 10,
-    width: '78%',
+    width: '90%',
     alignSelf: 'center',
-    backgroundColor: Color.BG_GRAY
+    // backgroundColor: Color.WHITE
   },
   title: {
+    fontSize: 20,
     color: Color.BLACK,
     fontWeight: 'bold'
   },
   addButton: {
+    flexDirection: 'row',
     backgroundColor: Color.GREEN,
     flex: 1,
     height: 50,
@@ -120,12 +119,19 @@ const styles = StyleSheet.create({
     marginRight: 10,
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 5
+    borderRadius: 25
   },
   addButtonTxt: {
-    fontSize: 15,
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: Color.WHITE
+  },
+  buttonPrice: {
+    position: 'absolute',
+    right: 30,
+    fontSize: 20,
     fontWeight: 'bold',
     color: Color.WHITE
   }
 });
-export default Payment;
+export default CustomerFavorite;

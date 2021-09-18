@@ -113,7 +113,7 @@ const ItemDetail = (props) => {
           placeholder={'(suace ect.)'}
         />
         <Separator customStyle={{marginTop:0}} />
-        <TouchableOpacity style={styles.addCartBtn}>
+        <TouchableOpacity style={styles.addCartBtn} onPress={() => props.navigation.navigate('CustomerFavorite')}>
           <Text style={styles.addCartTxt}>{'Add to Cart $60'}</Text>
         </TouchableOpacity>
       </ScrollView>

@@ -15,13 +15,14 @@ import CheckOut from '../Screens/CheckOut';
 import BottomNavigation from './BottomNavigation';
 import Payment from '../Screens/Payment';
 import SearchRestaurant from '../Screens/SearchRestaurant';
+import CustomerFavorite from '../Screens/CustomerFavorite';
 
 const Stack = createStackNavigator();
 
 export const LandingStack = () => {
     return (
         <Stack.Navigator>
-            <Stack.Screen name="Landing" component={CheckOut} options={{ headerShown: false }} />
+            <Stack.Screen name="Landing" component={Landing} options={{ headerShown: false }} />
             <Stack.Screen name="BottomNavigation" component={BottomNavigation} options={{ headerShown: false }} />
         </Stack.Navigator>
     );
@@ -34,6 +35,7 @@ export const HomeStack = () => {
             <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
             <Stack.Screen name="SubCategory" component={SubCategory} options={{ headerShown: false }} />
             <Stack.Screen name="ItemDetail" component={ItemDetail} options={{ headerShown: false }} />
+            <Stack.Screen name="CustomerFavorite" component={CustomerFavorite} options={{ headerShown: false }} />
         </Stack.Navigator>
     );
 }
@@ -42,6 +44,8 @@ export const CartStack = () => {
     return (
         <Stack.Navigator>
             <Stack.Screen name="Cart" component={Cart} options={{ headerShown: false }} />
+            <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
+            <Stack.Screen name="CheckOut" component={CheckOut} options={{ headerShown: false }} />
         </Stack.Navigator>
     );
 }

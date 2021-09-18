@@ -12,7 +12,10 @@ import {
   StatusBar,
   StyleSheet,
   FlatList,
-  Button
+  View,
+  TouchableOpacity,
+  Image,
+  Text
 } from 'react-native';
 
 import Color from '../Utilities/Color';
@@ -21,6 +24,11 @@ import { accountData } from '../Utilities/AccountData';
 import AccountHeader from '../Components/AccountHeader';
 import ChangePasswordDialogue from '../Components/ChangePasswordDialogue';
 import { AccountTitle } from '../Utilities/Enums';
+import Constants from '../Utilities/Constants';
+import { saveObjectData, saveData } from '../Utilities/Storage';
+import Keys from '../Utilities/Keys';
+
+const logoutIcon = require('../../assets/login.png')
 
 const Account = (props) => {
   const [changePassord, setChangePassword] = useState(false)
@@ -53,6 +61,23 @@ const Account = (props) => {
     }
   }
 
+  const footerView = () => {
+    return (
+      <TouchableOpacity style={styles.logoutView} onPress={() => {
+        saveData(Keys.ACCESS_TOKEN, null)
+        saveObjectData(Keys.USER, null)
+        Constants.user = null
+        Constants.token = null
+        props.navigation.replace('Landing')
+      }}>
+        <View style={styles.content}>
+          <Image style={styles.menu} source={logoutIcon} resizeMode='contain' />
+          <Text style={styles.title}>{'Logout'}</Text>
+        </View>
+      </TouchableOpacity>
+    )
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle={'dark-content'} />
@@ -64,7 +89,7 @@ const Account = (props) => {
         keyExtractor={(item) => item.title}
         // ListHeaderComponent={this.headerView}
         // onEndReached={this.loadMore()}
-        // ListFooterComponent={this.footerView}
+        ListFooterComponent={footerView}
       />
       {changePassord && <ChangePasswordDialogue callback={(data) => { setChangePassword(data) }} />}
     </SafeAreaView>
@@ -78,6 +103,26 @@ const styles = StyleSheet.create({
   },
   list: {
     backgroundColor: Color.WHITE
+  },
+  logoutView: {
+    justifyContent: 'center',
+
+  },
+  content: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  menu: {
+    width: 25,
+    height: 25,
+    marginLeft: 10,
+    tintColor: Color.BG_BLUE
+  },
+  title: {
+    marginLeft: 20,
+    fontSize: 18,
+    color: Color.BG_BLUE
   },
 });
 export default Account;

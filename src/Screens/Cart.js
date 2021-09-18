@@ -22,6 +22,7 @@ import Color from '../Utilities/Color';
 import { cartData } from '../Data';
 import CartCell from '../Components/CartCell';
 import CartHeader from '../Components/CartHeader';
+import Constants from '../Utilities/Constants';
 
 const Cart = (props) => {
 
@@ -33,8 +34,8 @@ const Cart = (props) => {
 
   const footerView = () => {
     return (
-      <View style={{marginLeft:30,marginRight:30}}>
-        <TouchableOpacity style={styles.addMore}>
+      <View style={{ marginLeft: 30, marginRight: 30 }}>
+        <TouchableOpacity style={styles.addMore} onPress={() => props.navigation.navigate('Home')}>
           <Text style={styles.addMoreTxt}>{'Add More Items'}</Text>
         </TouchableOpacity>
         <View style={styles.summaryView}>
@@ -52,7 +53,10 @@ const Cart = (props) => {
             <Text style={styles.costVal}>{'$102'}</Text>
           </View>
         </View>
-        <TouchableOpacity style={styles.continue}>
+        <TouchableOpacity style={styles.continue} onPress={() => {
+          Constants.user == null ? props.navigation.navigate('Login') : props.navigation.navigate('CheckOut')
+          
+        }}>
           <Text style={styles.continueTxt}>{'Continue'}</Text>
         </TouchableOpacity>
       </View>
@@ -113,19 +117,19 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginVertical: 8
   },
-  costTxt:{
+  costTxt: {
     fontSize: 18,
-    fontWeight:'700'
+    fontWeight: '700'
   },
   costVal: {
     fontSize: 18,
-    fontWeight:'700',
+    fontWeight: '700',
     marginLeft: 'auto'
   },
   continue: {
     width: 180,
     height: 40,
-    marginTop:10,
+    marginTop: 10,
     borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',
