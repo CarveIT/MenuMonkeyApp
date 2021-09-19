@@ -6,7 +6,7 @@
  * @flow strict-local
  */
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -16,13 +16,15 @@ import {
   TouchableOpacity,
   View,
   Image,
-  TextInput
+  TextInput,
+  Alert
 } from 'react-native';
-
 
 import Color from '../Utilities/Color';
 import Separator from '../Components/Separator';
 import { ItemSize } from '../Utilities/Enums';
+import ApiCalls from '../Services/ApiCalls';
+
 const backImg = require('../../assets/left-arrow.png');
 const checkedImgradio = require('../../assets/checkedradio.png');
 const uncheckedImgradio = require('../../assets/uncheckradio.png');
@@ -30,15 +32,89 @@ const checkedImg = require('../../assets/checked.png');
 const uncheckedImg = require('../../assets/un-checked.png');
 
 const ItemDetail = (props) => {
-  const [size, setSize] = useState(ItemSize.LARGE)
-  const [free, setFree] = useState(false)
+  const [details, setDetails] = useState(null)
+  const [size, setSize] = useState(0)
+  const [sides, setSides] = useState([])
   const [count, setCount] = useState(1)
+  const [total, setTotal] = useState(+(props.route.params.detail.price))
+  let price = +(props.route.params.detail.price)
+  useEffect(() => {
+    fetchDetails('upsell/' + props.route.params.detail.id)
+  }, []);
 
   const upinputvalue = () => {
-    setCount(count + 1)
+    console.log('upinputvalue')
+    setCount(prevCount => prevCount + 1)
+    console.log(count + ' x ' + price) 
+    setTotal(total+price)
   }
+
   const downinputvalue = () => {
-    setCount(count == 1 ? 1 : count - 1)
+    
+    setCount(prevCount => prevCount == 1 ? 1 : prevCount - 1)
+    total > price && setTotal(total-price)
+  }
+
+  const fetchDetails = (endPoint) => {
+    // setLoading(true)
+    ApiCalls.getApiCall(endPoint).then(data => {
+      console.log("DATA");
+      console.log(data)
+      // setLoading(false)
+      if (data.dish) {
+        setDetails(data)
+      } else {
+        Alert.alert('Error', data.error);
+      }
+    }, error => {
+      Alert.alert('Error', error);
+    })
+  }
+
+  const SizeList = () => {
+    return (
+      (details != null) && details.allsizes.map((obj, index) => {
+        return (
+          <View key={'container' + index} style={{ width: '100%' }}>
+            <View key={'row' + index} style={styles.row}>
+              <TouchableOpacity key={'button' + index} onPress={() => { setSize(index) }}>
+                <Image key={'img' + index} style={styles.checked} source={index == size ? checkedImgradio : uncheckedImgradio} />
+              </TouchableOpacity>
+              <Text key={'text' + index} style={styles.sizeTxt}>{obj.name}</Text>
+            </View>
+            <Separator />
+          </View>
+        )
+      })
+    )
+  }
+
+  const appendSide = (index) => {
+    let temp = [...sides]
+    if (temp.indexOf(index) == -1) {
+      temp.push(index)
+    } else {
+      temp = temp.filter(obj => obj != index)
+    }
+    setSides(temp)
+  }
+
+  const SideList = () => {
+    return (
+      (details != null) && details.dishItems.map((obj, index) => {
+        return (
+          <View key={'checkContainer' + index} style={{ width: '100%' }}>
+            <View key={'checkRow' + index} style={styles.row}>
+              <TouchableOpacity key={'checkBtn' + index} onPress={() => { appendSide(index) }}>
+                <Image key={'checkImg' + index} style={styles.checked} source={sides.includes(index) ? checkedImg : uncheckedImg} />
+              </TouchableOpacity>
+              <Text key={'checkTxt' + index} style={styles.sizeTxt}>{obj.name}</Text>
+            </View>
+            <Separator />
+          </View>
+        )
+      })
+    )
   }
 
   return (
@@ -46,7 +122,7 @@ const ItemDetail = (props) => {
       <StatusBar barStyle={'dark-content'} />
       <TouchableOpacity style={styles.backBtn} onPress={() => props.navigation.goBack()}>
         <Image style={styles.backimg} source={backImg} />
-         <Text style={styles.header}>{props.route.params.detail.name}</Text>
+        <Text style={styles.header}>{props.route.params.detail.name}</Text>
       </TouchableOpacity>
       <ScrollView contentContainerStyle={styles.scroller}>
         {/* <Text style={styles.header}>{props.route.params.detail.name.toUpperCase()}</Text> */}
@@ -58,52 +134,39 @@ const ItemDetail = (props) => {
           </View>
         </View>
         <Separator />
+        <SizeList />
         <View style={styles.row}>
-          <TouchableOpacity onPress={() => { setSize(ItemSize.LARGE) }}>
-            <Image style={size == ItemSize.LARGE ? styles.checked : styles.unChecked} source={size == ItemSize.LARGE ? checkedImgradio : uncheckedImgradio} />
-          </TouchableOpacity>
-          <Text style={styles.sizeTxt}>{'Large'}</Text>
-        </View>
-        <Separator />
-        <View style={styles.row}>
-          <TouchableOpacity onPress={() => { setSize(ItemSize.MEDIUM) }}>
-            <Image style={size == ItemSize.MEDIUM ? styles.checked : styles.unChecked} source={size == ItemSize.MEDIUM ? checkedImgradio : uncheckedImgradio} />
-          </TouchableOpacity>
-          <Text style={styles.sizeTxt}>{'Medium'}</Text>
-         
-        </View>
-        <Separator />
-        <View style={styles.row}>
-          <Text style={styles.subHeading}>{'Select Size'}</Text>
+          <Text style={styles.subHeading}>{'Select Side'}</Text>
           <View style={styles.requiredView}>
             <Text style={styles.requiredTxt}>{'Required'}</Text>
           </View>
         </View>
         <Separator />
-        <View style={styles.row}>
+        {/* <View style={styles.row}>
           <TouchableOpacity onPress={() => { setFree(!free) }}>
             <Image style={free ? styles.checked : styles.unChecked} source={free ? checkedImg : uncheckedImg} />
           </TouchableOpacity>
           <Text style={styles.sizeTxt}>{'Free'}</Text>
         </View>
-        <Separator />
-        <View style={styles.row}>
-          <Text style={styles.subHeading}>{'Special Instructions'}</Text>
-        </View>
-        <Separator />
+        <Separator /> */}
+        <SideList />
+
         <View style={styles.row}>
           <Text style={styles.subHeading}>{'Quantity'}</Text>
         </View>
         <View style={{ width: "100%", flexDirection: 'row', marginTop: 10 }}>
-          <TouchableOpacity style={styles.upvaluecontainer} onPress={downinputvalue}>
+          <TouchableOpacity style={styles.upvaluecontainer} onPress={() => downinputvalue()}>
             <Text style={{ height: 20, width: 15, textAlign: 'center' }}>-</Text>
           </TouchableOpacity>
-
           <Text style={styles.txtcount}>{count}</Text>
-          <TouchableOpacity style={styles.downvaluecontainer} onPress={upinputvalue}>
+          <TouchableOpacity style={styles.downvaluecontainer} onPress={() => upinputvalue()}>
             <Text style={{ height: 20, width: 18, textAlign: 'center' }}>+</Text>
           </TouchableOpacity>
-          <Text style={styles.mediumPrice}>{'$5.00'}</Text>
+          <Text style={styles.mediumPrice}>{'$'+total}</Text>
+        </View>
+        <Separator />
+        <View style={styles.row}>
+          <Text style={styles.subHeading}>{'Special Instructions'}</Text>
         </View>
         <Separator />
         <Text style={styles.instMsg}>{'Please note that special requests may result in price adjustments after your order is processed'}</Text>
@@ -112,7 +175,7 @@ const ItemDetail = (props) => {
           placeholderTextColor={Color.LIGHTGRAY}
           placeholder={'(suace ect.)'}
         />
-        <Separator customStyle={{marginTop:0}} />
+        <Separator customStyle={{ marginTop: 0 }} />
         <TouchableOpacity style={styles.addCartBtn} onPress={() => props.navigation.navigate('CustomerFavorite')}>
           <Text style={styles.addCartTxt}>{'Add to Cart $60'}</Text>
         </TouchableOpacity>
@@ -159,8 +222,10 @@ const styles = StyleSheet.create({
   },
   txtcount: {
     height: 20,
-    width: 60, marginHorizontal: 2,
-    paddingLeft: 2, borderWidth: 1,
+    width: 60, 
+    marginHorizontal: 2,
+    paddingLeft: 2, 
+    borderWidth: 1,
     borderRadius: 1,
     borderColor: Color.BLACK
   },
@@ -171,14 +236,14 @@ const styles = StyleSheet.create({
     tintColor: Color.BLACK
   },
   scroller: {
-    flex: 1,
-    marginHorizontal:20,
+    // flex: 1,
+    marginHorizontal: 20,
     alignItems: 'center'
   },
   header: {
     fontSize: 25,
     width: '80%',
-    marginBottom:5,
+    marginBottom: 5,
     fontWeight: 'bold',
     textAlign: 'center'
   },
@@ -229,16 +294,18 @@ const styles = StyleSheet.create({
   },
   instMsg: {
     marginTop: 5,
-    lineHeight: 20
+    lineHeight: 20,
+    alignSelf: 'flex-start',
+    color: Color.BG_GRAY
   },
   input: {
     width: '100%',
     fontSize: 16,
-    color:Color.BLACK
+    color: Color.BLACK
   },
   addCartBtn: {
-    position: 'absolute',
-    bottom: 0,
+    // position: 'absolute',
+    marginTop: 20,
     width: 300,
     height: 50,
     borderRadius: 25,

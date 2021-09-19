@@ -6,7 +6,7 @@
  * @flow strict-local
  */
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -26,13 +26,41 @@ import Constants from '../Utilities/Constants';
 
 const Cart = (props) => {
 
+  useEffect(() => {
+    var formData = new FormData();
+    formData.append('restaurant', Constants.selectedRestaurant.id)
+    formData.append('dish', '1,2')
+    formData.append('quantity', '2,1')
+    cartApi('cart')
+  }, []);
+
   renderItem = ({ item }) => {
     return (
-      <CartCell 
-      item={item}
-      navigation={props.navigation} />
+      <CartCell
+        item={item}
+        navigation={props.navigation} />
     );
   }
+
+  const cartApi = (params, endPoint) => {
+    setLoading(true)
+    ApiCalls.postApiCall(params, endPoint).then(data => {
+      console.log("DATA");
+      console.log(data)
+      setLoading(false)
+      if (data.results) {
+      } else {
+        Alert.alert('Error', data.error);
+      }
+    }, error => {
+      Alert.alert('Error', error);
+    })
+  }
+
+  // const total = () => {
+  //   (cost * (tax/100)) + cost
+  //   return
+  // }
 
   const footerView = () => {
     return (
@@ -44,11 +72,11 @@ const Cart = (props) => {
           <Text style={styles.summaryTxt}>{'Summary'}</Text>
           <View style={styles.costView}>
             <Text style={styles.costTxt}>{'Cost'}</Text>
-            <Text style={styles.costVal}>{'$100.00'}</Text>
+            <Text style={styles.costVal}>{cartData.reduce((n, { price }) => n + price, 0)}</Text>
           </View>
           <View style={styles.costView}>
             <Text style={styles.costTxt}>{'Tax'}</Text>
-            <Text style={styles.costVal}>{'$2'}</Text>
+            <Text style={styles.costVal}>{'20%'}</Text>
           </View>
           <View style={styles.costView}>
             <Text style={styles.costTxt}>{'Total'}</Text>

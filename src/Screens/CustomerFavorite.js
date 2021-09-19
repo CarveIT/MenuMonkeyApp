@@ -24,15 +24,15 @@ import ApiCalls from '../Services/ApiCalls';
 import { pastOrders } from '../Data';
 import SubCatHeader from '../Components/SubCatHeader';
 import CustomerFavoriteCell from '../Components/CustomerFavoriteCell';
-import color from '../Utilities/Color';
 import AddPaymentMethod from '../Components/AddPaymentMethod';
+import Constants from '../Utilities/Constants';
 
 const CustomerFavorite = (props) => {
   const [orders, setOrders] = useState([])
   const [addPayment, setAddPayment] = useState(false)
 
   useEffect(() => {
-    fetchOrders('addmore/1')
+    fetchOrders('addmore/'+Constants.selectedRestaurant.id)
   }, []);
 
   renderItem = ({ item }) => {

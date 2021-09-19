@@ -105,13 +105,13 @@ export const cartData = [
         id: '1',
         itemName: 'DRINK',
         quantity: 1,
-        price: '$10.00'
+        price: 10
     },
     {
         id: '2',
         itemName: 'DRINK',
         quantity: 1,
-        price: '$10.00'
+        price: 10
     },
     // {
     //     id: '3',
