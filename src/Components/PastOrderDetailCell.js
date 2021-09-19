@@ -20,39 +20,46 @@ import Color from '../Utilities/Color';
 const image = require('../../assets/slide1.jpg')
 const plusIcon = require('../../assets/add.png')
 
-const CustomerFavoriteCell = (props) => {
-    const { item, navigation } = props
+const PastOrderDetailCell = (props) => {
+    const { item } = props
     return (
         <View style={styles.container}>
             <Image style={styles.menu} source={image} />
             <View style={styles.centerView}>
-                <Text style={styles.status}>{item.dish.name}</Text>
-                <TouchableOpacity style={styles.addButton} onPress={() => navigation.navigate('ItemDetail')}>
-                    <Image style={styles.plusImage} source={plusIcon}></Image>
-                </TouchableOpacity>
+                <View style={styles.row}>
+                    <Text style={styles.dishLbl}>{'Dish:'}</Text>
+                    <Text style={styles.dishValueLbl}>{item.dish.name}</Text>
+                </View>
+                <View style={styles.row}>
+                    <Text style={styles.sizeLbl}>{'Size:'}</Text>
+                    <Text style={styles.sizeLbl}>{item.size.name}</Text>
+                </View>
+                <View style={styles.row}>
+                    <Text style={styles.quantityLbl}>{'Quantity'}</Text>
+                    <Text style={styles.quantityLbl}>{item.quantity}</Text>
+                </View>
             </View>
-            <Text style={styles.statusVal}>{'$'+item.dish.price+'   Description of Dish'}</Text>
         </View>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
-        paddingVertical: 5,
-        // marginHorizontal: 10,
+        flexDirection: 'row',
         borderRadius: 7,
+        marginBottom: 15,
         alignItems: 'center',
         backgroundColor: Color.WHITE
     },
     menu: {
-        width: 150,
-        height: 150,
+        width: 130,
+        height: 130,
+        marginLeft: 15,
         resizeMode: 'contain'
     },
     centerView: {
-        flexDirection: 'row',
-        width: '100%',
-        alignItems: 'center'
+        marginLeft: 20
+        // alignItems: 'center'
     },
     status: {
         // marginTop: 10,
@@ -102,15 +109,26 @@ const styles = StyleSheet.create({
         borderWidth: 3,
         borderColor: Color.BLACK
     },
-    plusLbl: {
-        fontSize: 30,
-        fontWeight: 'bold',
-        color: Color.GREEN
+    row: {
+        flexDirection: 'row'
     },
-    plusImage: {
-        height: 20,
-        width: 20,
-        alignSelf: 'center'
+    dishLbl: {
+        fontSize: 18,
+        paddingRight: 10,
     },
+    dishValueLbl: {
+        fontSize: 18,
+        color: 'green'
+    },
+    sizeLbl: {
+        fontSize: 18,
+        paddingRight: 10,
+        color: Color.BG_GRAY
+    },
+    quantityLbl: {
+        fontSize: 18,
+        paddingRight: 10,
+        color: Color.RED
+    }
 });
-export default CustomerFavoriteCell;
+export default PastOrderDetailCell;

@@ -19,15 +19,17 @@ import Color from '../Utilities/Color';
 const image = require('../../assets/menu.png')
 
 const PastOrderCell = (props) => {
-    const { item } = props
+    const { item, navigation } = props
     return (
         <View style={styles.container}>
             <Image style={styles.menu} source={image} />
             <View style={styles.centerView}>
                 <Text style={styles.status}>{'Status:'}</Text>
-                <Text style={styles.statusVal}>{item.status}</Text>
+                <TouchableOpacity onPress={() => navigation.navigate('PastOrderDetail', { pastOrderID: item.id })}>
+                    <Text style={styles.statusVal}>{item.status}</Text>
+                </TouchableOpacity>
                 <Text style={styles.order}>{'Order ID:'}
-                    <Text>{'  '+item.id}</Text>
+                    <Text>{'  ' + item.id}</Text>
                 </Text>
             </View>
             <View style={styles.rightView}>
@@ -44,7 +46,7 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
         marginVertical: 5,
-        marginHorizontal: 20,
+        marginHorizontal: 10,
         borderRadius: 7,
         alignItems: 'center',
         backgroundColor: Color.WHITE

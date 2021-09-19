@@ -32,18 +32,20 @@ const CustomerFavorite = (props) => {
   const [addPayment, setAddPayment] = useState(false)
 
   useEffect(() => {
-    fetchOrders('past-orders')
+    fetchOrders('addmore/1')
   }, []);
 
   renderItem = ({ item }) => {
     return (
-      <CustomerFavoriteCell item={item} />
+      <CustomerFavoriteCell
+        item={item}
+        navigation={props.navigation} />
     );
   }
 
   const footerView = () => {
     return (
-      <TouchableOpacity style={styles.addButton} onPress={() => setAddPayment(true)}>
+      <TouchableOpacity style={styles.addButton} onPress={() => props.navigation.navigate('CartTab')}>
         <Text style={styles.addButtonTxt}>{'Continue'}</Text>
         <Text style={styles.buttonPrice}>{'$2'}</Text>
       </TouchableOpacity>
@@ -56,8 +58,8 @@ const CustomerFavorite = (props) => {
       console.log("DATA");
       console.log(data)
       // setLoading(false)
-      if (data.past_orders) {
-        setOrders(data.past_orders)
+      if (data.favorites) {
+        setOrders(data.favorites)
       } else {
         Alert.alert('Error', data.error);
       }

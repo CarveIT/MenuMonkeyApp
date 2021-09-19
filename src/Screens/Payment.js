@@ -32,7 +32,7 @@ const Payment = (props) => {
   const [addPayment, setAddPayment] = useState(false)
 
   useEffect(() => {
-    fetchOrders('past-orders')
+    fetchCards('bill')
   }, []);
 
   renderItem = ({ item }) => {
@@ -49,14 +49,14 @@ const Payment = (props) => {
     )
   }
 
-  const fetchOrders = (endPoint) => {
+  const fetchCards = (endPoint) => {
     // setLoading(true)
     ApiCalls.getApiCall(endPoint).then(data => {
       console.log("DATA");
       console.log(data)
       // setLoading(false)
-      if (data.past_orders) {
-        setOrders(data.past_orders)
+      if (data.card) {
+        setOrders(data.card)
       } else {
         Alert.alert('Error', data.error);
       }

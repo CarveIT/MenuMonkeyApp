@@ -28,7 +28,9 @@ const Cart = (props) => {
 
   renderItem = ({ item }) => {
     return (
-      <CartCell item={item} />
+      <CartCell 
+      item={item}
+      navigation={props.navigation} />
     );
   }
 
@@ -55,7 +57,7 @@ const Cart = (props) => {
         </View>
         <TouchableOpacity style={styles.continue} onPress={() => {
           Constants.user == null ? props.navigation.navigate('Login') : props.navigation.navigate('CheckOut')
-          
+
         }}>
           <Text style={styles.continueTxt}>{'Continue'}</Text>
         </TouchableOpacity>
@@ -66,7 +68,10 @@ const Cart = (props) => {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle={'dark-content'} />
-      <CartHeader title={'View Cart'} />
+      <CartHeader
+        title={'View Cart'}
+        navigation={props.navigation}
+      />
       <FlatList
         data={cartData}
         style={styles.list}

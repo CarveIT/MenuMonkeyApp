@@ -24,6 +24,7 @@ const CheckOut = (props) => {
         <SafeAreaView style={styles.container}>
             <SubCatHeader
                 title={'Checkout'}
+                navigation={props.navigation}
                 subTitlestyle={styles.headerTxt}
             />
             <ScrollView style={styles.scroller}>

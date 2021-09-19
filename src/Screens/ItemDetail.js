@@ -46,7 +46,7 @@ const ItemDetail = (props) => {
       <StatusBar barStyle={'dark-content'} />
       <TouchableOpacity style={styles.backBtn} onPress={() => props.navigation.goBack()}>
         <Image style={styles.backimg} source={backImg} />
-         {/* <Text style={styles.header}>{props.route.params.detail.name.toUpperCase()}</Text> */}
+         <Text style={styles.header}>{props.route.params.detail.name}</Text>
       </TouchableOpacity>
       <ScrollView contentContainerStyle={styles.scroller}>
         {/* <Text style={styles.header}>{props.route.params.detail.name.toUpperCase()}</Text> */}

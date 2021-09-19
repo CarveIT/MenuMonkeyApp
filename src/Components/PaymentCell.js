@@ -24,8 +24,8 @@ const PaymentCell = (props) => {
         <View style={styles.container}>
             <Image style={styles.menu} source={image} />
             <View style={styles.centerView}>
-                <Text style={styles.status}>{'**** **** **** 4242'}</Text>
-                <Text style={styles.statusVal}>{'Expires 11/2021'}</Text>
+                <Text style={styles.status}>{item.card_number != null ? '**** **** **** '+item.card_number.substring(-4, 4) : item.card_number}</Text>
+                <Text style={styles.statusVal}>{'Expires '+item.expiry_month+'/'+item.expiry_year}</Text>
             </View>
         </View>
     );
@@ -36,6 +36,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         paddingVertical: 5,
         marginHorizontal: 10,
+        marginBottom: 10,
         borderRadius: 7,
         alignItems: 'center',
         backgroundColor: Color.WHITE

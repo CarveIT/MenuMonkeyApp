@@ -16,12 +16,14 @@ import BottomNavigation from './BottomNavigation';
 import Payment from '../Screens/Payment';
 import SearchRestaurant from '../Screens/SearchRestaurant';
 import CustomerFavorite from '../Screens/CustomerFavorite';
+import PastOrderDetail from '../Screens/PastOrderDetail';
 
 const Stack = createStackNavigator();
 
 export const LandingStack = () => {
     return (
         <Stack.Navigator>
+            
             <Stack.Screen name="Landing" component={Landing} options={{ headerShown: false }} />
             <Stack.Screen name="BottomNavigation" component={BottomNavigation} options={{ headerShown: false }} />
         </Stack.Navigator>
@@ -62,6 +64,7 @@ export const OrdersStack = () => {
     return (
         <Stack.Navigator>
             <Stack.Screen name="Past Orders" component={PastOrders} options={{ headerShown: false }} />
+            <Stack.Screen name="PastOrderDetail" component={PastOrderDetail} options={{ headerShown: false }} />
         </Stack.Navigator>
     );
 }

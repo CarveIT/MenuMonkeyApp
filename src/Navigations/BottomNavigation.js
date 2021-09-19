@@ -15,7 +15,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { is } from '@babel/types';
 import Constants from '../Utilities/Constants';
 
-const searchIcon = require('../../assets/search.png')
+const searchIcon = require('../../assets/home.png')
 const cartIcon = require('../../assets/cart.png')
 const favoriteIcon = require('../../assets/heart.png')
 const orderIcon = require('../../assets/orders.png')
