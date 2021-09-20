@@ -11,36 +11,28 @@ import {
     StyleSheet,
     View,
     Text,
-    Image,
-    TouchableOpacity,
     Alert,
+    TouchableOpacity,
+    Image
 } from 'react-native';
+
+import Key from '../Utilities/Keys';
+import { saveData, getData, saveObjectData } from '../Utilities/Storage';
 
 import Color from '../Utilities/Color';
 import Button from './Button';
 import ProfileInput from './ProfileInput';
 import { ChangePasswordStatus } from '../Utilities/Enums';
 import ApiCalls from '../Services/ApiCalls';
+import Constants from '../Utilities/Constants';
 
-const validation = (currentPassword, password, confirmPassword) => {
-    if (currentPassword == '' || password == '' || confirmPassword == '') {
+const validation = (password, email) => {
+    if (password == '' || email == '') {
         const obj = {
             valid: false,
             error: 'All fields is required'
         }
         return obj;
-    } else if (password.length < 6 && confirmPassword.length < 6) {
-        const obj = {
-            valid: false,
-            error: 'The new password must be at least 6 characters.'
-        }
-        return obj
-    } else if (password != confirmPassword) {
-        const obj = {
-            valid: false,
-            error: 'Confirm password mismatched'
-        }
-        return obj
     }
     const obj = {
         valid: true,
@@ -49,39 +41,41 @@ const validation = (currentPassword, password, confirmPassword) => {
     return obj
 }
 
-const ChangePasswordDialogue = (props) => {
+const GuestSigninDialogue = (props) => {
     const { callback } = props;
-    const [currentPassword, setCurrentPassword] = useState('')
+    const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const [confirmPassword, setConfirmPassword] = useState('')
     const [loading, setLoading] = useState(false)
 
     const continueTapped = () => {
-        let validate = validation(currentPassword, password, confirmPassword)
+        let validate = validation(password, email)
         if (validate.valid == false) {
             Alert.alert('ERROR', validate.error)
             return
+        } else {
+            var formData = new FormData();
+            formData.append('email', email)
+            formData.append('password', password)
+            loginApi(formData, 'login')
         }
-
-        var formData = new FormData();
-        formData.append('password', currentPassword)
-        formData.append('new_password', password)
-        formData.append('confirm_password', confirmPassword)
-        changePasswordApi(formData, 'change-password')
         // callback(false)
     }
 
-    const changePasswordApi = (params, endPoint) => {
+    const loginApi = async (params, endPoint) => {
         setLoading(true)
         ApiCalls.postApiCall(params, endPoint).then(data => {
             console.log("DATA");
             console.log(data)
             setLoading(false)
-            if (data.message) {
-                Alert.alert('', data.message);
-                callback(false)
+            if (data.success) {
+                let user = data.success.user
+                user['token'] = data.success.token
+                Constants.user = user
+                saveData(Key.ACCESS_TOKEN, data.success.token)
+                saveObjectData(Key.USER, user)
+
             } else {
-                Alert.alert('Error', data.message);
+                Alert.alert('Error', data.error);
             }
         }, error => {
             Alert.alert('Error', error);
@@ -91,30 +85,29 @@ const ChangePasswordDialogue = (props) => {
     return (
         <View style={styles.container}>
             <View style={styles.form}>
+                <View style={styles.headingView}>
+                    <Text style={styles.heading}>{'Welcome'}</Text>
+                    <Text style={styles.subHeading}>{'Hello! Sign in as Guest'}</Text>
+                </View>
                 <TouchableOpacity style={styles.closeBtn} onPress={() => callback(false)}>
                     <Image resizeMode='contain' style={styles.closeImg} source={require('../../assets/red-cross.png')} />
                 </TouchableOpacity>
-                <Text style={styles.heading}>{'Change Password'}</Text>
                 <ProfileInput
-                    placeholder={'Current Password'}
-                    secureTextEntry={true}
-                    onChangeText={(pass) => setCurrentPassword(pass)}
+                    placeholder={'Name'}
+                    onChangeText={(email) => setEmail(email)}
                 />
                 <ProfileInput
-                    placeholder={'New Password'}
-                    secureTextEntry={true}
+                    placeholder={'Email Address'}
                     onChangeText={(pass) => setPassword(pass)}
                 />
                 <ProfileInput
-                    placeholder={'Confirm New Password'}
-                    secureTextEntry={true}
-                    onChangeText={(pass) => setConfirmPassword(pass)}
+                    placeholder={'Phone'}
+                    onChangeText={(pass) => setPassword(pass)}
                 />
-                {/* <Text style={styles.errorLbl}>{'Please enter a password which is not similar then current password.'}</Text> */}
                 <View style={styles.btnRow}>
                     <Button
                         style={styles.btnContinue}
-                        title={'Continue'}
+                        title={'Sign in'}
                         loading={loading}
                         onPress={() => continueTapped()}
                     />
@@ -145,12 +138,33 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: Color.BLUE
     },
+    headingView: {
+        width: '100%',
+        paddingLeft: 10,
+        justifyContent: 'center'
+    },
     heading: {
         fontSize: 20,
         fontWeight: 'bold',
         marginTop: 20,
-        alignSelf: 'center',
         color: Color.WHITE
+    },
+    subHeading: {
+        // fontSize: 20,
+        // fontWeight: 'bold',
+        // marginTop: 20,
+        color: Color.WHITE
+    },
+    closeBtn: {
+        position: 'absolute',
+        top: 5,
+        right: 5,
+        width: 30,
+        height: 30,
+    },
+    closeImg: {
+        width: 30,
+        height: 30
     },
     btnRow: {
         flexDirection: 'row',
@@ -164,24 +178,7 @@ const styles = StyleSheet.create({
     btnCancel: {
         flex: 1,
         marginLeft: 5
-    },
-    errorLbl: {
-        fontSize: 16,
-        paddingVertical: 5,
-        paddingHorizontal: 20,
-        color: Color.RED
-    },
-    closeBtn: {
-        position: 'absolute',
-        top: 5,
-        right: 5,
-        width: 30,
-        height: 30,
-    },
-    closeImg: {
-        width: 30,
-        height: 30
     }
 
 });
-export default ChangePasswordDialogue;
+export default GuestSigninDialogue;

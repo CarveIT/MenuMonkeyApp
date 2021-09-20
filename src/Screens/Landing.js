@@ -49,7 +49,7 @@ const Landing = (props) => {
     ]);
 
     const [date, setDate] = useState(moment().toDate());
-    
+
     const [time, setTime] = useState();
     const [mode, setMode] = useState('date');
     const [show, setShow] = useState(false);
@@ -65,21 +65,21 @@ const Landing = (props) => {
         const currentDate = selectedDate || date;
         setShow(Platform.OS === 'ios');
         setDate(currentDate);
-      };
+    };
 
-      const showDatepicker = () => {
-          console.log("Here")
+    const showDatepicker = () => {
+        console.log("Here")
         showMode('date');
-      };
-    
-      const showTimepicker = () => {
-        showMode('time');
-      };
+    };
 
- const showMode = (currentMode) => {
-    setShow(true);
-    setMode(currentMode);
-  };
+    const showTimepicker = () => {
+        showMode('time');
+    };
+
+    const showMode = (currentMode) => {
+        setShow(true);
+        setMode(currentMode);
+    };
 
     const loadData = async () => {
         let user = await getObjectData(Key.USER);
@@ -189,7 +189,11 @@ const Landing = (props) => {
 
             </ScrollView>
             {signinForm && <SigninDialogue callback={(data) => { setSigninForm(data) }} />}
-            {!dineIn && <PickupDialogue  date={date} callback={(data) => { setDineIn(data) }} callbackdatepicker={()=>{showDatepicker() }} callbacktimepicker={()=>showTimepicker()} />}
+            {!dineIn && <PickupDialogue
+                date={date}
+                callback={(data) => { setDineIn(data) }}
+                callbackdatepicker={() => { showDatepicker() }}
+                callbacktimepicker={() => showTimepicker()} />}
 
             {show && (
                 <DateTimePicker
@@ -206,10 +210,8 @@ const Landing = (props) => {
         </SafeAreaView>
     );
 
-    
+
 };
-
-
 
 const styles = StyleSheet.create({
     container: {

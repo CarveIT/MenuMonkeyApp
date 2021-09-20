@@ -14,29 +14,27 @@ import {
     Image,
     Text,
 } from 'react-native';
-
+import Constants from '../Utilities/Constants';
 import Color from '../Utilities/Color';
 const image = require('../../assets/menu.png')
 
 const AccountCell = (props) => {
     const { item, callback } = props
     return (
-        <TouchableOpacity style={styles.container} onPress={() => callback(item)}>
+        <TouchableOpacity style={[styles.container, { display: (Constants.user != null && item.title == 'Log In') ? 'none' : 'flex'}]} onPress={() => callback(item)}>
             <View style={styles.content}>
                 <Image style={styles.menu} source={item.image} resizeMode='contain' />
                 <Text style={styles.title}>{item.title}</Text>
             </View>
-            <View style={styles.separator}></View>
+            {(Constants.user != null && item.title != 'Change Password') ? <View style={styles.separator}></View> : null}
         </TouchableOpacity>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
-        // marginVertical: 10,
         height: 70,
-        justifyContent: 'center',
-        // alignItems: 'center',
+        justifyContent: 'center'
     },
     content: {
         flex:  1,

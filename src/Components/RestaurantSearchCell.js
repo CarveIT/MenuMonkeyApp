@@ -21,15 +21,15 @@ import Color from '../Utilities/Color';
 const image = require('../../assets/heart.png')
 
 const RestaurantSearchCell = (props) => {
-    const { item } = props
+    const { item, navigation } = props
 
     return (
-        <View style={styles.container}>
+        <TouchableOpacity style={styles.container} onPress={() => props.navigation.navigate('Home')}>
             <View>
                 <Text style={styles.title}>{item.restaurant.name}</Text>
                 <Text style={styles.subTitle}>{item.restaurant.address}</Text>
             </View>
-        </View>
+        </TouchableOpacity>
     );
 };
 

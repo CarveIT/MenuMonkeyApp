@@ -12,6 +12,8 @@ import {
     View,
     Text,
     Alert,
+    TouchableOpacity,
+    Image
 } from 'react-native';
 
 import Color from '../Utilities/Color';
@@ -43,7 +45,7 @@ const validation = (password, confirmPassword) => {
 }
 
 const AddPaymentMethod = (props) => {
-    const { callback } = props;
+    const { callback, previousScreen } = props;
     const [name, setName] = useState('')
     const [cardNo, setCardNo] = useState('')
     const [cvc, setCVC] = useState('')
@@ -59,11 +61,11 @@ const AddPaymentMethod = (props) => {
         // }
         var formData = new FormData();
         formData.append('card_number', cardNo)
-        formData.append('cvc', cvc) 
+        formData.append('cvc', cvc)
         formData.append('expiry_month', month)
         formData.append('expiry_year', year)
         addCardApi(formData, "card-save")
-        
+
     }
 
     const addCardApi = (params, endPoint) => {
@@ -87,6 +89,9 @@ const AddPaymentMethod = (props) => {
             <View style={styles.form}>
                 <View style={styles.whiteBg}>
                     <Text style={styles.heading}>{'Credit Card'}</Text>
+                    <TouchableOpacity style={styles.closeBtn} onPress={() => callback(false)}>
+                        <Image resizeMode='contain' style={styles.closeImg} source={require('../../assets/red-cross.png')} />
+                    </TouchableOpacity>
                     <PaymentInput
                         label={'Name on Card'}
                         onChangeText={(name) => setName(name)}
@@ -114,13 +119,25 @@ const AddPaymentMethod = (props) => {
                         placeholder={'YYYY'}
                         onChangeText={(yyyy) => setYear(yyyy)}
                     />
-                    <View style={{ flex: 1, height: 50 }}>
-                        <Button
+                    <View style={{ flex: 1, height: 50, marginTop: 10 }}>
+                        {previousScreen != 'Checkout' && <Button
                             style={styles.btnContinue}
                             title={'Save'}
-                            loading = {loading}
+                            loading={loading}
                             onPress={() => continueTapped()}
-                        />
+                        />}
+                        {previousScreen == 'Checkout' && <Button
+                            style={styles.btnContinue}
+                            title={'Total: $2.1'}
+                            loading={loading}
+                            onPress={() => continueTapped()}
+                        />}
+                        {previousScreen == 'Checkout' && <Button
+                            style={styles.btnContinue}
+                            title={'Pay >>'}
+                            loading={loading}
+                            onPress={() => continueTapped()}
+                        />}
                     </View>
 
                     {/* <View style={styles.btnRow}>
@@ -174,7 +191,7 @@ const styles = StyleSheet.create({
     btnContinue: {
         width: '100%',
         height: 50,
-        marginTop: 20,
+        marginTop: 10,
         backgroundColor: Color.BG_BLUE
     },
     btnCancel: {
@@ -188,7 +205,17 @@ const styles = StyleSheet.create({
     },
     fieldRow: {
         flexDirection: 'row',
-    }
-
+    },
+    closeBtn: {
+        position: 'absolute',
+        top: 5,
+        right: 5,
+        width: 30,
+        height: 30,
+    },
+    closeImg: {
+        width: 30,
+        height: 30
+    },
 });
 export default AddPaymentMethod;

@@ -16,45 +16,53 @@ import {
 } from 'react-native';
 
 import Color from '../Utilities/Color';
-const image = require('../../assets/master-card.png')
 
-const PaymentCell = (props) => {
-    const { item } = props
+const image = require('../../assets/slide1.jpg')
+const plusIcon = require('../../assets/add.png')
+
+const CustomerFavoriteCell = (props) => {
+    const { item, navigation } = props
     return (
         <View style={styles.container}>
             <Image style={styles.menu} source={image} />
             <View style={styles.centerView}>
-                <Text style={styles.status}>{item.card_number != null ? '**** **** **** '+item.card_number.substring(-4, 4) : item.card_number}</Text>
-                <Text style={styles.statusVal}>{'Expires '+item.expiry_month+'/'+item.expiry_year}</Text>
+                <Text style={styles.status}>{item.dish.name}</Text>
+                <TouchableOpacity style={styles.addButton} onPress={() => navigation.navigate('ItemDetail')}>
+                    <Image style={styles.plusImage} source={plusIcon}></Image>
+                </TouchableOpacity>
             </View>
+            <Text style={styles.statusVal}>{'$'+item.dish.price+'   Description of Dish'}</Text>
         </View>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
-        flexDirection: 'row',
         paddingVertical: 5,
-        marginHorizontal: 10,
-        marginBottom: 10,
+        // marginHorizontal: 10,
         borderRadius: 7,
         alignItems: 'center',
         backgroundColor: Color.WHITE
     },
     menu: {
-        marginLeft: 10
+        width: 150,
+        height: 150,
+        resizeMode: 'contain'
     },
     centerView: {
-        marginLeft: 20
+        flexDirection: 'row',
+        width: '100%',
+        alignItems: 'center'
     },
     status: {
         // marginTop: 10,
-        fontSize: 16,
+        fontSize: 20,
         fontWeight: '700'
     },
     statusVal: {
-        marginBottom: 5,
-        fontSize: 16,
+        marginTop: 20,
+        alignSelf: 'flex-start',
+        fontSize: 13,
         color: 'gray'
     },
     order: {
@@ -84,6 +92,25 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: 'bold',
         color: Color.WHITE
-    }
+    },
+    addButton: {
+        width: 35,
+        height: 40,
+        marginLeft: 'auto',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderWidth: 3,
+        borderColor: Color.BLACK
+    },
+    plusLbl: {
+        fontSize: 30,
+        fontWeight: 'bold',
+        color: Color.GREEN
+    },
+    plusImage: {
+        height: 20,
+        width: 20,
+        alignSelf: 'center'
+    },
 });
-export default PaymentCell;
+export default CustomerFavoriteCell;

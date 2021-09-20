@@ -13,7 +13,9 @@ import {
   StyleSheet,
   FlatList,
   Alert,
-  View
+  View,
+  Text,
+  TouchableOpacity
 } from 'react-native';
 
 import Color from '../Utilities/Color';
@@ -21,20 +23,19 @@ import PastOrderCell from '../Components/PastOrderCell';
 import ApiCalls from '../Services/ApiCalls';
 import { pastOrders } from '../Data';
 import SubCatHeader from '../Components/SubCatHeader';
+import PastOrderDetailCell from '../Components/PastOrderDetailCell';
 
-const PastOrders = (props) => {
-  const [orders, setOrders] = useState([])
+const PastOrderDetail = (props) => {
+  const [orderDetail, setOrderDetail] = useState([])
+  const [addPayment, setAddPayment] = useState(false)
 
   useEffect(() => {
-    fetchOrders('past-orders')
+    fetchOrders('past-order-detail/'+props.route.params.pastOrderID)
   }, []);
 
   renderItem = ({ item }) => {
     return (
-      <PastOrderCell
-        item={item}
-        navigation={props.navigation}
-      />
+      <PastOrderDetailCell item={item} />
     );
   }
 
@@ -44,8 +45,8 @@ const PastOrders = (props) => {
       console.log("DATA");
       console.log(data)
       // setLoading(false)
-      if (data.past_orders) {
-        setOrders(data.past_orders)
+      if (data.past_order_detail) {
+        setOrderDetail(data.past_order_detail)
       } else {
         Alert.alert('Error', data.error);
       }
@@ -60,18 +61,17 @@ const PastOrders = (props) => {
       <View style={{ backgroundColor: Color.WHITE }}>
         <SubCatHeader
           subTitlestyle={styles.title}
-          title={"Past Orders"}
-          cartimgstyle={{ tintColor: Color.BLACK }} />
+          title={"Past Order Details"}
+          cartimgstyle={{ tintColor: Color.BLACK }}
+          navigation={props.navigation} />
       </View>
       <FlatList
-        data={orders}
+        data={orderDetail}
         style={styles.list}
         renderItem={(item) => renderItem(item)}
         keyExtractor={(item) => item.id}
-      // ListHeaderComponent={this.headerView}
-      // onEndReached={this.loadMore()}
-      // ListFooterComponent={this.footerView}
       />
+      {addPayment && <AddPaymentMethod callback={(data) => { setAddPayment(data) }} />}
     </SafeAreaView>
   );
 };
@@ -82,14 +82,41 @@ const styles = StyleSheet.create({
     backgroundColor: Color.BG_GRAY
   },
   list: {
-    position: 'absolute',
-    top: 40,
-    width: '78%',
+    // position: 'absolute',
+    // top: 40,
+    marginTop: 10,
+    width: '90%',
     alignSelf: 'center',
-    backgroundColor: Color.WHITE
+    // backgroundColor: Color.WHITE
   },
   title: {
-    color: Color.BLACK, fontWeight: 'bold'
+    fontSize: 20,
+    color: Color.BLACK,
+    fontWeight: 'bold'
+  },
+  addButton: {
+    flexDirection: 'row',
+    backgroundColor: Color.GREEN,
+    flex: 1,
+    height: 50,
+    marginTop: 10,
+    marginLeft: 10,
+    marginRight: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 25
+  },
+  addButtonTxt: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: Color.WHITE
+  },
+  buttonPrice: {
+    position: 'absolute',
+    right: 30,
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: Color.WHITE
   }
 });
-export default PastOrders;
+export default PastOrderDetail;

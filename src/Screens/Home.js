@@ -23,6 +23,7 @@ import { categories } from '../Data';
 import CategoryCell from '../Components/CategoryCell';
 import HomeHeader from '../Components/HomeHeader';
 import ApiCalls from '../Services/ApiCalls';
+import Constants from '../Utilities/Constants';
 
 const Home = (props) => {
 
@@ -49,6 +50,7 @@ const Home = (props) => {
       if (data.menus) {
         setMenu(data.menus)
         setRestaurant(data.restaurant)
+        Constants.selectedRestaurant = data.restaurant
       } else {
         Alert.alert('Error', data.error);
       }

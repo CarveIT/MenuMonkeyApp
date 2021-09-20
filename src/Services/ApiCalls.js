@@ -12,8 +12,7 @@ class ApiCalls {
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
-                    'Authorization': 'Bearer '+ Constants.user.token
-                    // 'Authorization': 'Bearer '+Keys.AUTH
+                    'Authorization': Constants.user != null ? 'Bearer '+ Constants.user.token : ''
                 }
             });
             let result = await request
@@ -34,7 +33,7 @@ class ApiCalls {
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'multipart/form-data', // , multipart/form-data
-                    'Authorization': 'Bearer '+ Constants.user.token
+                    'Authorization': Constants.user != null ? 'Bearer '+ Constants.user.token : ''
                 },
                 body: params // JSON.stringify(params)
             });

@@ -35,6 +35,7 @@ const SearchRestaurant = (props) => {
     return (
       <RestaurantSearchCell
         item={item}
+        navigation={props.navigation}
       />
     );
   }

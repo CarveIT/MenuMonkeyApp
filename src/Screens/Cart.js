@@ -6,7 +6,7 @@
  * @flow strict-local
  */
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -22,37 +22,71 @@ import Color from '../Utilities/Color';
 import { cartData } from '../Data';
 import CartCell from '../Components/CartCell';
 import CartHeader from '../Components/CartHeader';
+import Constants from '../Utilities/Constants';
 
 const Cart = (props) => {
 
+  useEffect(() => {
+    var formData = new FormData();
+    formData.append('restaurant', Constants.selectedRestaurant.id)
+    formData.append('dish', '1,2')
+    formData.append('quantity', '2,1')
+    cartApi('cart')
+  }, []);
+
   renderItem = ({ item }) => {
     return (
-      <CartCell item={item} />
+      <CartCell
+        item={item}
+        navigation={props.navigation} />
     );
   }
 
+  const cartApi = (params, endPoint) => {
+    setLoading(true)
+    ApiCalls.postApiCall(params, endPoint).then(data => {
+      console.log("DATA");
+      console.log(data)
+      setLoading(false)
+      if (data.results) {
+      } else {
+        Alert.alert('Error', data.error);
+      }
+    }, error => {
+      Alert.alert('Error', error);
+    })
+  }
+
+  // const total = () => {
+  //   (cost * (tax/100)) + cost
+  //   return
+  // }
+
   const footerView = () => {
     return (
-      <View style={{marginLeft:30,marginRight:30}}>
-        <TouchableOpacity style={styles.addMore}>
+      <View style={{ marginLeft: 30, marginRight: 30 }}>
+        <TouchableOpacity style={styles.addMore} onPress={() => props.navigation.navigate('Home')}>
           <Text style={styles.addMoreTxt}>{'Add More Items'}</Text>
         </TouchableOpacity>
         <View style={styles.summaryView}>
           <Text style={styles.summaryTxt}>{'Summary'}</Text>
           <View style={styles.costView}>
             <Text style={styles.costTxt}>{'Cost'}</Text>
-            <Text style={styles.costVal}>{'$100.00'}</Text>
+            <Text style={styles.costVal}>{cartData.reduce((n, { price }) => n + price, 0)}</Text>
           </View>
           <View style={styles.costView}>
             <Text style={styles.costTxt}>{'Tax'}</Text>
-            <Text style={styles.costVal}>{'$2'}</Text>
+            <Text style={styles.costVal}>{'20%'}</Text>
           </View>
           <View style={styles.costView}>
             <Text style={styles.costTxt}>{'Total'}</Text>
             <Text style={styles.costVal}>{'$102'}</Text>
           </View>
         </View>
-        <TouchableOpacity style={styles.continue}>
+        <TouchableOpacity style={styles.continue} onPress={() => {
+          Constants.user == null ? props.navigation.navigate('Login') : props.navigation.navigate('CheckOut')
+
+        }}>
           <Text style={styles.continueTxt}>{'Continue'}</Text>
         </TouchableOpacity>
       </View>
@@ -62,7 +96,10 @@ const Cart = (props) => {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle={'dark-content'} />
-      <CartHeader title={'View Cart'} />
+      <CartHeader
+        title={'View Cart'}
+        navigation={props.navigation}
+      />
       <FlatList
         data={cartData}
         style={styles.list}
@@ -113,19 +150,19 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginVertical: 8
   },
-  costTxt:{
+  costTxt: {
     fontSize: 18,
-    fontWeight:'700'
+    fontWeight: '700'
   },
   costVal: {
     fontSize: 18,
-    fontWeight:'700',
+    fontWeight: '700',
     marginLeft: 'auto'
   },
   continue: {
     width: 180,
     height: 40,
-    marginTop:10,
+    marginTop: 10,
     borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',
