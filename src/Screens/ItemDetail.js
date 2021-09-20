@@ -43,14 +43,11 @@ const ItemDetail = (props) => {
   }, []);
 
   const upinputvalue = () => {
-    console.log('upinputvalue')
     setCount(prevCount => prevCount + 1)
-    console.log(count + ' x ' + price) 
     setTotal(total+price)
   }
 
   const downinputvalue = () => {
-    
     setCount(prevCount => prevCount == 1 ? 1 : prevCount - 1)
     total > price && setTotal(total-price)
   }
