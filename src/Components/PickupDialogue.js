@@ -42,7 +42,7 @@ const validation = (password, email) => {
 }
 
 const PickupDialogue = (props) => {
-    const { callback,callbackdatepicker,callbacktimepicker,time,date } = props;
+    const { callback,callbackdatepicker,callbacktimepicker,date } = props;
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [loading, setLoading] = useState(false)

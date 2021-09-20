@@ -35,7 +35,6 @@ import ApiCalls from '../Services/ApiCalls';
 
 import DateTimePicker from '@react-native-community/datetimepicker';
 import moment from 'moment';
-
 const Landing = (props) => {
     const [signinForm, setSigninForm] = useState(false)
     const [yesBtn, setYesBtn] = useState(false)
@@ -51,6 +50,7 @@ const Landing = (props) => {
     const [date, setDate] = useState(moment().toDate());
 
     const [time, setTime] = useState();
+    const [userinfo, setuserinfo] = useState();
     const [mode, setMode] = useState('date');
     const [show, setShow] = useState(false);
 
@@ -59,6 +59,8 @@ const Landing = (props) => {
         loadData()
         getLocation()
     }, []);
+
+
 
 
     const onChange = (event, selectedDate) => {
@@ -119,7 +121,7 @@ const Landing = (props) => {
         })
     }
 
-    const cartcount = useSelector(state => state.cartcount)
+  const cartcount = useSelector(state => state.cartcount)
     // const { user } = useSelector(state => state.user)
     const dispatch = useDispatch()
 
@@ -127,6 +129,9 @@ const Landing = (props) => {
         dispatch(setcartCount(cartcount + 1))
         console.log({ cartcount })
     }
+
+   
+
     return (
         <SafeAreaView style={styles.container}>
             <StatusBar barStyle={'dark-content'} />
