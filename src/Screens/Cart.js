@@ -43,11 +43,11 @@ const Cart = (props) => {
   }
 
   const cartApi = (params, endPoint) => {
-    setLoading(true)
+    // setLoading(true)
     ApiCalls.postApiCall(params, endPoint).then(data => {
       console.log("DATA");
       console.log(data)
-      setLoading(false)
+      // setLoading(false)
       if (data.results) {
       } else {
         Alert.alert('Error', data.error);
