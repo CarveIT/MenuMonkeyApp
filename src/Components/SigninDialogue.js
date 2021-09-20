@@ -73,7 +73,7 @@ const SigninDialogue = (props) => {
                 Constants.user = user
                 saveData(Key.ACCESS_TOKEN, data.success.token)
                 saveObjectData(Key.USER, user)
-                
+              
             } else {
                 Alert.alert('Error', data.error);
             }
