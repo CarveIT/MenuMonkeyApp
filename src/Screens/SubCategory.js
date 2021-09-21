@@ -60,7 +60,10 @@ const SubCategory = (props) => {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle={'dark-content'} />
-      <SubCatHeader title={'Search'} {...props} />
+      <SubCatHeader
+        title={'Search'}
+        {...props}
+        navigation={props.navigation} />
 
       <View style={styles.searchcontainer}>
         <View style={styles.searchView}>

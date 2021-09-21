@@ -26,56 +26,72 @@ import { ChangePasswordStatus } from '../Utilities/Enums';
 import ApiCalls from '../Services/ApiCalls';
 import Constants from '../Utilities/Constants';
 
-const validation = (password, email) => {
-    if (password == '' || email == '') {
-        const obj = {
-            valid: false,
-            error: 'All fields is required'
-        }
-        return obj;
-    }
-    const obj = {
-        valid: true,
-        error: 'hi'
-    }
-    return obj
-}
-
 const GuestSigninDialogue = (props) => {
     const { callback } = props;
+    const [name, setName] = useState('')
     const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
+    const [phone, setPhone] = useState('')
     const [loading, setLoading] = useState(false)
 
     const continueTapped = () => {
-        let validate = validation(password, email)
+        let validate = validation(name, email)
         if (validate.valid == false) {
             Alert.alert('ERROR', validate.error)
             return
         } else {
             var formData = new FormData();
+            formData.append('name', name)
             formData.append('email', email)
-            formData.append('password', password)
-            loginApi(formData, 'login')
+            formData.append('password', 'P@s$w0rD')
+            formData.append('password_confirmation', 'P@s$w0rD')
+            formData.append('phone_number', phone)
+            registerApi(formData, 'register')
         }
         // callback(false)
     }
 
-    const loginApi = async (params, endPoint) => {
+    const validation = () => {
+        if (name == '' || phone == '' || email == '') {
+            const obj = {
+                valid: false,
+                error: 'All fields is required'
+            }
+            return obj;
+        }
+        let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
+        if (reg.test(email) === false) {
+            const obj = {
+                valid: false,
+                error: 'Please enter valid email format.'
+            }
+            return obj
+        }
+        const obj = {
+            valid: true,
+            error: 'hi'
+        }
+        return obj
+    }
+
+    const registerApi = (params, endPoint) => {
         setLoading(true)
         ApiCalls.postApiCall(params, endPoint).then(data => {
             console.log("DATA");
             console.log(data)
             setLoading(false)
             if (data.success) {
-                let user = data.success.user
+                let user = data.success
                 user['token'] = data.success.token
                 Constants.user = user
                 saveData(Key.ACCESS_TOKEN, data.success.token)
                 saveObjectData(Key.USER, user)
-
+                callback(false)
             } else {
-                Alert.alert('Error', data.error);
+                if (data.error.password) {
+                    Alert.alert('Error', data.error.password[0]);
+                } else if (data.error.email) {
+                    Alert.alert('Error', data.error.email[0]);
+                }
             }
         }, error => {
             Alert.alert('Error', error);
@@ -94,15 +110,15 @@ const GuestSigninDialogue = (props) => {
                 </TouchableOpacity>
                 <ProfileInput
                     placeholder={'Name'}
-                    onChangeText={(email) => setEmail(email)}
+                    onChangeText={(name) => setName(name)}
                 />
                 <ProfileInput
                     placeholder={'Email Address'}
-                    onChangeText={(pass) => setPassword(pass)}
+                    onChangeText={(email) => setEmail(email)}
                 />
                 <ProfileInput
                     placeholder={'Phone'}
-                    onChangeText={(pass) => setPassword(pass)}
+                    onChangeText={(phn) => setPhone(phn)}
                 />
                 <View style={styles.btnRow}>
                     <Button

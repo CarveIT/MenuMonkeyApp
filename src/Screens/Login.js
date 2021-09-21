@@ -180,7 +180,7 @@ const Login = (props) => {
         },
       })
       console.log(token);
-// send token to server using required details and get feedback...
+      // send token to server using required details and get feedback...
     } catch (error) {
       // this.setState({ loading: false })
     }
@@ -206,8 +206,11 @@ const Login = (props) => {
       console.log(data)
       setLoading(false)
       if (data.success) {
-        Constants.user = data.success.user
-        Constants.token = data.success.token
+        let user = data.success.user
+        user['token'] = data.success.token
+        Constants.user = user
+        saveData(Key.ACCESS_TOKEN, data.success.token)
+        saveObjectData(Key.USER, user)
       } else {
         Alert.alert('Error', data.error);
       }
@@ -265,8 +268,8 @@ const Login = (props) => {
           <SocialButton
             icon={guestIcon}
             title={'Guest'}
-            // onPress={() => setSigninForm(true)}
-            onPress={() => handleCardPayPress()}
+            onPress={() => setSigninForm(true)}
+          // onPress={() => handleCardPayPress()}
           />
           <View style={styles.signupView}>
             <Text style={styles.signupTitle}>{'Don\'t have an account?'}</Text>
@@ -276,7 +279,10 @@ const Login = (props) => {
           </View>
         </View>
       </View>
-      {signinForm && <GuestSigninDialogue callback={(data) => { setSigninForm(data) }} />}
+      {signinForm && <GuestSigninDialogue callback={(data) => {
+        setSigninForm(data)
+        props.navigation.replace('Landing')
+      }} />}
     </SafeAreaView>
   );
 };

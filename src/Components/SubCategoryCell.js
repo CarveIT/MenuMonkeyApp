@@ -16,6 +16,7 @@ import {
 } from 'react-native';
 
 import Color from '../Utilities/Color';
+import Constants from '../Utilities/Constants';
 const image = require('../../assets/menu_caption.jpeg')
 const addimage = require('../../assets/add.png')
 
@@ -24,7 +25,7 @@ const SubCategoryCell = (props) => {
     return (
         <TouchableOpacity style={styles.container} onPress={() => { props.navigation.navigate('ItemDetail', { detail: item }) }}>
             <View style={styles.imagecontainer}>
-                <Image style={styles.image} source={image}></Image>
+                <Image resizeMode='contain' style={styles.image} source={{uri: Constants.dishImageUrl+item.imageName}}></Image>
 
             </View>
             <View style={styles.productcontainer}>

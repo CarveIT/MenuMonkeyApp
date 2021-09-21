@@ -25,6 +25,7 @@ export const LandingStack = () => {
         <Stack.Navigator>
             <Stack.Screen name="Landing" component={Landing} options={{ headerShown: false }} />
             <Stack.Screen name="BottomNavigation" component={BottomNavigation} options={{ headerShown: false }} />
+            <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
         </Stack.Navigator>
     );
 }
@@ -37,6 +38,7 @@ export const HomeStack = () => {
             <Stack.Screen name="SubCategory" component={SubCategory} options={{ headerShown: false }} />
             <Stack.Screen name="ItemDetail" component={ItemDetail} options={{ headerShown: false }} />
             <Stack.Screen name="CustomerFavorite" component={CustomerFavorite} options={{ headerShown: false }} />
+            <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
         </Stack.Navigator>
     );
 }
@@ -55,6 +57,7 @@ export const FavoriteStack = () => {
     return (
         <Stack.Navigator>
             <Stack.Screen name="Favorite" component={Favourites} options={{ headerShown: false }} />
+            <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
         </Stack.Navigator>
     );
 }
@@ -64,6 +67,7 @@ export const OrdersStack = () => {
         <Stack.Navigator>
             <Stack.Screen name="Past Orders" component={PastOrders} options={{ headerShown: false }} />
             <Stack.Screen name="PastOrderDetail" component={PastOrderDetail} options={{ headerShown: false }} />
+            <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
         </Stack.Navigator>
     );
 }

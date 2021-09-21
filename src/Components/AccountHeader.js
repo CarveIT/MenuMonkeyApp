@@ -20,6 +20,7 @@ const image = require('../../assets/profile-bg.jpg')
 
 const AccountHeader = (props) => {
     const { title, subTitle } = props
+    
     return (
         <ImageBackground style={styles.image} source={image}>
             <View style={styles.profileView}>

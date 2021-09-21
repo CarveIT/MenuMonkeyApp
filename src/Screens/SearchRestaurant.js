@@ -23,6 +23,7 @@ import RestaurantSearchCell from '../Components/RestaurantSearchCell';
 import ApiCalls from '../Services/ApiCalls';
 import SubCatHeader from '../Components/SubCatHeader';
 import ProfileInput from '../Components/ProfileInput';
+import I18n from "i18n-js";
 
 const SearchRestaurant = (props) => {
   const [favorites, setFavorites] = useState([])
@@ -62,6 +63,7 @@ const SearchRestaurant = (props) => {
       <View style={{ backgroundColor: Color.BG_GRAY }}>
         <SubCatHeader
           title={"Search Result"}
+          navigation={props.navigation}
           backbtnstyle={{ tintColor: Color.WHITE }}
           cartimgstyle={{ tintColor: Color.WHITE }}
           subTitlestyle={styles.title} ></SubCatHeader>

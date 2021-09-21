@@ -18,11 +18,16 @@ import {
 } from 'react-native';
 
 import Color from '../Utilities/Color';
+import { useDispatch, useSelector } from 'react-redux';
+
 const cartImg = require('../../assets/cart.png')
 const backImg = require('../../assets/left-arrow.png')
 const WIDTH = Dimensions.get('window').width;
+
 const CartHeader = (props) => {
     const { title, subTitle, backbtnstyle } = props
+    const cartcount = useSelector(state => state.cartcount)
+
     return (
         <View style={{ alignItems: 'center', backgroundColor: Color.WHITE}}>
             <View style={styles.container}>
@@ -36,7 +41,7 @@ const CartHeader = (props) => {
                 </View>
                 <View style={styles.cartView}>
                     <Image resizeMode='contain' style={styles.cartIcon} source={cartImg} />
-                    <Text style={styles.counter}>{'2'}</Text>
+                    <Text style={styles.counter}>{cartcount}</Text>
                 </View>
             </View>
             <View style={styles.separator}></View>

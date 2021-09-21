@@ -16,6 +16,7 @@ import {
 } from 'react-native';
 
 import Color from '../Utilities/Color';
+import Constants from '../Utilities/Constants';
 
 const image = require('../../assets/slide1.jpg')
 const plusIcon = require('../../assets/add.png')
@@ -24,7 +25,7 @@ const CustomerFavoriteCell = (props) => {
     const { item, navigation } = props
     return (
         <View style={styles.container}>
-            <Image style={styles.menu} source={image} />
+            <Image resizeMode='contain' style={styles.menu} source={{uri: Constants.dishImageUrl+item.dish.imageName}} />
             <View style={styles.centerView}>
                 <Text style={styles.status}>{item.dish.name}</Text>
                 <TouchableOpacity style={styles.addButton} onPress={() => navigation.navigate('ItemDetail')}>

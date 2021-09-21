@@ -29,15 +29,21 @@ import PickupDialogue from '../Components/PickupDialogue';
 import ProfileInput from '../Components/ProfileInput';
 import Constants from '../Utilities/Constants';
 import { setcartCount } from '../Actions/updatecardactions';
-import { getObjectData } from '../Utilities/Storage';
+import { getObjectData, saveObjectData, saveData } from '../Utilities/Storage';
 import Key from '../Utilities/Keys';
 import ApiCalls from '../Services/ApiCalls';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import moment from 'moment';
+import Keys from '../Utilities/Keys';
+import en from "../Utilities/localization/en.json";
+import fr from "../Utilities/localization/fr.json";
+import I18n from "i18n-js";
+I18n.fallbacks = true;
+I18n.translations = { en, fr };
+
+
 // import * as Localization from 'expo-localization';
-import * as RNLocalize from "react-native-localize";
-import i18n from 'i18n-js';
-import memoize from "lodash.memoize";
+// import i18n from 'i18n-js';
 // import { zh, en, es } from '../Utilities/i18n/supportedLanguages';
 
 const Landing = (props) => {
@@ -47,6 +53,7 @@ const Landing = (props) => {
     const [location, setLocation] = useState('')
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState(null);
+    const [auth, setAuth] = useState('Sign in')
     const [items, setItems] = useState([
         { label: 'Ibadan', value: 'Ibadan' },
         { label: 'French', value: 'French' }
@@ -55,15 +62,15 @@ const Landing = (props) => {
     const [date, setDate] = useState(moment().toDate());
 
     const [time, setTime] = useState();
-    const [userinfo, setuserinfo] = useState();
     const [mode, setMode] = useState('date');
     const [show, setShow] = useState(false);
+    const [lang, setLang] = useState('en')
 
 
     useEffect(() => {
-        i18n.fallbacks = true;
-        i18n.translations = { en, zh, es };
-        i18n.locale = Localization.locale;
+        // i18n.fallbacks = true;
+        // i18n.translations = { en, zh, es };
+        // i18n.locale = Localization.locale;
         loadData()
         getLocation()
     }, []);
@@ -92,6 +99,11 @@ const Landing = (props) => {
         let user = await getObjectData(Key.USER);
         Constants.user = user
         console.log(Constants.user)
+        if (Constants.user == null) {
+            setAuth('Sign in')
+        } else {
+            setAuth('Sign Out')
+        }
     }
 
     const getLocation = () => {
@@ -135,15 +147,26 @@ const Landing = (props) => {
         console.log({ cartcount })
     }
 
-
+    const onPressSignin = () => {
+        if (Constants.user == null) {
+            setSigninForm(true)
+        } else {
+            saveData(Keys.ACCESS_TOKEN, null)
+            saveObjectData(Keys.USER, null)
+            Constants.user = null
+            Constants.token = null
+            setAuth('Sign in')
+        }
+    }
 
     return (
         <SafeAreaView style={styles.container}>
             <StatusBar barStyle={'dark-content'} />
             <ScrollView>
                 <Image style={styles.banner} resizeMode='contain' source={require('../../assets/banner.png')} />
-                <View style={styles.titleView}>{i18n.t('welcome')}
-                    <Text style={styles.title}>\</Text>
+                {/* <View style={styles.titleView}>{i18n.t('welcome')} */}
+                <View style={styles.titleView}>
+                    <Text style={styles.title}>{I18n.t('hello')}</Text>
                 </View>
                 <View style={styles.splitBtnView}>
                     <TouchableOpacity style={yesBtn ? styles.selectedSplitBtn : styles.splitBtn} onPress={() => setYesBtn(true)}>
@@ -189,16 +212,19 @@ const Landing = (props) => {
                 />}
                 <View style={styles.menuImgView}>
                     <Image style={styles.menuImg} source={require('../../assets/menu_caption.jpeg')} />
-                    <TouchableOpacity style={styles.signinBtn} onPress={() => setSigninForm(true)}>
-                        <Text style={styles.signin}>{Constants.user == null ? 'Sign in' : 'Sign Out'}</Text>
+                    <TouchableOpacity style={styles.signinBtn} onPress={() => onPressSignin()}>
+                        <Text style={styles.signin}>{auth}</Text>
                     </TouchableOpacity>
                     {/* <TouchableOpacity style={styles.signinBtn} onPress={() => { setcount() }}>
-                        <Text style={styles.signin}>{Constants.user == null ? 'Sign in' : 'Sign Out'}</Text>
-                    </TouchableOpacity> */}
+                         <Text style={styles.signin}>{Constants.user == null ? 'Sign in' : 'Sign Out'}</Text>
+                     </TouchableOpacity> */}
                 </View>
 
             </ScrollView>
-            {signinForm && <SigninDialogue callback={(data) => { setSigninForm(data) }} />}
+            {signinForm && <SigninDialogue callback={(data) => {
+                setSigninForm(data)
+                setAuth('Sign Out')
+            }} />}
             {!dineIn && <PickupDialogue
                 date={date}
                 callback={(data) => { setDineIn(data) }}
@@ -216,6 +242,27 @@ const Landing = (props) => {
                     onChange={onChange}
                 />
             )}
+
+            <View style={{ position: 'absolute', bottom: 10, right: 10 }}>
+                <TouchableOpacity>
+                    <Text>{'LANGUAGE'}</Text>
+                </TouchableOpacity>
+                <View>
+                    <TouchableOpacity onPress={() => {
+                        I18n.locale = 'en'
+                        setLang('en')
+                    }}>
+                        <Text>{'English'}</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => {
+                        I18n.locale = 'fr'
+                        setLang('fr')
+                    }}>
+                        <Text>{'Spanish'}</Text>
+                    </TouchableOpacity>
+                </View>
+            </View>
+
 
         </SafeAreaView>
     );

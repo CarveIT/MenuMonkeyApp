@@ -59,6 +59,7 @@ const PastOrders = (props) => {
       <StatusBar barStyle={'dark-content'} />
       <View style={{ backgroundColor: Color.WHITE }}>
         <SubCatHeader
+          navigation={props.navigation}
           subTitlestyle={styles.title}
           title={"Past Orders"}
           cartimgstyle={{ tintColor: Color.BLACK }} />

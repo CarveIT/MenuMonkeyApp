@@ -38,7 +38,7 @@ const CartCell = (props) => {
                 </View> */}
             </View>
 
-            <Text style={styles.title}>{item.id + "X " + item.itemName}</Text>
+            <Text style={styles.title}>{item.quantity + "X" +item.dish.price}</Text>
             <Text style={styles.tagline}>{'code best brewed fase help'}</Text>
             <View style={styles.separator}></View>
         </View>

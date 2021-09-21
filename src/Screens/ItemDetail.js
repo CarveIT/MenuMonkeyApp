@@ -174,7 +174,7 @@ const ItemDetail = (props) => {
         />
         <Separator customStyle={{ marginTop: 0 }} />
         <TouchableOpacity style={styles.addCartBtn} onPress={() => props.navigation.navigate('CustomerFavorite')}>
-          <Text style={styles.addCartTxt}>{'Add to Cart $60'}</Text>
+          <Text style={styles.addCartTxt}>{'Add to Cart $'+total}</Text>
         </TouchableOpacity>
       </ScrollView>
     </SafeAreaView>

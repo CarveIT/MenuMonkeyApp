@@ -16,6 +16,7 @@ import {
   TouchableOpacity,
   View,
   FlatList
+  , Alert
 } from 'react-native';
 
 import Color from '../Utilities/Color';
@@ -23,15 +24,21 @@ import { cartData } from '../Data';
 import CartCell from '../Components/CartCell';
 import CartHeader from '../Components/CartHeader';
 import Constants from '../Utilities/Constants';
+import ApiCalls from '../Services/ApiCalls';
+
 
 const Cart = (props) => {
+  const [loading, setLoading] = useState(false)
+  const [cartData, setcartData] = useState([])
+  const [maindata, setmaindata] = useState({})
 
   useEffect(() => {
     var formData = new FormData();
-    formData.append('restaurant', Constants.selectedRestaurant.id)
+    // formData.append('restaurant', Constants.selectedRestaurant.id)
+    formData.append('restaurant', '1')
     formData.append('dish', '1,2')
     formData.append('quantity', '2,1')
-    cartApi('cart')
+    cartApi(formData, 'cart')
   }, []);
 
   renderItem = ({ item }) => {
@@ -43,12 +50,16 @@ const Cart = (props) => {
   }
 
   const cartApi = (params, endPoint) => {
-    // setLoading(true)
+    console.log({ endPoint })
+    setLoading(true)
     ApiCalls.postApiCall(params, endPoint).then(data => {
-      console.log("DATA");
-      console.log(data)
-      // setLoading(false)
+
+      console.log({ data })
+
+      setLoading(false)
       if (data.results) {
+        setmaindata(data)
+        setcartData(data.results)
       } else {
         Alert.alert('Error', data.error);
       }
@@ -63,7 +74,9 @@ const Cart = (props) => {
   // }
 
   const footerView = () => {
+    console.log({maindata})
     return (
+
       <View style={{ marginLeft: 30, marginRight: 30 }}>
         <TouchableOpacity style={styles.addMore} onPress={() => props.navigation.navigate('Home')}>
           <Text style={styles.addMoreTxt}>{'Add More Items'}</Text>
@@ -72,15 +85,16 @@ const Cart = (props) => {
           <Text style={styles.summaryTxt}>{'Summary'}</Text>
           <View style={styles.costView}>
             <Text style={styles.costTxt}>{'Cost'}</Text>
-            <Text style={styles.costVal}>{cartData.reduce((n, { price }) => n + price, 0)}</Text>
+
+            <Text style={styles.costVal}>{maindata.subtotal}</Text>
           </View>
           <View style={styles.costView}>
             <Text style={styles.costTxt}>{'Tax'}</Text>
-            <Text style={styles.costVal}>{'20%'}</Text>
+            <Text style={styles.costVal}>{maindata.tax}</Text>
           </View>
           <View style={styles.costView}>
             <Text style={styles.costTxt}>{'Total'}</Text>
-            <Text style={styles.costVal}>{'$102'}</Text>
+            <Text style={styles.costVal}>{'$'+maindata.total}</Text>
           </View>
         </View>
         <TouchableOpacity style={styles.continue} onPress={() => {

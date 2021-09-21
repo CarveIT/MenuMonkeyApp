@@ -12,7 +12,6 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { HomeStack, CartStack, FavoriteStack, OrdersStack, AccountStack } from './StackNavigations';
 import Color from '../Utilities/Color';
 import { useDispatch, useSelector } from 'react-redux';
-import { is } from '@babel/types';
 import Constants from '../Utilities/Constants';
 
 const searchIcon = require('../../assets/home.png')
@@ -99,6 +98,8 @@ const BottomNavigation = (props) => {
         listeners={{
           tabPress: e => {
             setTab('Favorites')
+            console.log('USER')
+            console.log(Constants.user)
             if (Constants.user == null) {
               Alert.alert('Error', 'Sign in to view your past restaurants')
               e.preventDefault()
