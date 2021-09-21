@@ -62,6 +62,7 @@ const SearchRestaurant = (props) => {
       <View style={{ backgroundColor: Color.BG_GRAY }}>
         <SubCatHeader
           title={"Search Result"}
+          navigation={props.navigation}
           backbtnstyle={{ tintColor: Color.WHITE }}
           cartimgstyle={{ tintColor: Color.WHITE }}
           subTitlestyle={styles.title} ></SubCatHeader>

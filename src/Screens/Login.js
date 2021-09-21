@@ -265,8 +265,8 @@ const Login = (props) => {
           <SocialButton
             icon={guestIcon}
             title={'Guest'}
-            // onPress={() => setSigninForm(true)}
-            onPress={() => handleCardPayPress()}
+            onPress={() => setSigninForm(true)}
+            // onPress={() => handleCardPayPress()}
           />
           <View style={styles.signupView}>
             <Text style={styles.signupTitle}>{'Don\'t have an account?'}</Text>

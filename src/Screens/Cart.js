@@ -16,6 +16,7 @@ import {
   TouchableOpacity,
   View,
   FlatList
+  ,Alert
 } from 'react-native';
 
 import Color from '../Utilities/Color';
@@ -23,15 +24,18 @@ import { cartData } from '../Data';
 import CartCell from '../Components/CartCell';
 import CartHeader from '../Components/CartHeader';
 import Constants from '../Utilities/Constants';
+import ApiCalls from '../Services/ApiCalls';
 
 const Cart = (props) => {
+  const [loading, setLoading] = useState(false)
+  // const [cartData, setcartData] = useState([])
 
   useEffect(() => {
     var formData = new FormData();
     formData.append('restaurant', Constants.selectedRestaurant.id)
     formData.append('dish', '1,2')
     formData.append('quantity', '2,1')
-    cartApi('cart')
+    cartApi(formData,'cart')
   }, []);
 
   renderItem = ({ item }) => {
@@ -43,10 +47,12 @@ const Cart = (props) => {
   }
 
   const cartApi = (params, endPoint) => {
+    console.log({endPoint})
     setLoading(true)
     ApiCalls.postApiCall(params, endPoint).then(data => {
       console.log("DATA");
       console.log(data)
+      // setcartData(data)
       setLoading(false)
       if (data.results) {
       } else {

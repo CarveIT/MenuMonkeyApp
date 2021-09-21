@@ -50,7 +50,6 @@ const Landing = (props) => {
     const [date, setDate] = useState(moment().toDate());
 
     const [time, setTime] = useState();
-    const [userinfo, setuserinfo] = useState();
     const [mode, setMode] = useState('date');
     const [show, setShow] = useState(false);
 

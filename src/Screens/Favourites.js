@@ -69,6 +69,7 @@ const Favourites = (props) => {
       <View style={{ backgroundColor: Color.BG_ORANGE }}>
         <SubCatHeader
           title={"Favourites"}
+          navigation={props.navigation}
           backbtnstyle={{ tintColor: Color.WHITE }}
           cartimgstyle={{ tintColor: Color.WHITE }}
           subTitlestyle={styles.title} ></SubCatHeader>

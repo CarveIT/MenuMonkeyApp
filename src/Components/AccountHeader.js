@@ -20,10 +20,11 @@ const image = require('../../assets/profile-bg.jpg')
 
 const AccountHeader = (props) => {
     const { title, subTitle } = props
+    
     return (
         <ImageBackground style={styles.image} source={image}>
             <View style={styles.profileView}>
-                <Text style={styles.alphabet}>{Constants.user.name[0]}</Text>
+                <Text style={styles.alphabet}>{Constants.user.name}</Text>
             </View>
             <View style={styles.nameView}>
                 <Text style={styles.fname}>{Constants.user.name}</Text>
