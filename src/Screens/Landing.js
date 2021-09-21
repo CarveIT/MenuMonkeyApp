@@ -34,9 +34,11 @@ import Key from '../Utilities/Keys';
 import ApiCalls from '../Services/ApiCalls';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import moment from 'moment';
-import * as Localization from 'expo-localization';
+// import * as Localization from 'expo-localization';
+import * as RNLocalize from "react-native-localize";
 import i18n from 'i18n-js';
-import { zh, en, es } from '../Utilities/i18n/supportedLanguages';
+import memoize from "lodash.memoize";
+// import { zh, en, es } from '../Utilities/i18n/supportedLanguages';
 
 const Landing = (props) => {
     const [signinForm, setSigninForm] = useState(false)
