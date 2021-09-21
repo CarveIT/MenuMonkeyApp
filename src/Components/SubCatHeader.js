@@ -28,7 +28,7 @@ const SubCatHeader = (props) => {
         <View style={styles.main}>
             <View style={styles.container}>
 
-                <TouchableOpacity style={styles.backBtnView} onPress={() => navigation.goBack()}>
+                <TouchableOpacity style={styles.backBtnView} onPress={[() => navigation.goBack(),]}>
                     <Image resizeMode='contain' style={[styles.backBtn , backbtnstyle]} source={backImg}></Image>
                 </TouchableOpacity>
 

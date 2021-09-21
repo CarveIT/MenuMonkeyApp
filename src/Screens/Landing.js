@@ -34,9 +34,12 @@ import Key from '../Utilities/Keys';
 import ApiCalls from '../Services/ApiCalls';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import moment from 'moment';
-import * as Localization from 'expo-localization';
-import i18n from 'i18n-js';
-import { zh, en, es } from '../Utilities/i18n/supportedLanguages';
+// import Languages from './languages.';
+import I18n from "i18n-js";
+
+// import * as Localization from 'expo-localization';
+// import i18n from 'i18n-js';
+// import { zh, en, es } from '../Utilities/i18n/supportedLanguages';
 
 const Landing = (props) => {
     const [signinForm, setSigninForm] = useState(false)
@@ -58,9 +61,9 @@ const Landing = (props) => {
 
 
     useEffect(() => {
-        i18n.fallbacks = true;
-        i18n.translations = { en, zh, es };
-        i18n.locale = Localization.locale;
+        // i18n.fallbacks = true;
+        // i18n.translations = { en, zh, es };
+        // i18n.locale = Localization.locale;
         loadData()
         getLocation()
     }, []);
@@ -139,8 +142,9 @@ const Landing = (props) => {
             <StatusBar barStyle={'dark-content'} />
             <ScrollView>
                 <Image style={styles.banner} resizeMode='contain' source={require('../../assets/banner.png')} />
-                <View style={styles.titleView}>{i18n.t('welcome')}
-                    <Text style={styles.title}>\</Text>
+                {/* <View style={styles.titleView}>{i18n.t('welcome')} */}
+                <View style={styles.titleView}>
+                    <Text style={styles.title}>{I18n.t("hello")}</Text>
                 </View>
                 <View style={styles.splitBtnView}>
                     <TouchableOpacity style={yesBtn ? styles.selectedSplitBtn : styles.splitBtn} onPress={() => setYesBtn(true)}>
