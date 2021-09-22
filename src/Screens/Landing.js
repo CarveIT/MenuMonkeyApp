@@ -35,7 +35,10 @@ import ApiCalls from '../Services/ApiCalls';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import moment from 'moment';
 // import Languages from './languages.';
+import  en from "../Utilities/i18n/supportedLanguages";
 import I18n from "i18n-js";
+I18n.fallbacks = true;
+I18n.translations = { en};
 
 // import * as Localization from 'expo-localization';
 // import i18n from 'i18n-js';
@@ -144,7 +147,7 @@ const Landing = (props) => {
                 <Image style={styles.banner} resizeMode='contain' source={require('../../assets/banner.png')} />
                 {/* <View style={styles.titleView}>{i18n.t('welcome')} */}
                 <View style={styles.titleView}>
-                    <Text style={styles.title}>{I18n.t("hello")}</Text>
+                    <Text style={styles.title}>{I18n.t('welcome')}</Text>
                 </View>
                 <View style={styles.splitBtnView}>
                     <TouchableOpacity style={yesBtn ? styles.selectedSplitBtn : styles.splitBtn} onPress={() => setYesBtn(true)}>
