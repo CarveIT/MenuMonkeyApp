@@ -33,7 +33,7 @@ const SubCategory = (props) => {
   const [dishes, setDishes] = useState([])
 
   useEffect(() => {
-    fetchFood('food/1')
+    fetchFood('food/'+props.route.params.dishID)
   }, []);
 
   renderItem = ({ item }) => {

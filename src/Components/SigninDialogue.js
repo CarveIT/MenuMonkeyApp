@@ -25,6 +25,7 @@ import ProfileInput from './ProfileInput';
 import { ChangePasswordStatus } from '../Utilities/Enums';
 import ApiCalls from '../Services/ApiCalls';
 import Constants from '../Utilities/Constants';
+import I18n from "i18n-js";
 
 const validation = (password, email) => {
     if (password == '' || email == '') {
@@ -88,24 +89,24 @@ const SigninDialogue = (props) => {
         <View style={styles.container}>
             <View style={styles.form}>
                 <View style={styles.headingView}>
-                    <Text style={styles.heading}>{'Login'}</Text>
+                    <Text style={styles.heading}>{I18n.t('Login')}</Text>
                     <TouchableOpacity style={styles.closeBtn} onPress={() => callback(false)}>
                         <Image resizeMode='contain' style={styles.closeImg} source={require('../../assets/red-cross.png')} />
                     </TouchableOpacity>
                 </View>
                 <ProfileInput
-                    placeholder={'Email Address'}
+                    placeholder={I18n.t('Email Address')}
                     onChangeText={(email) => setEmail(email)}
                 />
                 <ProfileInput
-                    placeholder={'Password'}
+                    placeholder={I18n.t('Password')}
                     secureTextEntry={true}
                     onChangeText={(pass) => setPassword(pass)}
                 />
                 <View style={styles.btnRow}>
                     <Button
                         style={styles.btnContinue}
-                        title={'Sign in'}
+                        title={I18n.t('Sign in')}
                         loading={loading}
                         onPress={() => continueTapped()}
                     />

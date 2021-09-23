@@ -24,7 +24,7 @@ const CategoryCell = (props) => {
     
     const { item, navigation } = props
     return (
-        <TouchableOpacity style={styles.cell} onPress={() => navigation.navigate('SubCategory')}>
+        <TouchableOpacity style={styles.cell} onPress={() => navigation.navigate('SubCategory', {dishID: item.id})}>
             <ImageBackground style={styles.image} source={image} imageStyle={styles.imageStyle} resizeMode='cover'>
                 <View style={styles.header}>
                     <Text style={styles.headerTxt}>{item.name}</Text>

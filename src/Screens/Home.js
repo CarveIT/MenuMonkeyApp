@@ -32,7 +32,7 @@ const Home = (props) => {
 
 
   useEffect(() => {
-    fetchMenu('welcome/1')
+    fetchMenu('welcome/'+Constants.selectedRestaurant.id)
   }, []);
 
   renderItem = ({ item }) => {

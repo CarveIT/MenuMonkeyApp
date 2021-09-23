@@ -18,7 +18,7 @@
     "Mobile": "Móvil",
     "Have an account": "Tener una cuenta",
     "Home Page Translation": "",
-    "Sign out": "desconectar",
+    "Sign Out": "desconectar",
     "Are you at": "Estás en",
     "yes": "sí",
     "no": "no",
@@ -60,6 +60,7 @@
     "Extra Large": "Extra grande",
     "Account Page": "",
     "My Account": "Mi cuenta",
+    "Account": "cuenta",
     "My Favorites": "Mis favoritas",
     "Billing and Payments": "Facturación y pagos",
     "Change": "Cambio",
@@ -115,5 +116,13 @@
     "Enter Credit Card": "Ingrese tarjeta de crédito",
     "Submit Order": "Orden de envio",
     "Pay": "Pagar",
-    "Please correct the errors and try again": "Por favor, corrija los errores e inténtelo de nuevo"
+    "Please correct the errors and try again": "Por favor, corrija los errores e inténtelo de nuevo",
+    "Email Address": "Email Address",
+    "Change Password": "Change Password",
+    "Current Password": "Current Password",
+    "New Password": "New Password",
+    "Confirm New Password" : "Confirm New Password",
+    "All fields are required": "All fields are required",
+    "The new password must be at least 6 characters.": "The new password must be at least 6 characters.",
+    "Confirm password mismatched": "Confirm password mismatched"
 }

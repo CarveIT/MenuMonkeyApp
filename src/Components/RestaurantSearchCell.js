@@ -26,8 +26,8 @@ const RestaurantSearchCell = (props) => {
     return (
         <TouchableOpacity style={styles.container} onPress={() => props.navigation.navigate('Home')}>
             <View>
-                <Text style={styles.title}>{item.restaurant.name}</Text>
-                <Text style={styles.subTitle}>{item.restaurant.address}</Text>
+                <Text style={styles.title}>{item.name}</Text>
+                <Text style={styles.subTitle}>{item.address}</Text>
             </View>
         </TouchableOpacity>
     );

@@ -174,8 +174,9 @@ const ItemDetail = (props) => {
           placeholder={'(suace ect.)'}
         />
         <Separator customStyle={{ marginTop: 0 }} />
-        <TouchableOpacity style={styles.addCartBtn} onPress={() => props.navigation.navigate('CustomerFavorite')}>
-          <Text style={styles.addCartTxt}>{I18n.t('Add to Cart') + "$" + total}</Text>
+        <TouchableOpacity style={styles.addCartBtn} onPress={() => props.navigation.navigate('CustomerFavorite', {total: total})}>
+          <Text style={styles.addCartTxt}>{I18n.t('Add to Cart')}</Text>
+          <Text style={styles.totalTxt}>{"$" + total}</Text>
         </TouchableOpacity>
       </ScrollView>
     </SafeAreaView>
@@ -314,6 +315,13 @@ const styles = StyleSheet.create({
     backgroundColor: Color.GREEN
   },
   addCartTxt: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: Color.WHITE
+  },
+  totalTxt: {
+    position: 'absolute',
+    right: 30,
     fontSize: 18,
     fontWeight: 'bold',
     color: Color.WHITE

@@ -21,24 +21,25 @@ import Button from './Button';
 import ProfileInput from './ProfileInput';
 import { ChangePasswordStatus } from '../Utilities/Enums';
 import ApiCalls from '../Services/ApiCalls';
+import I18n from 'i18n-js';
 
 const validation = (currentPassword, password, confirmPassword) => {
     if (currentPassword == '' || password == '' || confirmPassword == '') {
         const obj = {
             valid: false,
-            error: 'All fields is required'
+            error: I18n.t('All fields are required')
         }
         return obj;
     } else if (password.length < 6 && confirmPassword.length < 6) {
         const obj = {
             valid: false,
-            error: 'The new password must be at least 6 characters.'
+            error: I18n.t('The new password must be at least 6 characters.')
         }
         return obj
     } else if (password != confirmPassword) {
         const obj = {
             valid: false,
-            error: 'Confirm password mismatched'
+            error: I18n.t('Confirm password mismatched')
         }
         return obj
     }
@@ -94,19 +95,19 @@ const ChangePasswordDialogue = (props) => {
                 <TouchableOpacity style={styles.closeBtn} onPress={() => callback(false)}>
                     <Image resizeMode='contain' style={styles.closeImg} source={require('../../assets/red-cross.png')} />
                 </TouchableOpacity>
-                <Text style={styles.heading}>{'Change Password'}</Text>
+                <Text style={styles.heading}>{I18n.t('Change Password')}</Text>
                 <ProfileInput
-                    placeholder={'Current Password'}
+                    placeholder={I18n.t('Current Password')}
                     secureTextEntry={true}
                     onChangeText={(pass) => setCurrentPassword(pass)}
                 />
                 <ProfileInput
-                    placeholder={'New Password'}
+                    placeholder={I18n.t('New Password')}
                     secureTextEntry={true}
                     onChangeText={(pass) => setPassword(pass)}
                 />
                 <ProfileInput
-                    placeholder={'Confirm New Password'}
+                    placeholder={I18n.t('Confirm New Password')}
                     secureTextEntry={true}
                     onChangeText={(pass) => setConfirmPassword(pass)}
                 />
@@ -114,7 +115,7 @@ const ChangePasswordDialogue = (props) => {
                 <View style={styles.btnRow}>
                     <Button
                         style={styles.btnContinue}
-                        title={'Continue'}
+                        title={I18n.t('Continue')}
                         loading={loading}
                         onPress={() => continueTapped()}
                     />

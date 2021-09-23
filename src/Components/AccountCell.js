@@ -16,6 +16,8 @@ import {
 } from 'react-native';
 import Constants from '../Utilities/Constants';
 import Color from '../Utilities/Color';
+import I18n from 'i18n-js';
+
 const image = require('../../assets/menu.png')
 
 const AccountCell = (props) => {
@@ -24,7 +26,7 @@ const AccountCell = (props) => {
         <TouchableOpacity style={[styles.container, { display: (Constants.user != null && item.title == 'Log In') ? 'none' : 'flex'}]} onPress={() => callback(item)}>
             <View style={styles.content}>
                 <Image style={styles.menu} source={item.image} resizeMode='contain' />
-                <Text style={styles.title}>{item.title}</Text>
+                <Text style={styles.title}>{I18n.t(item.title)}</Text>
             </View>
             {(Constants.user != null && item.title != 'Change Password') ? <View style={styles.separator}></View> : null}
         </TouchableOpacity>

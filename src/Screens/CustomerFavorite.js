@@ -48,7 +48,7 @@ const CustomerFavorite = (props) => {
     return (
       <TouchableOpacity style={styles.addButton} onPress={() => props.navigation.navigate('CartTab')}>
         <Text style={styles.addButtonTxt}>{I18n.t('Continue')}</Text>
-        <Text style={styles.buttonPrice}>{'$2'}</Text>
+        <Text style={styles.buttonPrice}>{'$'+props.route.params.total}</Text>
       </TouchableOpacity>
     )
   }

@@ -36,12 +36,11 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import moment from 'moment';
 import Keys from '../Utilities/Keys';
 import en from "../Utilities/localization/en.json";
-import fr from "../Utilities/localization/fr.json";
+import es from "../Utilities/localization/es.json";
 import OptionsMenu from "react-native-options-menu";
-
 import I18n from "i18n-js";
 I18n.fallbacks = true;
-I18n.translations = { en, fr };
+I18n.translations = { en, es };
 
 
 // import * as Localization from 'expo-localization';
@@ -49,9 +48,6 @@ I18n.translations = { en, fr };
 // import { zh, en, es } from '../Utilities/i18n/supportedLanguages';
 
 const Landing = (props) => {
-
-
-
     const [signinForm, setSigninForm] = useState(false)
     const [yesBtn, setYesBtn] = useState(false)
     const [dineIn, setDineIn] = useState(true)
@@ -63,31 +59,25 @@ const Landing = (props) => {
         { label: 'Ibadan', value: 'Ibadan' },
         { label: 'French', value: 'French' }
     ]);
-
     const [date, setDate] = useState(moment().toDate());
-
     const [time, setTime] = useState();
     const [mode, setMode] = useState('date');
     const [show, setShow] = useState(false);
     const [lang, setLang] = useState('en')
+    const [restaurants, setRestaurants] = useState([]);
     const [Langimg, setLangimg] = useState(require('../../assets/united-states.png'))
 
-
-
-
     useEffect(() => {
-        // i18n.fallbacks = true;
-        // i18n.translations = { en, zh, es };
-        // i18n.locale = Localization.locale;
         loadData()
         getLocation()
+
     }, []);
 
     const changelang = (langauge) => {
 
         if (langauge == "spanish") {
-            I18n.locale = 'fr'
-            setLang('fr')
+            I18n.locale = 'es'
+            setLang('es')
             setLangimg(require('../../assets/spain.png'))
         }
         else {
@@ -96,7 +86,6 @@ const Landing = (props) => {
             setLangimg(require('../../assets/united-states.png'))
         }
     }
-    
 
     const onChange = (event, selectedDate) => {
         const currentDate = selectedDate || date;
@@ -105,7 +94,6 @@ const Landing = (props) => {
     };
 
     const showDatepicker = () => {
-        console.log("Here")
         showMode('date');
     };
 
@@ -125,7 +113,7 @@ const Landing = (props) => {
         if (Constants.user == null) {
             setAuth(I18n.t('Sign in'))
         } else {
-            setAuth(I18n.t('Sign out'))
+            setAuth(I18n.t('Sign Out'))
         }
     }
 
@@ -161,6 +149,23 @@ const Landing = (props) => {
         })
     }
 
+    const getRestaurants = (params, endPoint) => {
+        // setLoading(true)
+        ApiCalls.postApiCall(params, endPoint).then(data => {
+            console.log('GET-RESTAURANT')
+            console.log("DATA");
+            console.log(data)
+            // setLoading(false)
+            if (data.restaurant) {
+                setRestaurants(data.restaurant)
+            } else {
+                Alert.alert('Error', data.message);
+            }
+        }, error => {
+            Alert.alert('Error', error);
+        })
+    }
+
     const cartcount = useSelector(state => state.cartcount)
     // const { user } = useSelector(state => state.user)
     const dispatch = useDispatch()
@@ -182,7 +187,25 @@ const Landing = (props) => {
         }
     }
 
+    const onPressRestaurant = (restaurant) => {
+        setRestaurants([])
+        Constants.selectedRestaurant = restaurant
+        props.navigation.navigate('BottomNavigation')
+    }
 
+    const RestaurantList = () => {
+        return (
+            <View>
+                {restaurants.map((obj, index) => {
+                    return (
+                        <TouchableOpacity key={'rc' + index} style={styles.restaurantCell} onPress={() => onPressRestaurant(obj)}>
+                            <Text>{obj.name}</Text>
+                        </TouchableOpacity>
+                    )
+                })}
+            </View>
+        )
+    }
 
     return (
         <SafeAreaView style={styles.container}>
@@ -191,7 +214,7 @@ const Landing = (props) => {
                 <Image style={styles.banner} resizeMode='contain' source={require('../../assets/banner.png')} />
                 {/* <View style={styles.titleView}>{i18n.t('welcome')} */}
                 <View style={styles.titleView}>
-                    <Text style={styles.title}>{I18n.t('Are you at')+" Ibadan?"}</Text>
+                    <Text style={styles.title}>{I18n.t('Are you at') + " Ibadan?"}</Text>
                 </View>
                 <View style={styles.splitBtnView}>
                     <TouchableOpacity style={yesBtn ? styles.selectedSplitBtn : styles.splitBtn} onPress={() => setYesBtn(true)}>
@@ -201,21 +224,27 @@ const Landing = (props) => {
                         <Text style={yesBtn ? styles.btnTxt : styles.btnTxtSelected}>{I18n.t('no')}</Text>
                     </TouchableOpacity>
                 </View>
-                <View style={styles.locationSplitBtnView}>
+                {/* <View style={styles.locationSplitBtnView}>
                     <TouchableOpacity style={dineIn ? styles.selectedLocationBtn : styles.locationBtn} onPress={() => setDineIn(true)}>
                         <Text style={dineIn ? styles.selectedLocationBtnTxt : styles.locationBtnTxt}>{I18n.t('Dine-in')}</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={!dineIn ? styles.selectedLocationBtn : styles.locationBtn} onPress={() => setDineIn(false)}>
                         <Text style={!dineIn ? styles.selectedLocationBtnTxt : styles.locationBtnTxt}>{I18n.t('Pickup')}</Text>
                     </TouchableOpacity>
-                </View>
-                <ProfileInput
+                </View> */}
+                {!yesBtn && <ProfileInput
                     inputview={styles.inputview}
                     input={styles.profileInput}
                     placeholder={I18n.t('Enter Address or location')}
-                    onChangeText={(text) => setLocation(text)}
-                />
-                {!yesBtn && <DropDownPicker
+                    onChangeText={(text) => {
+                        console.log(text)
+                        var formData = new FormData();
+                        formData.append('keyword', text)
+                        getRestaurants(formData, 'get-restaurants')
+                    }}
+                />}
+                <RestaurantList />
+                {/* {!yesBtn && <DropDownPicker
                     style={styles.dropDownview}
                     containerStyle={styles.dropDown}
                     placeholder={I18n.t('Select Resturant')}
@@ -234,7 +263,7 @@ const Landing = (props) => {
                         Constants.selectedRestaurant = restaurant
                         props.navigation.navigate('BottomNavigation')
                     }}
-                />}
+                />} */}
                 <View style={styles.menuImgView}>
                     <Image style={styles.menuImg} source={require('../../assets/menu_caption.jpeg')} />
                     <TouchableOpacity style={styles.signinBtn} onPress={() => onPressSignin()}>
@@ -248,7 +277,7 @@ const Landing = (props) => {
             </ScrollView>
             {signinForm && <SigninDialogue callback={(data) => {
                 setSigninForm(data)
-                setAuth(I18n.t('Sign out'))
+                setAuth(I18n.t('Sign Out'))
             }} />}
             {!dineIn && <PickupDialogue
                 date={date}
@@ -440,6 +469,15 @@ const styles = StyleSheet.create({
         borderRadius: 1,
         backgroundColor: Color.WHITE
     },
+    restaurantCell: {
+        width: '80%',
+        height: 60,
+        marginTop: 2,
+        justifyContent: 'center',
+        alignItems: 'center',
+        alignSelf: 'center',
+        backgroundColor: Color.WHITE
+    }
 });
 
 

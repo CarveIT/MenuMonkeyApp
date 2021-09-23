@@ -13,7 +13,8 @@ import {
   StatusBar,
   StyleSheet,
   Alert,
-  useColorScheme,
+  TouchableOpacity,
+  Text,
   View,
   FlatList
 } from 'react-native';
@@ -24,15 +25,20 @@ import ApiCalls from '../Services/ApiCalls';
 import SubCatHeader from '../Components/SubCatHeader';
 import ProfileInput from '../Components/ProfileInput';
 import I18n from "i18n-js";
+import Constants from '../Utilities/Constants';
 
 const SearchRestaurant = (props) => {
-  const [favorites, setFavorites] = useState([])
+  const [restaurants, setRestaurants] = useState([])
+  const [searchRestaurants, setSearchRestaurants] = useState([])
+  const [searchText, setSearchText] = useState('')
 
   useEffect(() => {
-    fetchFavorites('favorite')
+    setRestaurants([Constants.selectedRestaurant])
   }, []);
 
-  renderItem = ({ item }) => {
+  const renderItem = ({ item }) => {
+    console.log("MY ITEM")
+    console.log(item)
     return (
       <RestaurantSearchCell
         item={item}
@@ -41,16 +47,38 @@ const SearchRestaurant = (props) => {
     );
   }
 
-  const fetchFavorites = (endPoint) => {
+  const RestaurantList = () => {
+    return (
+      <View>
+        {searchRestaurants.map((obj, index) => {
+          return (
+            <TouchableOpacity key={'rc' + index} style={styles.restaurantCell} onPress={() => onPressRestaurant(obj)}>
+              <Text>{obj.name}</Text>
+            </TouchableOpacity>
+          )
+        })}
+      </View>
+    )
+  }
+
+  const onPressRestaurant = (restaurant) => {
+    setSearchText('')
+    setSearchRestaurants([])
+    Constants.selectedRestaurant = restaurant
+    setRestaurants([restaurant])
+  }
+
+  const getRestaurants = (params, endPoint) => {
     // setLoading(true)
-    ApiCalls.getApiCall(endPoint).then(data => {
+    ApiCalls.postApiCall(params, endPoint).then(data => {
+      console.log('GET-RESTAURANT')
       console.log("DATA");
       console.log(data)
       // setLoading(false)
-      if (data.favorites) {
-        setFavorites(data.favorites)
+      if (data.restaurant) {
+        setSearchRestaurants(data.restaurant)
       } else {
-        Alert.alert('Error', data.error);
+        Alert.alert('Error', data.message);
       }
     }, error => {
       Alert.alert('Error', error);
@@ -62,7 +90,7 @@ const SearchRestaurant = (props) => {
       <StatusBar barStyle={'dark-content'} />
       <View style={{ backgroundColor: Color.BG_GRAY }}>
         <SubCatHeader
-          title={I18n.t('Search')+" "+ I18n.t('Result')}
+          title={I18n.t('Search') + " " + I18n.t('Result')}
           navigation={props.navigation}
           backbtnstyle={{ tintColor: Color.WHITE }}
           cartimgstyle={{ tintColor: Color.WHITE }}
@@ -70,12 +98,25 @@ const SearchRestaurant = (props) => {
       </View>
       <ProfileInput
         inputview={styles.inputview}
+        value={searchText}
         input={styles.profileInput}
         placeholder={I18n.t('Enter Address or location')}
-      // onChangeText={(text) => setLocation(text)} 
+        onChangeText={(text) => {
+          console.log(text)
+          setSearchText(text)
+          if (text == '') {
+            setRestaurants([Constants.selectedRestaurant])
+            return
+          }
+          var formData = new FormData();
+          formData.append('keyword', text)
+          getRestaurants(formData, 'get-restaurants')
+
+        }}
       />
+      <RestaurantList />
       <FlatList
-        data={favorites}
+        data={restaurants}
         style={styles.list}
         renderItem={(item) => renderItem(item)}
         keyExtractor={(item) => item.id}
@@ -111,5 +152,14 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     backgroundColor: Color.WHITE
   },
+  restaurantCell: {
+    width: '80%',
+    height: 60,
+    marginTop: 2,
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'center',
+    backgroundColor: Color.WHITE
+  }
 });
 export default SearchRestaurant;
