@@ -62,7 +62,7 @@ const SearchRestaurant = (props) => {
       <StatusBar barStyle={'dark-content'} />
       <View style={{ backgroundColor: Color.BG_GRAY }}>
         <SubCatHeader
-          title={"Search Result"}
+          title={I18n.t('Search')+" "+ I18n.t('Result')}
           navigation={props.navigation}
           backbtnstyle={{ tintColor: Color.WHITE }}
           cartimgstyle={{ tintColor: Color.WHITE }}
@@ -71,7 +71,7 @@ const SearchRestaurant = (props) => {
       <ProfileInput
         inputview={styles.inputview}
         input={styles.profileInput}
-        placeholder={'Enter Address or location'}
+        placeholder={I18n.t('Enter Address or location')}
       // onChangeText={(text) => setLocation(text)} 
       />
       <FlatList

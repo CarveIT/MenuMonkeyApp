@@ -13,6 +13,7 @@ import SubCatHeader from '../Components/SubCatHeader';
 import ProfileInput from '../Components/ProfileInput';
 import Color from '../Utilities/Color';
 import AddPaymentMethod from '../Components/AddPaymentMethod';
+import I18n from 'i18n-js';
 
 const cardsImg = require('../../assets/cards.jpg')
 
@@ -23,32 +24,32 @@ const CheckOut = (props) => {
     return (
         <SafeAreaView style={styles.container}>
             <SubCatHeader
-                title={'Checkout'}
+                title={I18n.t('Checkout')}
                 navigation={props.navigation}
                 subTitlestyle={styles.headerTxt}
             />
             <ScrollView style={styles.scroller}>
-                <Text style={styles.title}>{'Dinien'}</Text>
+                <Text style={styles.title}>{I18n.t('Dine-in')}</Text>
                 <ProfileInput
                     inputview={styles.tableField}
                     input={styles.tableInput}
-                    placeholder={'Enter Table Number'}
+                    placeholder={I18n.t('Enter Table Number')}
                 />
                 <TouchableOpacity style={styles.addMore}>
-                    <Text style={styles.addMoreTxt}>{'Add More Items'}</Text>
+                    <Text style={styles.addMoreTxt}>{I18n.t('Add More Items')}</Text>
                 </TouchableOpacity>
-                <Text style={styles.summaryLbl}>{'Summary'}</Text>
+                <Text style={styles.summaryLbl}>{I18n.t('Summary')}</Text>
                 <View style={styles.billView}>
                     <View style={styles.row}>
-                        <Text style={styles.leftTxt}>{'Cost'}</Text>
+                        <Text style={styles.leftTxt}>{I18n.t('Cost')}</Text>
                         <Text style={styles.rightTxt}>{'$4'}</Text>
                     </View>
                     <View style={styles.row}>
-                        <Text style={styles.leftTxt}>{'Tax'}</Text>
+                        <Text style={styles.leftTxt}>{I18n.t('Tax')}</Text>
                         <Text style={styles.rightTxt}>{'5%'}</Text>
                     </View>
                     <View style={styles.row}>
-                        <Text style={styles.leftTxt}>{'Tip'}</Text>
+                        <Text style={styles.leftTxt}>{I18n.t('Tip')}</Text>
                         <View style={styles.tipView}>
                             <TouchableOpacity style={styles.tipButton} onPress={() => setTip(18)}>
                                 <Text style={styles.tipLbl}>{'18%'}</Text>
@@ -65,34 +66,34 @@ const CheckOut = (props) => {
                         </View>
                     </View>
                     <View style={styles.row}>
-                        <Text style={styles.leftTxt}>{'Cash Tip'}</Text>
+                        <Text style={styles.leftTxt}>{I18n.t('Cash Tip')}</Text>
                         <ProfileInput
                             inputview={styles.tipInputView}
                             input={styles.tipInput}
-                            placeholder={'Enter Cash Tip'}
+                            placeholder={I18n.t('Enter Cash Tip')}
                         />
                     </View>
                     <View style={styles.row}>
-                        <Text style={styles.leftTxt}>{'Total'}</Text>
+                        <Text style={styles.leftTxt}>{I18n.t('Total')}</Text>
                         <Text style={styles.rightTxt}>{'$4.2'}</Text>
                     </View>
                 </View>
                 <TouchableOpacity style={styles.creditButton} onPress={() => setAddPayment(true)}>
-                    <Text style={styles.addMoreTxt}>{'Enter Credit Card'}</Text>
+                    <Text style={styles.addMoreTxt}>{I18n.t('Enter Credit Card')}</Text>
                 </TouchableOpacity>
                 <ProfileInput
                     inputview={styles.couponView}
                     input={styles.couponField}
-                    placeholder={'Coupon Code'}
+                    placeholder={I18n.t('Coupon Code')}
                 />
                 <Image style={styles.cardIcon} source={cardsImg} />
                 <TouchableOpacity style={styles.orderButton}>
-                    <Text style={styles.addMoreTxt}>{'Submit Order'}</Text>
+                    <Text style={styles.addMoreTxt}>{I18n.t('Submit Order')}</Text>
                 </TouchableOpacity>
             </ScrollView>
             {addPayment &&
                 <AddPaymentMethod
-                    previousScreen={'Checkout'}
+                    previousScreen={I18n.t('Checkout')}
                     // cardInfo={}
                     callback={(data) => { setAddPayment(data) }}
                 />}

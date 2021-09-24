@@ -24,6 +24,7 @@ import Color from '../Utilities/Color';
 import Separator from '../Components/Separator';
 import { ItemSize } from '../Utilities/Enums';
 import ApiCalls from '../Services/ApiCalls';
+import I18n from 'i18n-js';
 
 const backImg = require('../../assets/left-arrow.png');
 const checkedImgradio = require('../../assets/checkedradio.png');
@@ -44,12 +45,12 @@ const ItemDetail = (props) => {
 
   const upinputvalue = () => {
     setCount(prevCount => prevCount + 1)
-    setTotal(total+price)
+    setTotal(total + price)
   }
 
   const downinputvalue = () => {
     setCount(prevCount => prevCount == 1 ? 1 : prevCount - 1)
-    total > price && setTotal(total-price)
+    total > price && setTotal(total - price)
   }
 
   const fetchDetails = (endPoint) => {
@@ -125,17 +126,17 @@ const ItemDetail = (props) => {
         {/* <Text style={styles.header}>{props.route.params.detail.name.toUpperCase()}</Text> */}
         {/* <Separator /> */}
         <View style={styles.row}>
-          <Text style={styles.subHeading}>{'Select Size'}</Text>
+          <Text style={styles.subHeading}>{I18n.t('Select') + " " + I18n.t('Size')}</Text>
           <View style={styles.requiredView}>
-            <Text style={styles.requiredTxt}>{'Required'}</Text>
+            <Text style={styles.requiredTxt}>{I18n.t('Required')}</Text>
           </View>
         </View>
         <Separator />
         <SizeList />
         <View style={styles.row}>
-          <Text style={styles.subHeading}>{'Select Side'}</Text>
+          <Text style={styles.subHeading}>{I18n.t('Select') + " " + I18n.t('Side')}</Text>
           <View style={styles.requiredView}>
-            <Text style={styles.requiredTxt}>{'Required'}</Text>
+            <Text style={styles.requiredTxt}>{I18n.t('Required')}</Text>
           </View>
         </View>
         <Separator />
@@ -149,7 +150,7 @@ const ItemDetail = (props) => {
         <SideList />
 
         <View style={styles.row}>
-          <Text style={styles.subHeading}>{'Quantity'}</Text>
+          <Text style={styles.subHeading}>{I18n.t('Quantity')}</Text>
         </View>
         <View style={{ width: "100%", flexDirection: 'row', marginTop: 10 }}>
           <TouchableOpacity style={styles.upvaluecontainer} onPress={() => downinputvalue()}>
@@ -159,14 +160,14 @@ const ItemDetail = (props) => {
           <TouchableOpacity style={styles.downvaluecontainer} onPress={() => upinputvalue()}>
             <Text style={{ height: 20, width: 18, textAlign: 'center' }}>+</Text>
           </TouchableOpacity>
-          <Text style={styles.mediumPrice}>{'$'+total}</Text>
+          <Text style={styles.mediumPrice}>{'$' + total}</Text>
         </View>
         <Separator />
         <View style={styles.row}>
-          <Text style={styles.subHeading}>{'Special Instructions'}</Text>
+          <Text style={styles.subHeading}>{I18n.t('Special Instructions')}</Text>
         </View>
         <Separator />
-        <Text style={styles.instMsg}>{'Please note that special requests may result in price adjustments after your order is processed'}</Text>
+        <Text style={styles.instMsg}>{I18n.t('Please note that special requests may result in price adjustments after your order is processed')}</Text>
         <TextInput
           style={styles.input}
           placeholderTextColor={Color.LIGHTGRAY}
@@ -174,7 +175,7 @@ const ItemDetail = (props) => {
         />
         <Separator customStyle={{ marginTop: 0 }} />
         <TouchableOpacity style={styles.addCartBtn} onPress={() => props.navigation.navigate('CustomerFavorite')}>
-          <Text style={styles.addCartTxt}>{'Add to Cart $'+total}</Text>
+          <Text style={styles.addCartTxt}>{I18n.t('Add to Cart') + "$" + total}</Text>
         </TouchableOpacity>
       </ScrollView>
     </SafeAreaView>
@@ -219,9 +220,9 @@ const styles = StyleSheet.create({
   },
   txtcount: {
     height: 20,
-    width: 60, 
+    width: 60,
     marginHorizontal: 2,
-    paddingLeft: 2, 
+    paddingLeft: 2,
     borderWidth: 1,
     borderRadius: 1,
     borderColor: Color.BLACK

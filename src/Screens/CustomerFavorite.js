@@ -26,6 +26,7 @@ import SubCatHeader from '../Components/SubCatHeader';
 import CustomerFavoriteCell from '../Components/CustomerFavoriteCell';
 import AddPaymentMethod from '../Components/AddPaymentMethod';
 import Constants from '../Utilities/Constants';
+import I18n from 'i18n-js';
 
 const CustomerFavorite = (props) => {
   const [orders, setOrders] = useState([])
@@ -46,7 +47,7 @@ const CustomerFavorite = (props) => {
   const footerView = () => {
     return (
       <TouchableOpacity style={styles.addButton} onPress={() => props.navigation.navigate('CartTab')}>
-        <Text style={styles.addButtonTxt}>{'Continue'}</Text>
+        <Text style={styles.addButtonTxt}>{I18n.t('Continue')}</Text>
         <Text style={styles.buttonPrice}>{'$2'}</Text>
       </TouchableOpacity>
     )
@@ -74,7 +75,7 @@ const CustomerFavorite = (props) => {
       <View style={{ backgroundColor: Color.WHITE }}>
         <SubCatHeader
           subTitlestyle={styles.title}
-          title={"Add These To Your Order"}
+          title={I18n.t("Add these to your order")}
           cartimgstyle={{ tintColor: Color.BLACK }}
           hideCart={true}
           navigation={props.navigation} />

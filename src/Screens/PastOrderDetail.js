@@ -24,6 +24,7 @@ import ApiCalls from '../Services/ApiCalls';
 import { pastOrders } from '../Data';
 import SubCatHeader from '../Components/SubCatHeader';
 import PastOrderDetailCell from '../Components/PastOrderDetailCell';
+import I18n from 'i18n-js';
 
 const PastOrderDetail = (props) => {
   const [orderDetail, setOrderDetail] = useState([])
@@ -61,7 +62,7 @@ const PastOrderDetail = (props) => {
       <View style={{ backgroundColor: Color.WHITE }}>
         <SubCatHeader
           subTitlestyle={styles.title}
-          title={"Past Order Details"}
+          title={I18n.t("Past Order Detail")}
           cartimgstyle={{ tintColor: Color.BLACK }}
           navigation={props.navigation} />
       </View>

@@ -13,6 +13,7 @@ import { HomeStack, CartStack, FavoriteStack, OrdersStack, AccountStack } from '
 import Color from '../Utilities/Color';
 import { useDispatch, useSelector } from 'react-redux';
 import Constants from '../Utilities/Constants';
+import I18n from 'i18n-js';
 
 const searchIcon = require('../../assets/home.png')
 const cartIcon = require('../../assets/cart.png')
@@ -29,7 +30,7 @@ const BottomNavigation = (props) => {
   const LoginButton = () => {
     return (
       <TouchableOpacity style={styles.loginButton} onPress={() => props.navigation.navigate('Login')}>
-        <Text style={styles.loginLbl}>{'Sign in'}</Text>
+        <Text style={styles.loginLbl}>{I18n.t('Sign in')}</Text>
       </TouchableOpacity>
     )
   }
@@ -43,7 +44,7 @@ const BottomNavigation = (props) => {
         options={{
           tabBarLabel: ({ focused }) => {
             return (
-              <Text style={focused ? styles.activeLabel : styles.label}>{'Home'}</Text>
+              <Text style={focused ? styles.activeLabel : styles.label}>{I18n.t('Home')}</Text>
             )
           },
           tabBarIcon: ({ focused, color, size }) => {
@@ -60,7 +61,7 @@ const BottomNavigation = (props) => {
         options={{
           tabBarLabel: ({ focused }) => {
             return (
-              <Text style={focused ? styles.activeLabel : styles.label}>{'Cart'}</Text>
+              <Text style={focused ? styles.activeLabel : styles.label}>{I18n.t('Cart')}</Text>
             )
           },
           tabBarIcon: ({ focused, color, size }) => {
@@ -84,7 +85,7 @@ const BottomNavigation = (props) => {
               (Constants.user == null && tab == 'Favorites') ?
                 <LoginButton />
                 :
-                <Text style={focused ? styles.activeLabel : styles.label}>{'Favorites'}</Text>
+                <Text style={focused ? styles.activeLabel : styles.label}>{I18n.t('Favorites')}</Text>
             )
           },
           tabBarIcon: ({ focused, color, size }) => {
@@ -116,7 +117,7 @@ const BottomNavigation = (props) => {
               (Constants.user == null && tab == 'Past Orders') ?
                 <LoginButton />
                 :
-                <Text numberOfLines={1} style={focused ? styles.activeLabel : styles.label}>{'Past Orders'}</Text>
+                <Text numberOfLines={1} style={focused ? styles.activeLabel : styles.label}>{I18n.t('Past Orders')}</Text>
             )
           },
           tabBarIcon: ({ focused, color, size }) => {
@@ -145,7 +146,7 @@ const BottomNavigation = (props) => {
               (Constants.user == null && tab == 'Account') ?
                 <LoginButton />
                 :
-                <Text style={focused ? styles.activeLabel : styles.label}>{'Account'}</Text>
+                <Text style={focused ? styles.activeLabel : styles.label}>{I18n.t('Account')}</Text>
             )
           },
           tabBarIcon: ({ focused, color, size }) => {

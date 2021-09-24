@@ -26,6 +26,7 @@ import SubCatHeader from '../Components/SubCatHeader';
 import PaymentCell from '../Components/PaymentCell';
 import color from '../Utilities/Color';
 import AddPaymentMethod from '../Components/AddPaymentMethod';
+import I18n from 'i18n-js';
 
 const Payment = (props) => {
   const [orders, setOrders] = useState([])
@@ -44,7 +45,7 @@ const Payment = (props) => {
   const footerView = () => {
     return (
       <TouchableOpacity style={styles.addButton} onPress={() => setAddPayment(true)}>
-        <Text style={styles.addButtonTxt}>{'Add Payment Method'}</Text>
+        <Text style={styles.addButtonTxt}>{I18n.t('Add Payment Method')}</Text>
       </TouchableOpacity>
     )
   }
@@ -71,7 +72,7 @@ const Payment = (props) => {
       <View style={{ backgroundColor: Color.WHITE }}>
         <SubCatHeader
           subTitlestyle={styles.title}
-          title={"Payments"}
+          title={I18n.t("Payments")}
           cartimgstyle={{ tintColor: Color.BLACK }}
           hideCart={true}
           navigation={props.navigation} />

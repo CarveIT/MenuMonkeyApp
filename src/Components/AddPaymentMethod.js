@@ -22,6 +22,7 @@ import ProfileInput from './ProfileInput';
 import { ChangePasswordStatus } from '../Utilities/Enums';
 import PaymentInput from './PaymentInput';
 import ApiCalls from '../Services/ApiCalls';
+import I18n from 'i18n-js';
 
 const validation = (password, confirmPassword) => {
     if (password == '' || confirmPassword == '') {
@@ -93,11 +94,11 @@ const AddPaymentMethod = (props) => {
                         <Image resizeMode='contain' style={styles.closeImg} source={require('../../assets/red-cross.png')} />
                     </TouchableOpacity>
                     <PaymentInput
-                        label={'Name on Card'}
+                        label={I18n.t('Name on Card')}
                         onChangeText={(name) => setName(name)}
                     />
                     <PaymentInput
-                        label={'Card Number'}
+                        label={I18n.t('Card Number')}
                         onChangeText={(no) => setCardNo(no)}
                     />
                     <View style={styles.fieldRow}>
@@ -109,7 +110,7 @@ const AddPaymentMethod = (props) => {
                         />
                         <PaymentInput
                             containerStyle={{ flex: 1, marginLeft: 5 }}
-                            label={'Expiration'}
+                            label={I18n.t('Expiration')}
                             placeholder={'MM'}
                             onChangeText={(mm) => setMonth(mm)}
                         />
@@ -122,19 +123,19 @@ const AddPaymentMethod = (props) => {
                     <View style={{ flex: 1, height: 50, marginTop: 10 }}>
                         {previousScreen != 'Checkout' && <Button
                             style={styles.btnContinue}
-                            title={'Save'}
+                            title={I18n.t('Save')}
                             loading={loading}
                             onPress={() => continueTapped()}
                         />}
                         {previousScreen == 'Checkout' && <Button
                             style={styles.btnContinue}
-                            title={'Total: $2.1'}
+                            title={I18n.t('Total') + ': $2.1'}
                             loading={loading}
                             onPress={() => continueTapped()}
                         />}
                         {previousScreen == 'Checkout' && <Button
                             style={styles.btnContinue}
-                            title={'Pay >>'}
+                            title={I18n.t('Pay') + "" + '>>'}
                             loading={loading}
                             onPress={() => continueTapped()}
                         />}

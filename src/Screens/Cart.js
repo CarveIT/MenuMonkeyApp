@@ -25,6 +25,7 @@ import CartCell from '../Components/CartCell';
 import CartHeader from '../Components/CartHeader';
 import Constants from '../Utilities/Constants';
 import ApiCalls from '../Services/ApiCalls';
+import I18n from 'i18n-js';
 
 
 const Cart = (props) => {
@@ -79,21 +80,21 @@ const Cart = (props) => {
 
       <View style={{ marginLeft: 30, marginRight: 30 }}>
         <TouchableOpacity style={styles.addMore} onPress={() => props.navigation.navigate('Home')}>
-          <Text style={styles.addMoreTxt}>{'Add More Items'}</Text>
+          <Text style={styles.addMoreTxt}>{I18n.t('Add More Items')}</Text>
         </TouchableOpacity>
         <View style={styles.summaryView}>
-          <Text style={styles.summaryTxt}>{'Summary'}</Text>
+          <Text style={styles.summaryTxt}>{I18n.t('Summary')}</Text>
           <View style={styles.costView}>
-            <Text style={styles.costTxt}>{'Cost'}</Text>
+            <Text style={styles.costTxt}>{I18n.t('Cost')}</Text>
 
             <Text style={styles.costVal}>{maindata.subtotal}</Text>
           </View>
           <View style={styles.costView}>
-            <Text style={styles.costTxt}>{'Tax'}</Text>
+            <Text style={styles.costTxt}>{I18n.t('Tax')}</Text>
             <Text style={styles.costVal}>{maindata.tax}</Text>
           </View>
           <View style={styles.costView}>
-            <Text style={styles.costTxt}>{'Total'}</Text>
+            <Text style={styles.costTxt}>{I18n.t('Total')}</Text>
             <Text style={styles.costVal}>{'$'+maindata.total}</Text>
           </View>
         </View>
@@ -101,7 +102,7 @@ const Cart = (props) => {
           Constants.user == null ? props.navigation.navigate('Login') : props.navigation.navigate('CheckOut')
 
         }}>
-          <Text style={styles.continueTxt}>{'Continue'}</Text>
+          <Text style={styles.continueTxt}>{I18n.t('Continue')}</Text>
         </TouchableOpacity>
       </View>
     )
@@ -111,7 +112,7 @@ const Cart = (props) => {
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle={'dark-content'} />
       <CartHeader
-        title={'View Cart'}
+        title={I18n.t('View Cart')}
         navigation={props.navigation}
       />
       <FlatList

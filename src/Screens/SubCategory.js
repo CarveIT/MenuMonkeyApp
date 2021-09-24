@@ -25,6 +25,7 @@ import SubCategoryCell from '../Components/SubCategoryCell';
 import SubCatHeader from '../Components/SubCatHeader';
 import ApiCalls from '../Services/ApiCalls';
 import { TextInput } from 'react-native-gesture-handler';
+import I18n from 'i18n-js';
 
 const searchImg = require('../../assets/search.png')
 const SubCategory = (props) => {
@@ -61,7 +62,7 @@ const SubCategory = (props) => {
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle={'dark-content'} />
       <SubCatHeader
-        title={'Search'}
+        title={I18n.t('Search')}
         {...props}
         navigation={props.navigation} />
 
@@ -69,7 +70,7 @@ const SubCategory = (props) => {
         <View style={styles.searchView}>
           <TextInput
             style={styles.input}
-            placeholder={'Search by name'}
+            placeholder={I18n.t('Search by name')}
           />
           <Image style={styles.searchIcon} source={searchImg} />
         </View>
@@ -84,7 +85,7 @@ const SubCategory = (props) => {
       // ListFooterComponent={this.footerView}
       />
       <TouchableOpacity style={styles.addCartBtn} onPress={() => props.navigation.navigate('CartTab')}>
-        <Text style={styles.addCartTxt}>{'Continue'}</Text>
+        <Text style={styles.addCartTxt}>{I18n.t('Continue')}</Text>
       </TouchableOpacity>
     </SafeAreaView>
   );

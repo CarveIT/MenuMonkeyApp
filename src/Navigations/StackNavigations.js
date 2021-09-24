@@ -18,6 +18,7 @@ import SearchRestaurant from '../Screens/SearchRestaurant';
 import CustomerFavorite from '../Screens/CustomerFavorite';
 import PastOrderDetail from '../Screens/PastOrderDetail';
 
+
 const Stack = createStackNavigator();
 
 export const LandingStack = () => {

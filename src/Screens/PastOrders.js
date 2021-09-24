@@ -21,6 +21,7 @@ import PastOrderCell from '../Components/PastOrderCell';
 import ApiCalls from '../Services/ApiCalls';
 import { pastOrders } from '../Data';
 import SubCatHeader from '../Components/SubCatHeader';
+import I18n from 'i18n-js';
 
 const PastOrders = (props) => {
   const [orders, setOrders] = useState([])
@@ -61,7 +62,7 @@ const PastOrders = (props) => {
         <SubCatHeader
           navigation={props.navigation}
           subTitlestyle={styles.title}
-          title={"Past Orders"}
+          title={I18n.t("Past Orders")}
           cartimgstyle={{ tintColor: Color.BLACK }} />
       </View>
       <FlatList

@@ -37,6 +37,8 @@ import moment from 'moment';
 import Keys from '../Utilities/Keys';
 import en from "../Utilities/localization/en.json";
 import fr from "../Utilities/localization/fr.json";
+import OptionsMenu from "react-native-options-menu";
+
 import I18n from "i18n-js";
 I18n.fallbacks = true;
 I18n.translations = { en, fr };
@@ -47,13 +49,16 @@ I18n.translations = { en, fr };
 // import { zh, en, es } from '../Utilities/i18n/supportedLanguages';
 
 const Landing = (props) => {
+
+
+
     const [signinForm, setSigninForm] = useState(false)
     const [yesBtn, setYesBtn] = useState(false)
     const [dineIn, setDineIn] = useState(true)
     const [location, setLocation] = useState('')
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState(null);
-    const [auth, setAuth] = useState('Sign in')
+    const [auth, setAuth] = useState(I18n.t('Sign in'))
     const [items, setItems] = useState([
         { label: 'Ibadan', value: 'Ibadan' },
         { label: 'French', value: 'French' }
@@ -65,6 +70,9 @@ const Landing = (props) => {
     const [mode, setMode] = useState('date');
     const [show, setShow] = useState(false);
     const [lang, setLang] = useState('en')
+    const [Langimg, setLangimg] = useState(require('../../assets/united-states.png'))
+
+
 
 
     useEffect(() => {
@@ -74,6 +82,21 @@ const Landing = (props) => {
         loadData()
         getLocation()
     }, []);
+
+    const changelang = (langauge) => {
+
+        if (langauge == "spanish") {
+            I18n.locale = 'fr'
+            setLang('fr')
+            setLangimg(require('../../assets/spain.png'))
+        }
+        else {
+            I18n.locale = 'en'
+            setLang('en')
+            setLangimg(require('../../assets/united-states.png'))
+        }
+    }
+    
 
     const onChange = (event, selectedDate) => {
         const currentDate = selectedDate || date;
@@ -100,9 +123,9 @@ const Landing = (props) => {
         Constants.user = user
         console.log(Constants.user)
         if (Constants.user == null) {
-            setAuth('Sign in')
+            setAuth(I18n.t('Sign in'))
         } else {
-            setAuth('Sign Out')
+            setAuth(I18n.t('Sign out'))
         }
     }
 
@@ -155,9 +178,11 @@ const Landing = (props) => {
             saveObjectData(Keys.USER, null)
             Constants.user = null
             Constants.token = null
-            setAuth('Sign in')
+            setAuth(I18n.t('Sign in'))
         }
     }
+
+
 
     return (
         <SafeAreaView style={styles.container}>
@@ -166,34 +191,34 @@ const Landing = (props) => {
                 <Image style={styles.banner} resizeMode='contain' source={require('../../assets/banner.png')} />
                 {/* <View style={styles.titleView}>{i18n.t('welcome')} */}
                 <View style={styles.titleView}>
-                    <Text style={styles.title}>{I18n.t('hello')}</Text>
+                    <Text style={styles.title}>{I18n.t('Are you at')+" Ibadan?"}</Text>
                 </View>
                 <View style={styles.splitBtnView}>
                     <TouchableOpacity style={yesBtn ? styles.selectedSplitBtn : styles.splitBtn} onPress={() => setYesBtn(true)}>
-                        <Text style={yesBtn ? styles.btnTxtSelected : styles.btnTxt}>Yes</Text>
+                        <Text style={yesBtn ? styles.btnTxtSelected : styles.btnTxt}>{I18n.t('yes')}</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={yesBtn ? styles.splitBtn : styles.selectedSplitBtn} onPress={() => setYesBtn(false)}>
-                        <Text style={yesBtn ? styles.btnTxt : styles.btnTxtSelected}>No</Text>
+                        <Text style={yesBtn ? styles.btnTxt : styles.btnTxtSelected}>{I18n.t('no')}</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.locationSplitBtnView}>
                     <TouchableOpacity style={dineIn ? styles.selectedLocationBtn : styles.locationBtn} onPress={() => setDineIn(true)}>
-                        <Text style={dineIn ? styles.selectedLocationBtnTxt : styles.locationBtnTxt}>Dine-In</Text>
+                        <Text style={dineIn ? styles.selectedLocationBtnTxt : styles.locationBtnTxt}>{I18n.t('Dine-in')}</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={!dineIn ? styles.selectedLocationBtn : styles.locationBtn} onPress={() => setDineIn(false)}>
-                        <Text style={!dineIn ? styles.selectedLocationBtnTxt : styles.locationBtnTxt}>Pickup</Text>
+                        <Text style={!dineIn ? styles.selectedLocationBtnTxt : styles.locationBtnTxt}>{I18n.t('Pickup')}</Text>
                     </TouchableOpacity>
                 </View>
                 <ProfileInput
                     inputview={styles.inputview}
                     input={styles.profileInput}
-                    placeholder={'Enter Address or location'}
+                    placeholder={I18n.t('Enter Address or location')}
                     onChangeText={(text) => setLocation(text)}
                 />
                 {!yesBtn && <DropDownPicker
                     style={styles.dropDownview}
                     containerStyle={styles.dropDown}
-                    placeholder={'Select Restaurant'}
+                    placeholder={I18n.t('Select Resturant')}
                     dropDownContainerStyle={{ width: '90%', alignSelf: 'center' }}
                     open={open}
                     value={value}
@@ -223,7 +248,7 @@ const Landing = (props) => {
             </ScrollView>
             {signinForm && <SigninDialogue callback={(data) => {
                 setSigninForm(data)
-                setAuth('Sign Out')
+                setAuth(I18n.t('Sign out'))
             }} />}
             {!dineIn && <PickupDialogue
                 date={date}
@@ -244,31 +269,24 @@ const Landing = (props) => {
             )}
 
             <View style={{ position: 'absolute', bottom: 10, right: 10 }}>
-                <TouchableOpacity>
-                    <Text>{'LANGUAGE'}</Text>
-                </TouchableOpacity>
-                <View>
-                    <TouchableOpacity onPress={() => {
-                        I18n.locale = 'en'
-                        setLang('en')
-                    }}>
-                        <Text>{'English'}</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => {
-                        I18n.locale = 'fr'
-                        setLang('fr')
-                    }}>
-                        <Text>{'Spanish'}</Text>
-                    </TouchableOpacity>
+                <View style={{ flexDirection: 'row' }}>
+                    <Image style={{ width: 50, height: 50 }} resizeMode='contain' source={Langimg}></Image>
+                    <View style={{ width: 30 }}>
+                        <OptionsMenu
+                            button={require('../../assets/down-arrow.png')}
+                            buttonStyle={{ width: 15, height: 15, marginTop: 17, marginLeft: 5, resizeMode: "contain", justifyContent: 'flex-end' }}
+                            destructiveIndex={1}
+                            options={['Spanish', 'English']}
+                            actions={[() => changelang('spanish'), () => changelang("english")]} />
+
+                    </View>
                 </View>
             </View>
-
-
         </SafeAreaView>
     );
-
-
 };
+
+
 
 const styles = StyleSheet.create({
     container: {

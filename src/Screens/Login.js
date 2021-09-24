@@ -30,6 +30,7 @@ import GuestSigninDialogue from '../Components/GuestSigninDialogue';
 import { LoginManager, AccessToken, GraphRequest, GraphRequestManager } from "react-native-fbsdk";
 import { GoogleSignin, statusCodes } from '@react-native-community/google-signin';
 import stripe from 'tipsi-stripe'
+import I18n from 'i18n-js';
 
 const backIcon = require('../../assets/left-arrow.png')
 const monkeyImage = require('../../assets/monkey-2.jpg')
@@ -233,18 +234,18 @@ const Login = (props) => {
         </View>
         <View style={styles.formContainer}>
           <LoginInput
-            placeholder={'Email Address'}
+            placeholder={I18n.t('Email')}
             onChangeText={(email) => setEmail(email)}
           />
           <LoginInput
-            placeholder={'Password'}
+            placeholder={I18n.t('Password')}
             secureTextEntry={showPassword}
             showRightIcon={true}
             onChangeText={(pass) => setPassword(pass)}
             onPressEyeButton={() => { setShowPassword(!showPassword) }}
           />
           <TouchableOpacity style={styles.forgetButton}>
-            <Text style={styles.forgetTitle}>{'Forget Password'}</Text>
+            <Text style={styles.forgetTitle}>{I18n.t('Forget') + " " + I18n.t('Password')}</Text>
           </TouchableOpacity>
           <Button
             style={styles.loginButton}
@@ -252,7 +253,7 @@ const Login = (props) => {
             loading={loading}
             onPress={() => { onLoginPress() }}
           />
-          <Text style={styles.forgetTitle}>{'Login with'}</Text>
+          <Text style={styles.forgetTitle}>{I18n.t('Login')+" "+I18n.t('with')}</Text>
           <View style={styles.socialView}>
             <SocialButton
               onPress={() => GooglesignIn()}
@@ -267,14 +268,14 @@ const Login = (props) => {
           </View>
           <SocialButton
             icon={guestIcon}
-            title={'Guest'}
+            title={I18n.t('Guest')}
             onPress={() => setSigninForm(true)}
           // onPress={() => handleCardPayPress()}
           />
           <View style={styles.signupView}>
-            <Text style={styles.signupTitle}>{'Don\'t have an account?'}</Text>
+            <Text style={styles.signupTitle}>{I18n.t('Dont have an account')}</Text>
             <TouchableOpacity style={styles.forgetButton} onPress={() => props.navigation.navigate('Register')}>
-              <Text style={styles.forgetTitle}>{'Sign Up'}</Text>
+              <Text style={styles.forgetTitle}>{I18n.t('Sign Up')}</Text>
             </TouchableOpacity>
           </View>
         </View>

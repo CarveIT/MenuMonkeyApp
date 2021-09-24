@@ -27,6 +27,7 @@ import { AccountTitle } from '../Utilities/Enums';
 import Constants from '../Utilities/Constants';
 import { saveObjectData, saveData } from '../Utilities/Storage';
 import Keys from '../Utilities/Keys';
+import I18n from 'i18n-js';
 
 const logoutIcon = require('../../assets/login.png')
 
@@ -72,7 +73,7 @@ const Account = (props) => {
       }}>
         <View style={styles.content}>
           <Image style={styles.menu} source={logoutIcon} resizeMode='contain' />
-          <Text style={styles.title}>{'Logout'}</Text>
+          <Text style={styles.title}>{I18n.t('Logout')}</Text>
         </View>
       </TouchableOpacity>
     )

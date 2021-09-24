@@ -27,6 +27,7 @@ import Button from '../Components/Button';
 import SocialButton from '../Components/SocialButton';
 import ApiCalls from '../Services/ApiCalls';
 import Constants from '../Utilities/Constants';
+import I18n from 'i18n-js';
 
 const backIcon = require('../../assets/back.png')
 const homeIcon = require('../../assets/home.png')
@@ -129,30 +130,30 @@ const Register = (props) => {
           <TouchableOpacity style={styles.backButton}>
             <Image style={styles.backImage} source={backIcon} />
           </TouchableOpacity>
-          <Text style={styles.signupTitle}>{'Sign Up'}</Text>
+          <Text style={styles.signupTitle}>{I18n.t('Sign Up')}</Text>
         </View>
         <View style={styles.formContainer}>
           <LoginInput
-            placeholder={'Username'}
+            placeholder={I18n.t('Username')}
             onChangeText={(user) => setUsername(user)}
           />
           <LoginInput
-            placeholder={'Mobile'}
+            placeholder={I18n.t('Mobile')}
             onChangeText={(phone) => setMobile(phone)}
           />
           <LoginInput
-            placeholder={'Email'}
+            placeholder={I18n.t('Email')}
             onChangeText={(email) => setEmail(email)}
           />
           <LoginInput
-            placeholder={'Password'}
+            placeholder={I18n.t('Password')}
             secureTextEntry={!showPassword}
             showRightIcon={true}
             onChangeText={(pass) => setPassword(pass)}
             onPressEyeButton={() => { setShowPassword(!showPassword) }}
           />
           <LoginInput
-            placeholder={'Confirm Password'}
+            placeholder={I18n.t('Confirm Password')}
             secureTextEntry={!showConfirmPassword}
             showRightIcon={true}
             onChangeText={(pass) => setConfirmPassword(pass)}
@@ -165,9 +166,9 @@ const Register = (props) => {
             onPress={() => { onLoginPress() }}
           />
           <View style={styles.signupView}>
-            <Text style={styles.accountTitle}>{'Have an account?'}</Text>
+            <Text style={styles.accountTitle}>{I18n.t('Have an account')}</Text>
             <TouchableOpacity style={styles.forgetButton} onPress={() => props.navigation.navigate('Login')}>
-              <Text style={styles.forgetTitle}>{'Sign In'}</Text>
+              <Text style={styles.forgetTitle}>{I18n.t('Sign in')}</Text>
             </TouchableOpacity>
           </View>
           <TouchableOpacity style={styles.homeButton}>

@@ -25,6 +25,7 @@ import FavouriteCell from '../Components/FavouriteCell';
 import HomeHeader from '../Components/HomeHeader';
 import ApiCalls from '../Services/ApiCalls';
 import SubCatHeader from '../Components/SubCatHeader';
+import I18n from 'i18n-js';
 
 const Favourites = (props) => {
   const isFocused = useIsFocused();
@@ -68,7 +69,7 @@ const Favourites = (props) => {
       <StatusBar barStyle={'dark-content'} />
       <View style={{ backgroundColor: Color.BG_ORANGE }}>
         <SubCatHeader
-          title={"Favourites"}
+          title={I18n.t("Favorites")}
           navigation={props.navigation}
           backbtnstyle={{ tintColor: Color.WHITE }}
           cartimgstyle={{ tintColor: Color.WHITE }}
