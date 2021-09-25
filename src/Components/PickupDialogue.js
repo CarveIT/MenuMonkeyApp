@@ -26,20 +26,20 @@ import { ChangePasswordStatus } from '../Utilities/Enums';
 import ApiCalls from '../Services/ApiCalls';
 import Constants from '../Utilities/Constants';
 
-const validation = (password, email) => {
-    if (password == '' || email == '') {
-        const obj = {
-            valid: false,
-            error: 'All fields is required'
-        }
-        return obj;
-    }
-    const obj = {
-        valid: true,
-        error: 'hi'
-    }
-    return obj
-}
+// const validation = (password, email) => {
+//     if (password == '' || email == '') {
+//         const obj = {
+//             valid: false,
+//             error: 'All fields is required'
+//         }
+//         return obj;
+//     }
+//     const obj = {
+//         valid: true,
+//         error: 'hi'
+//     }
+//     return obj
+// }
 
 const PickupDialogue = (props) => {
     const { callback,callbackdatepicker,callbacktimepicker,date } = props;
@@ -48,38 +48,17 @@ const PickupDialogue = (props) => {
     const [loading, setLoading] = useState(false)
 
     const continueTapped = () => {
-        let validate = validation(password, email)
-        if (validate.valid == false) {
-            Alert.alert('ERROR', validate.error)
-            return
-        } else {
-            var formData = new FormData();
-            formData.append('email', email)
-            formData.append('password', password)
-            loginApi(formData, 'login')
-        }
-        // callback(false)
-    }
-
-    const loginApi = async (params, endPoint) => {
-        setLoading(true)
-        ApiCalls.postApiCall(params, endPoint).then(data => {
-            console.log("DATA");
-            console.log(data)
-            setLoading(false)
-            if (data.success) {
-                let user = data.success.user
-                user['token'] = data.success.token
-                Constants.user = user
-                saveData(Key.ACCESS_TOKEN, data.success.token)
-                saveObjectData(Key.USER, user)
-
-            } else {
-                Alert.alert('Error', data.error);
-            }
-        }, error => {
-            Alert.alert('Error', error);
-        })
+        // let validate = validation(password, email)
+        // if (validate.valid == false) {
+        //     Alert.alert('ERROR', validate.error)
+        //     return
+        // } else {
+        //     var formData = new FormData();
+        //     formData.append('email', email)
+        //     formData.append('password', password)
+        //     loginApi(formData, 'login')
+        // }
+        callback(true)
     }
 
     return (

@@ -2,7 +2,7 @@
   "Login Page Translation": "",
   "Login": "Access",
   "with": "with",
-  "Email": "E-mail address",
+  "Email": "Email",
   "Password": "Password",
   "Forget": "Forgot",
   "Guest": "Guest",
@@ -118,5 +118,8 @@
   "Confirm New Password": "Confirm New Password",
   "All fields are required": "All fields are required",
   "The new password must be at least 6 characters.": "The new password must be at least 6 characters.",
-  "Confirm password mismatched": "Confirm password mismatched"
+  "Confirm password mismatched": "Confirm password mismatched",
+  "Submit": "Submit",
+  "Forget Password": "Forget Password",
+  "Enter your email address": "Enter your email address"
 }
