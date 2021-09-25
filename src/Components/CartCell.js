@@ -38,7 +38,10 @@ const CartCell = (props) => {
                 </View> */}
             </View>
 
-            <Text style={styles.title}>{item.quantity + "X" +item.dish.price}</Text>
+            <View style={{flexDirection:'row'}}>
+                <Text style={styles.title}>{item.quantity + "X " + item.dish.name}</Text>
+                <Text style={{position:'absolute',right:5,top:10,fontWeight:'700',fontSize:18}}>{"$" + item.dish.price}</Text>
+            </View>
             <Text style={styles.tagline}>{'code best brewed fase help'}</Text>
             <View style={styles.separator}></View>
         </View>
@@ -71,7 +74,7 @@ const styles = StyleSheet.create({
         fontWeight: '700'
     },
     title: {
-        width:'50%',
+        width: '50%',
         marginTop: 10,
         fontSize: 18,
         fontWeight: '700'

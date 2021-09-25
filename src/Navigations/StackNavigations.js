@@ -17,6 +17,7 @@ import Payment from '../Screens/Payment';
 import SearchRestaurant from '../Screens/SearchRestaurant';
 import CustomerFavorite from '../Screens/CustomerFavorite';
 import PastOrderDetail from '../Screens/PastOrderDetail';
+import CustomerFavoriteCell from '../Components/CustomerFavoriteCell';
 
 
 const Stack = createStackNavigator();

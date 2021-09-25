@@ -65,7 +65,7 @@ const Landing = (props) => {
     const [show, setShow] = useState(false);
     const [lang, setLang] = useState('en')
     const [restaurants, setRestaurants] = useState([]);
-    const [Langimg, setLangimg] = useState(require('../../assets/united-states.png'))
+    // const [Langimg, setLangimg] = useState("English")
 
     useEffect(() => {
         loadData()
@@ -78,12 +78,12 @@ const Landing = (props) => {
         if (langauge == "spanish") {
             I18n.locale = 'es'
             setLang('es')
-            setLangimg(require('../../assets/spain.png'))
+            // setLangimg(require('../../assets/spain.png'))
         }
         else {
             I18n.locale = 'en'
             setLang('en')
-            setLangimg(require('../../assets/united-states.png'))
+            // setLangimg(require('../../assets/united-states.png'))
         }
     }
 
@@ -299,7 +299,8 @@ const Landing = (props) => {
 
             <View style={{ position: 'absolute', bottom: 10, right: 10 }}>
                 <View style={{ flexDirection: 'row' }}>
-                    <Image style={{ width: 50, height: 50 }} resizeMode='contain' source={Langimg}></Image>
+                    {/* <Image style={{ width: 50, height: 50 }} resizeMode='contain' source={Langimg}></Image> */}
+                   <Text style={{textAlign:'center',alignSelf:'center',marginTop:10}}>{lang=="es"?"Spanish":"English"}</Text>
                     <View style={{ width: 30 }}>
                         <OptionsMenu
                             button={require('../../assets/down-arrow.png')}
@@ -464,9 +465,10 @@ const styles = StyleSheet.create({
     inputview: {
         width: '80%',
         height: 50,
-
         marginTop: 20,
         borderRadius: 1,
+        borderColor:'red',
+        borderWidth:2,
         backgroundColor: Color.WHITE
     },
     restaurantCell: {

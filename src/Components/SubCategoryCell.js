@@ -24,8 +24,9 @@ const SubCategoryCell = (props) => {
     const { item } = props
     return (
         <TouchableOpacity style={styles.container} onPress={() => { props.navigation.navigate('ItemDetail', { detail: item }) }}>
+
             <View style={styles.imagecontainer}>
-                <Image resizeMode='contain' style={styles.image} source={{uri: Constants.dishImageUrl+item.imageName}}></Image>
+                <Image resizeMode='contain' style={styles.image} source={{ uri: Constants.dishImageUrl + item.imageName }}></Image>
 
             </View>
             <View style={styles.productcontainer}>
@@ -36,6 +37,7 @@ const SubCategoryCell = (props) => {
             <View style={styles.cartcontainer}>
                 <Image style={styles.addcart} source={addimage}></Image>
             </View>
+
         </TouchableOpacity>
     );
 };
@@ -44,23 +46,33 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
         marginVertical: 6,
-        height: 100,
+        height: 150,
         marginHorizontal: 20,
         borderRadius: 3,
         alignItems: 'center',
         backgroundColor: Color.WHITE
     },
+    innercontainer: {
+        flexDirection: 'row',
+        marginVertical: 6,
+        height: 100,
+        marginHorizontal: 20,
+        borderRadius: 3,
+        alignItems: 'center',
+        backgroundColor: Color.WHITE,
+    },
     imagecontainer: {
         height: '100%',
         flex: 1,
         justifyContent: 'flex-start',
-        marginTop: 10,
-        marginLeft: 5
+        marginLeft: 15,
+        marginRight:20,
+        marginTop:20,
     },
     image:
     {
-        height: 50,
-        width: 50
+        height: 60,
+        width: 60
     },
     addcart: {
         height: 15,
@@ -68,16 +80,16 @@ const styles = StyleSheet.create({
         alignSelf: 'center'
     },
     cartcontainer: {
-        height: 30,
+        height: 32,
         flex: 0.7,
         borderRadius: 1,
-        borderWidth: 2,
+        borderWidth: 3,
         justifyContent: 'center',
         alignSelf: 'flex-start',
-        marginTop: 8,
-        marginRight: 10,
+        marginTop: 12,
+        marginRight: 15,
         borderColor: Color.BLACK,
-        margin: 5
+
     },
     productcontainer: {
         height: '100%',
@@ -97,15 +109,15 @@ const styles = StyleSheet.create({
         marginLeft: 20,
         marginTop: 5,
         marginBottom: 5,
-        fontSize: 12,
-        fontWeight: '700',
-        color: 'gray'
+        fontSize: 18,
+        color: 'black'
     },
     priceTxt: {
         marginLeft: 20,
         fontSize: 18,
-        marginTop: 10,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        position:'absolute',
+        bottom:15
     }
 });
 export default SubCategoryCell;

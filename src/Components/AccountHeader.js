@@ -37,7 +37,7 @@ const AccountHeader = (props) => {
 const styles = StyleSheet.create({
     image: {
         flexDirection: 'row',
-        height: 120,
+        height: 130,
         width: '100%',
         justifyContent: 'center',
         alignItems: 'center'
@@ -47,6 +47,7 @@ const styles = StyleSheet.create({
         width: 70,
         backgroundColor: Color.WHITE,
         borderRadius: 35,
+        marginBottom:20,
         justifyContent: 'center',
         alignItems: 'center'
     },
@@ -55,7 +56,8 @@ const styles = StyleSheet.create({
         color: Color.BLUE
     },
     nameView: {
-        marginLeft: 10
+        marginLeft: 10,
+        marginBottom:20,
     },
     fname: {
         fontSize: 25,

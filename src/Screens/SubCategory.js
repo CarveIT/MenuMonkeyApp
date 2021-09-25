@@ -70,6 +70,8 @@ const SubCategory = (props) => {
         <View style={styles.searchView}>
           <TextInput
             style={styles.input}
+          
+            placeholderTextColor='white'
             placeholder={I18n.t('Search by name')}
           />
           <Image style={styles.searchIcon} source={searchImg} />
@@ -153,6 +155,7 @@ const styles = StyleSheet.create({
     height: 40,
     marginLeft: 10,
     fontSize: 16,
+    textAlign:'center',
     fontWeight: '500',
     color: Color.WHITE,
   }

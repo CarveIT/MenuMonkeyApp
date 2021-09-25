@@ -228,6 +228,7 @@ const styles = StyleSheet.create({
     color: Color.WHITE,
     fontStyle: 'italic',
     fontSize: 12,
+    padding:2,
     fontWeight: 'bold'
   },
   loginButton: {
