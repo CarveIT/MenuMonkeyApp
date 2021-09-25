@@ -31,15 +31,13 @@ import { LoginManager, AccessToken, GraphRequest, GraphRequestManager } from "re
 import { GoogleSignin, statusCodes } from '@react-native-community/google-signin';
 import stripe from 'tipsi-stripe'
 import I18n from 'i18n-js';
+import ForgetPasswordDialogue from '../Components/ForgetPasswordDialogue';
 
 const backIcon = require('../../assets/left-arrow.png')
 const monkeyImage = require('../../assets/monkey-2.jpg')
 const googleIcon = require('../../assets/google.png')
 const facebookIcon = require('../../assets/fb.png')
 const guestIcon = require('../../assets/guest.png')
-
-
-
 
 GoogleSignin.configure({
   webClientId: '651488950701-m7rcr4u2u8ct8736fep61r4tlu66j9k8.apps.googleusercontent.com',
@@ -60,8 +58,6 @@ stripe.setOptions({
   publishableKey: 'pk_test_51IQbsdE512fnYKTsUSqDKUOdhhmBOdyNB76uLhEzHINIETQ6sg5XO9IvzgOsTthQden6SIG9VTH8MgG6FNTE3EUC00bqQ7ltUo'
 })
 
-
-
 const Login = (props) => {
 
   const [email, setEmail] = useState('')
@@ -71,7 +67,8 @@ const Login = (props) => {
   const [signinForm, setSigninForm] = useState(false)
   const [userinfo, setuserinfo] = useState();
   const [token, settoken] = useState();
-
+  const [forgetForm, setForgetForm] = useState(false)
+  
   const validation = (password, confirmPassword) => {
     if (email == '' || password == '') {
       const obj = {
@@ -244,7 +241,7 @@ const Login = (props) => {
             onChangeText={(pass) => setPassword(pass)}
             onPressEyeButton={() => { setShowPassword(!showPassword) }}
           />
-          <TouchableOpacity style={styles.forgetButton}>
+          <TouchableOpacity style={styles.forgetButton} onPress={() => setForgetForm(true)}>
             <Text style={styles.forgetTitle}>{I18n.t('Forget') + " " + I18n.t('Password')}</Text>
           </TouchableOpacity>
           <Button
@@ -253,7 +250,7 @@ const Login = (props) => {
             loading={loading}
             onPress={() => { onLoginPress() }}
           />
-          <Text style={styles.forgetTitle}>{I18n.t('Login')+" "+I18n.t('with')}</Text>
+          <Text style={styles.forgetTitle}>{I18n.t('Login') + " " + I18n.t('with')}</Text>
           <View style={styles.socialView}>
             <SocialButton
               onPress={() => GooglesignIn()}
@@ -283,6 +280,9 @@ const Login = (props) => {
       {signinForm && <GuestSigninDialogue callback={(data) => {
         setSigninForm(data)
         props.navigation.replace('Landing')
+      }} />}
+      {forgetForm && <ForgetPasswordDialogue callback={(data) => {
+        setForgetForm(data)
       }} />}
     </SafeAreaView>
   );
