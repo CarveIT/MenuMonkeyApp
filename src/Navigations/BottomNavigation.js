@@ -37,7 +37,11 @@ const BottomNavigation = (props) => {
 
   return (
     // <NavigationContainer>
-    <Tab.Navigator>
+    <Tab.Navigator
+      tabBarOptions={{
+        style: { height: 60 }
+      }}
+    >
       <Tab.Screen
         name="HomeTab"
         component={HomeStack}
@@ -191,6 +195,7 @@ const styles = StyleSheet.create({
   activeiconbg: {
     height: 30,
     width: 30,
+    // marginTop: 10,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
@@ -200,6 +205,7 @@ const styles = StyleSheet.create({
   iconbg: {
     height: 30,
     width: 30,
+    // marginTop: 10,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
@@ -208,7 +214,8 @@ const styles = StyleSheet.create({
   },
   activecartbg: {
     height: 30,
-    width: 40,
+    // width: 40,
+    paddingHorizontal: 5,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
@@ -217,7 +224,8 @@ const styles = StyleSheet.create({
   },
   iconcartbg: {
     height: 30,
-    width: 40,
+    // width: 40,
+    paddingHorizontal: 5,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
@@ -228,12 +236,13 @@ const styles = StyleSheet.create({
     color: Color.WHITE,
     fontStyle: 'italic',
     fontSize: 12,
-    padding:2,
+    padding: 2,
     fontWeight: 'bold'
   },
   loginButton: {
     height: 20,
     paddingHorizontal: 5,
+    marginTop: 5,
     borderRadius: 10,
     backgroundColor: Color.GREEN
   },

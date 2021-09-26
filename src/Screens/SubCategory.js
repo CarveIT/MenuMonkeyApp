@@ -31,6 +31,7 @@ const searchImg = require('../../assets/search.png')
 const SubCategory = (props) => {
 
   const [dishes, setDishes] = useState([])
+  const [menu, setMenu] = useState(null)
 
   useEffect(() => {
     fetchFood('food/'+props.route.params.dishID)
@@ -50,6 +51,7 @@ const SubCategory = (props) => {
       // setLoading(false)
       if (data.dishes) {
         setDishes(data.dishes)
+        setMenu(data.menu)
       } else {
         Alert.alert('Error', data.error);
       }
@@ -62,7 +64,7 @@ const SubCategory = (props) => {
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle={'dark-content'} />
       <SubCatHeader
-        title={I18n.t('Search')}
+        title={menu != null && menu.name.charAt(0).toUpperCase() + menu.name.slice(1)} // Capitalising
         {...props}
         navigation={props.navigation} />
 

@@ -103,11 +103,11 @@ const styles = StyleSheet.create({
     backgroundColor: Color.WHITE
   },
   list: {
+    marginTop: 50,
     backgroundColor: Color.WHITE
   },
   logoutView: {
     justifyContent: 'center',
-
   },
   content: {
     flex: 1,

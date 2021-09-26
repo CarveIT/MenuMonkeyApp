@@ -113,7 +113,7 @@ const GuestSigninDialogue = (props) => {
                     onChangeText={(name) => setName(name)}
                 />
                 <ProfileInput
-                    placeholder={'Email Address'}
+                    placeholder={'Email'}
                     onChangeText={(email) => setEmail(email)}
                 />
                 <ProfileInput

@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
   },
   list: {
     position: 'absolute',
-    top: 45,
+    top: 70,
     width: '78%',
     alignSelf: 'center',
     backgroundColor: Color.WHITE

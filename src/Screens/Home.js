@@ -102,10 +102,14 @@ const Home = (props) => {
       // onEndReached={this.loadMore()}
       // ListFooterComponent={this.footerView}
       />
-      {showPickUp && <PickupView callback={(data) => {
-        setDineIn(data)
-        setShowPickUp(false)
-      }} />}
+      {showPickUp && <PickupView
+        callback={(data) => {
+          setDineIn(data)
+          setShowPickUp(false)
+        }}
+        onClose={(data) => {
+          setShowPickUp(false)
+        }} />}
       {!dineIn && <PickupDialogue
         date={date}
         callback={(data) => { setDineIn(data) }}

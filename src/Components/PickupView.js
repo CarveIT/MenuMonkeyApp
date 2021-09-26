@@ -43,7 +43,7 @@ const validation = (email) => {
 }
 
 const PickupView = (props) => {
-    const { callback } = props;
+    const { callback, onClose } = props;
     const [dineIn, setDineIn] = useState(true)
 
     const continueTapped = () => {
@@ -85,6 +85,9 @@ const PickupView = (props) => {
     return (
         <View style={styles.container}>
             <View style={styles.form}>
+                <TouchableOpacity style={styles.closeBtn} onPress={() => onClose(false)}>
+                    <Image resizeMode='contain' style={styles.closeImg} source={require('../../assets/red-cross.png')} />
+                </TouchableOpacity>
                 <View style={styles.locationSplitBtnView}>
                     <TouchableOpacity style={dineIn ? styles.selectedLocationBtn : styles.locationBtn} onPress={() => {
                         setDineIn(true)
@@ -114,6 +117,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center', alignItems: 'center'
     },
     form: {
+        height: 150,
         width: '80%',
         borderRadius: 8,
         justifyContent: 'center',

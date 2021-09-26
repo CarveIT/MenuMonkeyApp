@@ -135,7 +135,7 @@ const AddPaymentMethod = (props) => {
                         />}
                         {previousScreen == 'Checkout' && <Button
                             style={styles.btnContinue}
-                            title={I18n.t('Payments') + "" + ' >>'}
+                            title={I18n.t('Pay') + "" + ' >>'}
                             loading={loading}
                             onPress={() => continueTapped()}
                         />}
