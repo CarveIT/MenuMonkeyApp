@@ -46,7 +46,7 @@ const validation = (password, confirmPassword) => {
 }
 
 const AddPaymentMethod = (props) => {
-    const { callback, previousScreen } = props;
+    const { callback, previousScreen, total } = props;
     const [name, setName] = useState('')
     const [cardNo, setCardNo] = useState('')
     const [cvc, setCVC] = useState('')
@@ -66,7 +66,6 @@ const AddPaymentMethod = (props) => {
         formData.append('expiry_month', month)
         formData.append('expiry_year', year)
         addCardApi(formData, "card-save")
-
     }
 
     const addCardApi = (params, endPoint) => {
@@ -129,9 +128,9 @@ const AddPaymentMethod = (props) => {
                         />}
                         {previousScreen == 'Checkout' && <Button
                             style={styles.btnContinue}
-                            title={I18n.t('Total') + ': $2.1'}
+                            title={I18n.t('Total') + ': $'+total}
                             loading={loading}
-                            onPress={() => continueTapped()}
+                            // onPress={() => continueTapped()}
                         />}
                         {previousScreen == 'Checkout' && <Button
                             style={styles.btnContinue}

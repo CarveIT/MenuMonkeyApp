@@ -18,13 +18,17 @@ import {
 } from 'react-native';
 
 import Color from '../Utilities/Color';
+import Constants from '../Utilities/Constants';
 const image = require('../../assets/heart.png')
 
 const RestaurantSearchCell = (props) => {
     const { item, navigation } = props
 
     return (
-        <TouchableOpacity style={styles.container} onPress={() => props.navigation.navigate('Home')}>
+        <TouchableOpacity style={styles.container} onPress={() => {
+            Constants.selectedRestaurant = item
+            props.navigation.navigate('Home')
+        }}>
             <View>
                 <Text style={styles.title}>{item.name}</Text>
                 <Text style={styles.subTitle}>{item.address}</Text>

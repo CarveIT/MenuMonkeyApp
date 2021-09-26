@@ -29,7 +29,7 @@ import I18n from 'i18n-js';
 
 const searchImg = require('../../assets/search.png')
 const SubCategory = (props) => {
-
+  const [allDishes, setAllDishes] = useState([])
   const [dishes, setDishes] = useState([])
   const [menu, setMenu] = useState(null)
 
@@ -50,6 +50,7 @@ const SubCategory = (props) => {
       console.log(data)
       // setLoading(false)
       if (data.dishes) {
+        setAllDishes(data.dishes)
         setDishes(data.dishes)
         setMenu(data.menu)
       } else {
@@ -72,9 +73,9 @@ const SubCategory = (props) => {
         <View style={styles.searchView}>
           <TextInput
             style={styles.input}
-          
             placeholderTextColor='white'
             placeholder={I18n.t('Search by name')}
+            onChangeText={(txt) => setDishes(allDishes.filter(obj => obj.name.includes(txt.toLowerCase())))}
           />
           <Image style={styles.searchIcon} source={searchImg} />
         </View>

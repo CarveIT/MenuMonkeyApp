@@ -18,9 +18,16 @@ import I18n from 'i18n-js';
 const cardsImg = require('../../assets/cards.jpg')
 
 const CheckOut = (props) => {
+    const cartData = props.route.params.cartDetails
     const [tip, setTip] = useState(0)
     const [addPayment, setAddPayment] = useState(false)
+    const [total, setTotal] = useState(cartData.total)
 
+    const calculateTip = (tip) => {
+        let a = cartData.total * (tip / 100)
+        setTotal(cartData.total + a)
+    }
+    
     return (
         <SafeAreaView style={styles.container}>
             <SubCatHeader
@@ -42,25 +49,25 @@ const CheckOut = (props) => {
                 <View style={styles.billView}>
                     <View style={styles.row}>
                         <Text style={styles.leftTxt}>{I18n.t('Cost')}</Text>
-                        <Text style={styles.rightTxt}>{'$4'}</Text>
+                        <Text style={styles.rightTxt}>{'$'+cartData.subtotal}</Text>
                     </View>
                     <View style={styles.row}>
                         <Text style={styles.leftTxt}>{I18n.t('Tax')}</Text>
-                        <Text style={styles.rightTxt}>{'5%'}</Text>
+                        <Text style={styles.rightTxt}>{cartData.restauranttax+'%'}</Text>
                     </View>
                     <View style={styles.row}>
                         <Text style={styles.leftTxt}>{I18n.t('Tip')}</Text>
                         <View style={styles.tipView}>
-                            <TouchableOpacity style={styles.tipButton} onPress={() => setTip(18)}>
+                            <TouchableOpacity style={styles.tipButton} onPress={() => calculateTip(18)}>
                                 <Text style={styles.tipLbl}>{'18%'}</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity style={styles.tipButton} onPress={() => setTip(20)}>
+                            <TouchableOpacity style={styles.tipButton} onPress={() => calculateTip(20)}>
                                 <Text style={styles.tipLbl}>{'20%'}</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity style={styles.tipButton} onPress={() => setTip(23)}>
+                            <TouchableOpacity style={styles.tipButton} onPress={() => calculateTip(23)}>
                                 <Text style={styles.tipLbl}>{'23%'}</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity style={styles.tipButton} onPress={() => setTip(25)}>
+                            <TouchableOpacity style={styles.tipButton} onPress={() => calculateTip(25)}>
                                 <Text style={styles.tipLbl}>{'25%'}</Text>
                             </TouchableOpacity>
                         </View>
@@ -71,11 +78,12 @@ const CheckOut = (props) => {
                             inputview={styles.tipInputView}
                             input={styles.tipInput}
                             placeholder={I18n.t('Enter Cash Tip')}
+                            onChangeText= {(txt) => calculateTip(txt)}
                         />
                     </View>
                     <View style={styles.row}>
                         <Text style={styles.leftTxt}>{I18n.t('Total')}</Text>
-                        <Text style={styles.rightTxt}>{'$4.2'}</Text>
+                        <Text style={styles.rightTxt}>{'$'+total.toFixed(2)}</Text>
                     </View>
                 </View>
                 <TouchableOpacity style={styles.creditButton} onPress={() => setAddPayment(true)}>
@@ -94,7 +102,7 @@ const CheckOut = (props) => {
             {addPayment &&
                 <AddPaymentMethod
                     previousScreen={I18n.t('Checkout')}
-                    // cardInfo={}
+                    total={total}
                     callback={(data) => { setAddPayment(data) }}
                 />}
         </SafeAreaView>

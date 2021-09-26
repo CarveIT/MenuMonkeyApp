@@ -25,6 +25,9 @@ import Separator from '../Components/Separator';
 import { ItemSize } from '../Utilities/Enums';
 import ApiCalls from '../Services/ApiCalls';
 import I18n from 'i18n-js';
+import Constants from '../Utilities/Constants';
+import Key from '../Utilities/Keys';
+import { getObjectData, saveObjectData } from '../Utilities/Storage';
 
 const backImg = require('../../assets/left-arrow.png');
 const checkedImgradio = require('../../assets/checkedradio.png');
@@ -37,11 +40,21 @@ const ItemDetail = (props) => {
   const [size, setSize] = useState(0)
   const [sides, setSides] = useState([])
   const [count, setCount] = useState(1)
+  const [isFirstTime, setIsFirstTime] = useState(true)
   const [total, setTotal] = useState(+(props.route.params.detail.price))
   let price = +(props.route.params.detail.price)
+  let itemName = props.route.params.detail.name
+  let dishID = props.route.params.detail.id
+
   useEffect(() => {
+    // loadData()
     fetchDetails('upsell/' + props.route.params.detail.id)
   }, []);
+
+  // const loadData = async () => {
+  //   let cart = await getObjectData(Key.CART);
+  //   console.log({cart})
+  // }
 
   const upinputvalue = () => {
     setCount(prevCount => prevCount + 1)
@@ -67,6 +80,35 @@ const ItemDetail = (props) => {
     }, error => {
       Alert.alert('Error', error);
     })
+  }
+
+  const addToCart = () => {
+    console.log(details.dishItems.length)
+    details.dishItems.length > 0 && setIsFirstTime(false)
+    if (details.dishItems.length > 0 && sides.length == 0) {
+      return
+    }
+    // console.log('RESTAURANT')
+    // console.log(Constants.selectedRestaurant)
+    
+    let cartData = {}
+    cartData.restaurant = Constants.selectedRestaurant.id
+    cartData.dishID = dishID
+    cartData.quantity = count
+    console.log({ cartData })
+    
+    if (Constants.cart == null) {
+      let cartArray = []
+      cartArray.push(cartData)
+      Constants.cart = cartArray
+      saveObjectData(Key.CART, cartArray)
+    } else {
+      Constants.cart.push(cartData)
+      saveObjectData(Key.CART, Constants.cart)
+    }
+
+    console.log(Constants.cart)
+    props.navigation.navigate('CustomerFavorite', { total: total })
   }
 
   const SizeList = () => {
@@ -120,7 +162,7 @@ const ItemDetail = (props) => {
       <StatusBar barStyle={'dark-content'} />
       <TouchableOpacity style={styles.backBtn} onPress={() => props.navigation.goBack()}>
         <Image style={styles.backimg} source={backImg} />
-        <Text style={styles.header}>{props.route.params.detail.name}</Text>
+        <Text style={styles.header}>{itemName.charAt(0).toUpperCase() + itemName.slice(1)}</Text>
       </TouchableOpacity>
       <ScrollView contentContainerStyle={styles.scroller}>
         {/* <Text style={styles.header}>{props.route.params.detail.name.toUpperCase()}</Text> */}
@@ -131,6 +173,7 @@ const ItemDetail = (props) => {
             <Text style={styles.requiredTxt}>{I18n.t('Required')}</Text>
           </View>
         </View>
+        {/* {(sides.length == 0 && !isFirstTime) && <Text style={styles.errorTxt}>{'You have not selected any size'}</Text>} */}
         <Separator />
         <SizeList />
         <View style={styles.row}>
@@ -139,6 +182,8 @@ const ItemDetail = (props) => {
             <Text style={styles.requiredTxt}>{I18n.t('Required')}</Text>
           </View>
         </View>
+         
+        {(sides.length == 0 && !isFirstTime) && <Text style={styles.errorTxt}>{'You have not selected any item'}</Text>}
         <Separator />
         {/* <View style={styles.row}>
           <TouchableOpacity onPress={() => { setFree(!free) }}>
@@ -171,10 +216,10 @@ const ItemDetail = (props) => {
         <TextInput
           style={styles.input}
           placeholderTextColor={Color.LIGHTGRAY}
-          placeholder={'(suace ect.)'}
+          placeholder={'(sauce on the side)'}
         />
         <Separator customStyle={{ marginTop: 0 }} />
-        <TouchableOpacity style={styles.addCartBtn} onPress={() => props.navigation.navigate('CustomerFavorite', {total: total})}>
+        <TouchableOpacity style={styles.addCartBtn} onPress={() => addToCart()}>
           <Text style={styles.addCartTxt}>{I18n.t('Add to Cart')}</Text>
           <Text style={styles.totalTxt}>{"$" + total}</Text>
         </TouchableOpacity>
@@ -259,7 +304,7 @@ const styles = StyleSheet.create({
   },
   requiredView: {
     width: 80,
-    height: 20,
+    height: 25,
     marginRight: 10,
     borderRadius: 15,
     marginLeft: 'auto',
@@ -333,7 +378,10 @@ const styles = StyleSheet.create({
     color: 'green',
     alignSelf: 'flex-end',
     backgroundColor: Color.LIGHTGRAY
+  },
+  errorTxt: {
+    alignSelf: 'flex-start',
+    color: Color.RED
   }
-
 });
 export default ItemDetail;

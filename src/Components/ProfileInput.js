@@ -18,7 +18,7 @@ import Color from '../Utilities/Color';
 const ProfileInput = (props) => {
     const { placeholder, secureTextEntry, onChangeText, input, inputview, value} = props;
     return (
-        <View style={[styles.inputView,inputview]}>
+        <View style={[styles.inputView, inputview]}>
             <TextInput
                 style={[styles.input, input]}
                 value={value}

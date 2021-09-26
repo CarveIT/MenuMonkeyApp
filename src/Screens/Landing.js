@@ -108,6 +108,9 @@ const Landing = (props) => {
 
     const loadData = async () => {
         let user = await getObjectData(Key.USER);
+        let cart = await getObjectData(Key.CART);
+        cart == null ? dispatch(setcartCount(0)) : dispatch(setcartCount(cart.length))
+        Constants.cart = cart
         Constants.user = user
         console.log(Constants.user)
         if (Constants.user == null) {

@@ -27,27 +27,56 @@ import Constants from '../Utilities/Constants';
 import ApiCalls from '../Services/ApiCalls';
 import I18n from 'i18n-js';
 
-
 const Cart = (props) => {
   const [loading, setLoading] = useState(false)
   const [cartData, setcartData] = useState([])
   const [maindata, setmaindata] = useState({})
+  const [cartInfo, setCartInfo] = useState(null)
+  // let cartInfo = null
 
   useEffect(() => {
-    var formData = new FormData();
-    // formData.append('restaurant', Constants.selectedRestaurant.id)
-    formData.append('restaurant', '1')
-    formData.append('dish', '1,2')
-    formData.append('quantity', '2,1')
-    cartApi(formData, 'cart')
+    prepareData()
   }, []);
 
-  renderItem = ({ item }) => {
+  const renderItem = ({ item }) => {
     return (
       <CartCell
         item={item}
         navigation={props.navigation} />
     );
+  }
+
+  const prepareData = () => {
+    if (Constants.cart == null) {
+      return
+    }
+    let restaurantID = Constants.selectedRestaurant.id
+    let currentRestaurantItems = Constants.cart.filter(obj => obj.restaurant == restaurantID)
+    let dish = []
+    let quantity = []
+    for (let i = 0; i < currentRestaurantItems.length; i++) {
+      if (dish.includes(currentRestaurantItems[i].dishID)) {
+
+      } else {
+        dish.push(currentRestaurantItems[i].dishID)
+        // let sum = currentRestaurantItems.reduce((n, { dishID, quantity }) => n + quantity, 0)
+        let sum = 0
+        currentRestaurantItems.map((obj, index) => {
+          if (obj.dishID == currentRestaurantItems[i].dishID) {
+            sum = sum + obj.quantity
+          }
+        })
+        quantity.push(sum)
+      }
+    }
+    // dish = dish.join(',')
+    console.log({ dish, quantity })
+
+    var formData = new FormData();
+    formData.append('restaurant', Constants.selectedRestaurant.id)
+    formData.append('dish', dish.join(','))
+    formData.append('quantity', quantity.join(','))
+    cartApi(formData, 'cart')
   }
 
   const cartApi = (params, endPoint) => {
@@ -61,6 +90,7 @@ const Cart = (props) => {
       if (data.results) {
         setmaindata(data)
         setcartData(data.results)
+        setCartInfo(data)
       } else {
         Alert.alert('Error', data.error);
       }
@@ -75,7 +105,7 @@ const Cart = (props) => {
   // }
 
   const footerView = () => {
-    console.log({maindata})
+    console.log({ maindata })
     return (
 
       <View style={{ marginLeft: 30, marginRight: 30 }}>
@@ -95,12 +125,11 @@ const Cart = (props) => {
           </View>
           <View style={styles.costView}>
             <Text style={styles.costTxt}>{I18n.t('Total')}</Text>
-            <Text style={styles.costVal}>{'$'+maindata.total}</Text>
+            <Text style={styles.costVal}>{'$' + maindata.total}</Text>
           </View>
         </View>
         <TouchableOpacity style={styles.continue} onPress={() => {
-          Constants.user == null ? props.navigation.navigate('Login') : props.navigation.navigate('CheckOut')
-
+          Constants.user == null ? props.navigation.navigate('Login') : props.navigation.navigate('CheckOut', { cartDetails: cartInfo })
         }}>
           <Text style={styles.continueTxt}>{I18n.t('Continue')}</Text>
         </TouchableOpacity>
@@ -119,7 +148,7 @@ const Cart = (props) => {
         data={cartData}
         style={styles.list}
         renderItem={(item) => renderItem(item)}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.dish.id}
         // ListHeaderComponent={this.headerView}
         ListFooterComponentStyle={styles.footer}
         ListFooterComponent={footerView}
