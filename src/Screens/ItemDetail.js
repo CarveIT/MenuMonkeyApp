@@ -28,6 +28,9 @@ import I18n from 'i18n-js';
 import Constants from '../Utilities/Constants';
 import Key from '../Utilities/Keys';
 import { getObjectData, saveObjectData } from '../Utilities/Storage';
+import { useDispatch, useSelector } from 'react-redux';
+import { setcartCount } from '../Actions/updatecardactions';
+
 
 const backImg = require('../../assets/left-arrow.png');
 const checkedImgradio = require('../../assets/checkedradio.png');
@@ -36,6 +39,8 @@ const checkedImg = require('../../assets/checked.png');
 const uncheckedImg = require('../../assets/un-checked.png');
 
 const ItemDetail = (props) => {
+
+ 
   const [details, setDetails] = useState(null)
   const [size, setSize] = useState(0)
   const [sides, setSides] = useState([])
@@ -45,6 +50,9 @@ const ItemDetail = (props) => {
   let price = +(props.route.params.detail.price)
   let itemName = props.route.params.detail.name
   let dishID = props.route.params.detail.id
+  const dispatch=useDispatch()
+  const cartcount = useSelector(state => state.cartcount)
+  
 
   useEffect(() => {
     // loadData()
@@ -90,13 +98,13 @@ const ItemDetail = (props) => {
     }
     // console.log('RESTAURANT')
     // console.log(Constants.selectedRestaurant)
-    
+
     let cartData = {}
     cartData.restaurant = Constants.selectedRestaurant.id
     cartData.dishID = dishID
     cartData.quantity = count
     console.log({ cartData })
-    
+
     if (Constants.cart == null) {
       let cartArray = []
       cartArray.push(cartData)
@@ -107,6 +115,9 @@ const ItemDetail = (props) => {
       saveObjectData(Key.CART, Constants.cart)
     }
 
+    
+    console.log("CartC",cartcount)
+    dispatch(setcartCount(cartcount+1))
     console.log(Constants.cart)
     props.navigation.navigate('CustomerFavorite', { total: total })
   }
@@ -182,7 +193,7 @@ const ItemDetail = (props) => {
             <Text style={styles.requiredTxt}>{I18n.t('Required')}</Text>
           </View>
         </View>
-         
+
         {(sides.length == 0 && !isFirstTime) && <Text style={styles.errorTxt}>{'You have not selected any item'}</Text>}
         <Separator />
         {/* <View style={styles.row}>

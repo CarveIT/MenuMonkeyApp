@@ -7,7 +7,8 @@ import {
     TouchableOpacity,
     Text,
     View,
-    Image
+    Image,
+    Alert
 } from 'react-native';
 import SubCatHeader from '../Components/SubCatHeader';
 import ProfileInput from '../Components/ProfileInput';
@@ -40,28 +41,6 @@ const CheckOut = (props) => {
         let a = cartData.total * (tip / 100)
         setTotal(cartData.total + a)
     }
-
-    const handleCardPayPress = () => {
-        try {
-            const isCardValid = stripe.isCardValid({
-                number: '4242424242424242',
-                expMonth: 10,
-                expYear: 21,
-                cvc: '888',
-              });
-          console.log(token);
-          stripe.confirmPayment('client_secret_from_backend', cardDetails)
-          .then(result => {
-            // result of type PaymentResult
-          })
-          .catch(err =>{
-
-          })
-        } catch (error) {
-          // this.setState({ loading: false })
-        }
-      }
-    
     return (
         <SafeAreaView style={styles.container}>
             <SubCatHeader

@@ -71,6 +71,7 @@ const Favourites = (props) => {
         <SubCatHeader
           title={I18n.t("Favorites")}
           navigation={props.navigation}
+          counterstyle={{color:Color.WHITE}}
           backbtnstyle={{ tintColor: Color.WHITE }}
           cartimgstyle={{ tintColor: Color.WHITE }}
           subTitlestyle={styles.title} ></SubCatHeader>

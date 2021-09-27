@@ -26,7 +26,7 @@ import I18n from 'i18n-js';
 import stripe from 'react-native-stripe-payments';
 
 stripe.setOptions({
-    publishingKey:'pk_test_51IQbsdE512fnYKTsUSqDKUOdhhmBOdyNB76uLhEzHINIETQ6sg5XO9IvzgOsTthQden6SIG9VTH8MgG6FNTE3EUC00bqQ7ltUo'
+    publishingKey: 'pk_test_51IQbsdE512fnYKTsUSqDKUOdhhmBOdyNB76uLhEzHINIETQ6sg5XO9IvzgOsTthQden6SIG9VTH8MgG6FNTE3EUC00bqQ7ltUo'
 })
 
 const validation = (password, confirmPassword) => {
@@ -77,7 +77,7 @@ const AddPaymentMethod = (props) => {
         setLoading(true)
         ApiCalls.postApiCall(params, endPoint).then(data => {
             console.log("DATA");
-            console.log({data})
+            console.log({ data })
             setLoading(false)
             callback(false)
             if (!data.message) {
@@ -107,21 +107,22 @@ const AddPaymentMethod = (props) => {
                 expMonth: 10,
                 expYear: 21,
                 cvc: '345',
-              }
-        //   console.log(cardDetails);
-          stripe.confirmPayment('client_secret_from_backend', cardDetails)
-          .then(result => {
-              console.log(result)
-            // result of type PaymentResult
-          })
-          .catch(err =>{
-    console.log(err)
-          })
+            }
+            //   console.log(cardDetails);
+            stripe.confirmPayment('client_secret_from_backend', cardDetails)
+                .then(result => {
+                    console.log(result)
+                    // result of type PaymentResult
+                })
+                .catch(err => {
+                    Alert.alert('Alert',"Please provide a valid client secret from backend")
+                    console.log(err)
+                })
         } catch (error) {
-          // this.setState({ loading: false })
+            // this.setState({ loading: false })
         }
-      }
-    
+    }
+
 
     return (
         <View style={styles.container}>
@@ -167,9 +168,9 @@ const AddPaymentMethod = (props) => {
                         />}
                         {previousScreen == 'Checkout' && <Button
                             style={styles.btnContinue}
-                            title={I18n.t('Total') + ': $'+total}
+                            title={I18n.t('Total') + ': $' + total}
                             loading={loading}
-                            // onPress={() => continueTapped()}
+                        // onPress={() => continueTapped()}
                         />}
                         {previousScreen == 'Checkout' && <Button
                             style={styles.btnContinue}
@@ -196,7 +197,7 @@ const AddPaymentMethod = (props) => {
         </View>
     );
 
-    
+
 };
 
 const styles = StyleSheet.create({
