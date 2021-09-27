@@ -20,7 +20,7 @@ import {
 import Color from '../Utilities/Color';
 
 const Button = (props) => {
-    const { title, style, onPress, loading = false } = props
+    const { title, style, onPress, titlestyle, loading = false } = props
 
     const Loader = () => {
         return (
@@ -33,7 +33,7 @@ const Button = (props) => {
     
     return (
         !loading ? <TouchableOpacity style={[styles.container, style]} onPress={onPress}>
-            <Text style={styles.title}>{title}</Text>
+            <Text style={[styles.title,titlestyle]}>{title}</Text>
         </TouchableOpacity> :
         <Loader/>
 

@@ -109,19 +109,26 @@ const GuestSigninDialogue = (props) => {
                     <Image resizeMode='contain' style={styles.closeImg} source={require('../../assets/red-cross.png')} />
                 </TouchableOpacity>
                 <ProfileInput
+                    inputview={styles.inputview}
                     placeholder={'Name'}
+                    input={styles.input}
                     onChangeText={(name) => setName(name)}
                 />
                 <ProfileInput
+                    inputview={styles.inputview}
+                    input={styles.input}
                     placeholder={'Email'}
                     onChangeText={(email) => setEmail(email)}
                 />
                 <ProfileInput
+                    inputview={styles.inputview}
                     placeholder={'Phone'}
+                    input={styles.input}
                     onChangeText={(phn) => setPhone(phn)}
                 />
                 <View style={styles.btnRow}>
                     <Button
+                        titlestyle={{ fontSize: 25 }}
                         style={styles.btnContinue}
                         title={'Sign in'}
                         loading={loading}
@@ -145,14 +152,17 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '115%',
         backgroundColor: '#00000099',
+        // alignItems:'center'
         justifyContent: 'center', alignItems: 'center'
     },
     form: {
         width: '80%',
         borderRadius: 8,
+        // position:'absolute',
+        // top:170,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: Color.BLUE
+        backgroundColor: Color.BG_BLUE
     },
     headingView: {
         width: '100%',
@@ -160,13 +170,13 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     heading: {
-        fontSize: 20,
+        fontSize: 30,
         fontWeight: 'bold',
         marginTop: 20,
         color: Color.WHITE
     },
     subHeading: {
-        // fontSize: 20,
+        fontSize: 15,
         // fontWeight: 'bold',
         // marginTop: 20,
         color: Color.WHITE
@@ -175,25 +185,42 @@ const styles = StyleSheet.create({
         position: 'absolute',
         top: 5,
         right: 5,
-        width: 30,
-        height: 30,
+        borderRadius: 16.5,
+        backgroundColor: 'white',
+        color: 'white',
+        width: 33,
+        alignContent: 'center',
+        justifyContent: 'center',
+        height: 33,
     },
     closeImg: {
         width: 30,
-        height: 30
+        height: 30,
+        alignSelf: 'center'
+
+
     },
     btnRow: {
         flexDirection: 'row',
         marginHorizontal: 15,
-        marginVertical: 20
+        marginVertical: 10,
     },
     btnContinue: {
-        flex: 0.7,
+        flex: 0.6,
         marginRight: 5
     },
     btnCancel: {
         flex: 1,
         marginLeft: 5
+    },
+    inputview: {
+        width: '95%',
+        borderRadius: 10,
+        marginTop: 15,
+
+    },
+    input: {
+        fontSize: 25
     }
 
 });

@@ -16,6 +16,7 @@ import {
   TouchableOpacity,
   Text,
   View,
+  Image,
   FlatList
 } from 'react-native';
 
@@ -31,6 +32,7 @@ const SearchRestaurant = (props) => {
   const [restaurants, setRestaurants] = useState([])
   const [searchRestaurants, setSearchRestaurants] = useState([])
   const [searchText, setSearchText] = useState('')
+  const searchImg = require('../../assets/search.png')
 
   useEffect(() => {
     setRestaurants([Constants.selectedRestaurant])
@@ -88,32 +90,38 @@ const SearchRestaurant = (props) => {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle={'dark-content'} />
-      <View style={{ backgroundColor: Color.BG_GRAY }}>
+      <View style={{ backgroundColor: Color.WHITE }}>
         <SubCatHeader
           title={I18n.t('Search') + " " + I18n.t('Result')}
           navigation={props.navigation}
-          backbtnstyle={{ tintColor: Color.WHITE }}
-          cartimgstyle={{ tintColor: Color.WHITE }}
+          backbtnstyle={{ tintColor: Color.BLACK }}
+          cartimgstyle={{ tintColor: Color.BLACK }}
           subTitlestyle={styles.title} ></SubCatHeader>
       </View>
-      <ProfileInput
-        inputview={styles.inputview}
-        value={searchText}
-        input={styles.profileInput}
-        placeholder={I18n.t('Enter Address or location')}
-        onChangeText={(text) => {
-          console.log(text)
-          setSearchText(text)
-          if (text == '') {
-            setRestaurants([Constants.selectedRestaurant])
-            return
-          }
-          var formData = new FormData();
-          formData.append('keyword', text)
-          getRestaurants(formData, 'get-restaurants')
+      <View style={styles.searchcontainer}>
+        <View style={styles.searchview}>
+          <ProfileInput
+            inputview={styles.inputview}
+            value={searchText}
+            placeholderTextColor={Color.WHITE}
+            input={styles.profileInput}
+            placeholder={I18n.t('Enter Address or location')}
+            onChangeText={(text) => {
+              console.log(text)
+              setSearchText(text)
+              if (text == '') {
+                setRestaurants([Constants.selectedRestaurant])
+                return
+              }
+              var formData = new FormData();
+              formData.append('keyword', text)
+              getRestaurants(formData, 'get-restaurants')
 
-        }}
-      />
+            }}
+          />
+          <Image style={styles.searchIcon} source={searchImg} />
+        </View>
+      </View>
       <RestaurantList />
       <FlatList
         data={restaurants}
@@ -135,31 +143,55 @@ const styles = StyleSheet.create({
     backgroundColor: Color.BG_GRAY
   },
   title: {
-    color: Color.WHITE,
-    fontWeight: 'bold'
+    color: Color.RED,
+    fontWeight: 'bold',
+    fontSize: 20
   },
   profileInput: {
     width: '100%',
-    borderRadius: 3,
     color: Color.BLACK,
+    backgroundColor: Color.BLUE,
+    justifyContent: 'center',
+    alignSelf: 'center',
     textAlign: 'center'
-
   },
   inputview: {
-    width: '80%',
+    width: '60%',
     height: 50,
-    marginTop: 20,
-    borderRadius: 4,
-    backgroundColor: Color.WHITE
+    marginTop: 0,
+    backgroundColor: Color.BLUE
   },
   restaurantCell: {
     width: '80%',
     height: 60,
-    marginTop: 2,
+    marginTop: 10,
     justifyContent: 'center',
     alignItems: 'center',
     alignSelf: 'center',
     backgroundColor: Color.WHITE
+  },
+  searchIcon: {
+    width: 25,
+    height: 25,
+    marginRight: 20,
+    tintColor: Color.WHITE
+  },
+  searchview: {
+    backgroundColor: Color.BLUE,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 3,
+    marginTop: 3,
+    marginBottom: 10
+  },
+  searchcontainer: {
+    marginTop: 2,
+    width: '100%',
+    backgroundColor: Color.WHITE,
+    justifyContent: 'center',
+    alignItems: 'center'
   }
+
 });
 export default SearchRestaurant;

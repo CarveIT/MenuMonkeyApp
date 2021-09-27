@@ -14,8 +14,19 @@ import ProfileInput from '../Components/ProfileInput';
 import Color from '../Utilities/Color';
 import AddPaymentMethod from '../Components/AddPaymentMethod';
 import I18n from 'i18n-js';
+import stripe from 'react-native-stripe-payments';
+
+stripe.setOptions({
+    publishingKey:'pk_test_51IQbsdE512fnYKTsUSqDKUOdhhmBOdyNB76uLhEzHINIETQ6sg5XO9IvzgOsTthQden6SIG9VTH8MgG6FNTE3EUC00bqQ7ltUo'
+})
+
 
 const cardsImg = require('../../assets/cards.jpg')
+
+// stripe.setOptions({
+//     publishableKey: 'pk_test_51IQbsdE512fnYKTsUSqDKUOdhhmBOdyNB76uLhEzHINIETQ6sg5XO9IvzgOsTthQden6SIG9VTH8MgG6FNTE3EUC00bqQ7ltUo'
+//   })
+
 
 const CheckOut = (props) => {
     const cartData = props.route.params.cartDetails
@@ -23,10 +34,33 @@ const CheckOut = (props) => {
     const [addPayment, setAddPayment] = useState(false)
     const [total, setTotal] = useState(cartData.total)
 
+ 
+
     const calculateTip = (tip) => {
         let a = cartData.total * (tip / 100)
         setTotal(cartData.total + a)
     }
+
+    const handleCardPayPress = () => {
+        try {
+            const isCardValid = stripe.isCardValid({
+                number: '4242424242424242',
+                expMonth: 10,
+                expYear: 21,
+                cvc: '888',
+              });
+          console.log(token);
+          stripe.confirmPayment('client_secret_from_backend', cardDetails)
+          .then(result => {
+            // result of type PaymentResult
+          })
+          .catch(err =>{
+
+          })
+        } catch (error) {
+          // this.setState({ loading: false })
+        }
+      }
     
     return (
         <SafeAreaView style={styles.container}>
@@ -216,6 +250,7 @@ const styles = StyleSheet.create({
         height: 30,
         width: 100,
         paddingHorizontal: 0,
+        paddingVertical:0,
         marginLeft: 'auto',
         marginTop: 0,
         borderWidth: 1,
@@ -227,6 +262,7 @@ const styles = StyleSheet.create({
         width: '100%',
         height: 30,
         fontSize: 12,
+        paddingVertical:0,
         paddingHorizontal: 0,
         borderRadius: 3,
         includeFontPadding: true,

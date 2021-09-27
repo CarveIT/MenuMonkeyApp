@@ -23,6 +23,11 @@ import { ChangePasswordStatus } from '../Utilities/Enums';
 import PaymentInput from './PaymentInput';
 import ApiCalls from '../Services/ApiCalls';
 import I18n from 'i18n-js';
+import stripe from 'react-native-stripe-payments';
+
+stripe.setOptions({
+    publishingKey:'pk_test_51IQbsdE512fnYKTsUSqDKUOdhhmBOdyNB76uLhEzHINIETQ6sg5XO9IvzgOsTthQden6SIG9VTH8MgG6FNTE3EUC00bqQ7ltUo'
+})
 
 const validation = (password, confirmPassword) => {
     if (password == '' || confirmPassword == '') {
@@ -72,10 +77,13 @@ const AddPaymentMethod = (props) => {
         setLoading(true)
         ApiCalls.postApiCall(params, endPoint).then(data => {
             console.log("DATA");
-            console.log(data)
+            console.log({data})
             setLoading(false)
             callback(false)
             if (!data.message) {
+                console.log(data)
+                handleCardPayPress()
+
             } else {
                 Alert.alert('Error', data.message);
             }
@@ -83,6 +91,37 @@ const AddPaymentMethod = (props) => {
             Alert.alert('Error', error);
         })
     }
+
+    const handleCardPayPress = async () => {
+        console.log("Here")
+        try {
+            // const isCardValid = stripe.isCardValid({
+            //     number: cardNo,
+            //     expMonth: month,
+            //     expYear: year,
+            //     cvc: cvc,
+            //   });
+
+            const cardDetails = {
+                number: cardNo,
+                expMonth: 10,
+                expYear: 21,
+                cvc: '345',
+              }
+        //   console.log(cardDetails);
+          stripe.confirmPayment('client_secret_from_backend', cardDetails)
+          .then(result => {
+              console.log(result)
+            // result of type PaymentResult
+          })
+          .catch(err =>{
+    console.log(err)
+          })
+        } catch (error) {
+          // this.setState({ loading: false })
+        }
+      }
+    
 
     return (
         <View style={styles.container}>
@@ -156,6 +195,8 @@ const AddPaymentMethod = (props) => {
             </View>
         </View>
     );
+
+    
 };
 
 const styles = StyleSheet.create({

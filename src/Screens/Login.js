@@ -29,9 +29,9 @@ import Constants from '../Utilities/Constants';
 import GuestSigninDialogue from '../Components/GuestSigninDialogue';
 import { LoginManager, AccessToken, GraphRequest, GraphRequestManager } from "react-native-fbsdk";
 import { GoogleSignin, statusCodes } from '@react-native-community/google-signin';
-import stripe from 'tipsi-stripe'
 import I18n from 'i18n-js';
 import ForgetPasswordDialogue from '../Components/ForgetPasswordDialogue';
+import stripe from 'tipsi-stripe'
 
 const backIcon = require('../../assets/left-arrow.png')
 const monkeyImage = require('../../assets/monkey-2.jpg')
@@ -54,10 +54,6 @@ GoogleSignin.configure({
   // iosClientId: '<FROM DEVELOPER CONSOLE>', // [iOS] optional, if you want to specify the client ID of type iOS (otherwise, it is taken from GoogleService-Info.plist)
 });
 
-stripe.setOptions({
-  publishableKey: 'pk_test_51IQbsdE512fnYKTsUSqDKUOdhhmBOdyNB76uLhEzHINIETQ6sg5XO9IvzgOsTthQden6SIG9VTH8MgG6FNTE3EUC00bqQ7ltUo'
-})
-
 const Login = (props) => {
 
   const [email, setEmail] = useState('')
@@ -68,7 +64,7 @@ const Login = (props) => {
   const [userinfo, setuserinfo] = useState();
   const [token, settoken] = useState();
   const [forgetForm, setForgetForm] = useState(false)
-  
+
   const validation = (password, confirmPassword) => {
     if (email == '' || password == '') {
       const obj = {
@@ -291,7 +287,7 @@ const Login = (props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Color.WHITE
+    backgroundColor: Color.BG_BLUE
   },
   header: {
     // flexDirection: 'row',
@@ -307,7 +303,10 @@ const styles = StyleSheet.create({
   },
   monkeyImage: {
     width: '100%',
-    height: '100%'
+    height: '100%',
+    // position:'absolute',
+    // bottom:10
+
   },
   backButton: {
     position: 'absolute',
@@ -318,6 +317,7 @@ const styles = StyleSheet.create({
   formContainer: {
     flex: 1,
     marginTop: -20,
+    marginBottom: 50,
     paddingTop: 30,
     alignItems: 'center',
     borderTopRightRadius: 20,
