@@ -6,7 +6,7 @@
  * @flow strict-local
  */
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     StyleSheet,
     View,
@@ -59,6 +59,11 @@ const AddPaymentMethod = (props) => {
     const [year, setYear] = useState('')
     const [loading, setLoading] = useState(false)
 
+
+    useEffect(() => {
+        fetchCards('bill')
+    }, []);
+
     const continueTapped = () => {
         // let validate = validation(password, confirmPassword)
         // if (validate.valid == false) {
@@ -92,6 +97,27 @@ const AddPaymentMethod = (props) => {
         })
     }
 
+    const fetchCards = (endPoint) => {
+        // setLoading(true)
+        ApiCalls.getApiCall(endPoint).then(data => {
+            console.log("DATA");
+            console.log(data)
+            // setLoading(false)
+            if (data.card) {
+                handlingCardNumber(data.card[data.card.length - 1].card_number)
+                setCVC(data.card[data.card.length - 1].cvc)
+                setMonth(data.card[data.card.length - 1].expiry_month)
+                setYear(data.card[data.card.length - 1].expiry_year)
+                console.log(data.card[data.card.length - 1].card_number)
+
+            } else {
+                Alert.alert('Error', data.error);
+            }
+        }, error => {
+            Alert.alert('Error', error);
+        })
+    }
+
     const handleCardPayPress = async () => {
         console.log("Here")
         try {
@@ -115,12 +141,15 @@ const AddPaymentMethod = (props) => {
                     // result of type PaymentResult
                 })
                 .catch(err => {
-                    Alert.alert('Alert',"Please provide a valid client secret from backend")
+                    Alert.alert('Alert', "Please provide a valid client secret from backend")
                     console.log(err)
                 })
         } catch (error) {
             // this.setState({ loading: false })
         }
+    }
+    const handlingCardNumber = (number) => {
+        setCardNo(number.replace(/\s?/g, '').replace(/(\d{4})/g, '$1 ').trim())
     }
 
 
@@ -133,21 +162,25 @@ const AddPaymentMethod = (props) => {
                         <Image resizeMode='contain' style={styles.closeImg} source={require('../../assets/red-cross.png')} />
                     </TouchableOpacity>
                     <PaymentInput
+
                         label={I18n.t('Name on Card')}
                         onChangeText={(name) => setName(name)}
                     />
                     <PaymentInput
+                        defaultvalue={cardNo}
                         label={I18n.t('Card Number')}
-                        onChangeText={(no) => setCardNo(no)}
+                        onChangeText={(no) => handlingCardNumber(no)}
                     />
                     <View style={styles.fieldRow}>
                         <PaymentInput
+                            defaultvalue={cvc}
                             containerStyle={{ flex: 1, marginRight: 5 }}
                             label={'CVC'}
                             placeholder={'ex. 311'}
                             onChangeText={(cvc) => setCVC(cvc)}
                         />
                         <PaymentInput
+                            defaultvalue={month}
                             containerStyle={{ flex: 1, marginLeft: 5 }}
                             label={I18n.t('Expiration')}
                             placeholder={'MM'}
@@ -155,8 +188,9 @@ const AddPaymentMethod = (props) => {
                         />
                     </View>
                     <PaymentInput
+                        defaultvalue={year}
                         containerStyle={{ width: '50%' }}
-                        placeholder={'YYYY'}
+                        placeholder={'YY'}
                         onChangeText={(yyyy) => setYear(yyyy)}
                     />
                     <View style={{ flex: 1, height: 50, marginTop: 10 }}>

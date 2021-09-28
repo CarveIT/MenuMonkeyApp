@@ -21,12 +21,13 @@ import Color from '../Utilities/Color';
 const eyeIcon = require('../../assets/eye.png')
 
 const PaymentInput = (props) => {
-    const { placeholder, secureTextEntry, onChangeText, showRightIcon = false, onPressEyeButton, label, containerStyle } = props;
+    const { placeholder, secureTextEntry, onChangeText, defaultvalue, showRightIcon = false, onPressEyeButton, label, containerStyle } = props;
     return (
         <View style={[styles.container, containerStyle]}>
             <Text style={styles.label}>{label}</Text>
             <View style={styles.inputView}>
                 <TextInput
+                    value={defaultvalue}
                     style={styles.input}
                     placeholder={placeholder}
                     placeholderTextColor='gray'
@@ -70,7 +71,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: 'bold',
         color: Color.GRAY
-    } 
+    }
 
 });
 export default PaymentInput;
