@@ -129,7 +129,7 @@ const Cart = (props) => {
           </View>
         </View>
         <TouchableOpacity style={styles.continue} onPress={() => {
-          Constants.user == null ? props.navigation.navigate('Login') : props.navigation.navigate('CheckOut', { cartDetails: cartInfo })
+          Constants.user == null ? props.navigation.navigate('Login', { cartDetails: cartInfo }) : props.navigation.navigate('CheckOut', { cartDetails: cartInfo })
         }}>
           <Text style={styles.continueTxt}>{I18n.t('Continue')}</Text>
         </TouchableOpacity>
