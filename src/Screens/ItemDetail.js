@@ -17,7 +17,8 @@ import {
   View,
   Image,
   TextInput,
-  Alert
+  Alert,
+  ImageBackground
 } from 'react-native';
 
 import Color from '../Utilities/Color';
@@ -40,7 +41,7 @@ const uncheckedImg = require('../../assets/un-checked.png');
 
 const ItemDetail = (props) => {
 
- 
+
   const [details, setDetails] = useState(null)
   const [size, setSize] = useState(0)
   const [sides, setSides] = useState([])
@@ -50,9 +51,9 @@ const ItemDetail = (props) => {
   let price = +(props.route.params.detail.price)
   let itemName = props.route.params.detail.name
   let dishID = props.route.params.detail.id
-  const dispatch=useDispatch()
+  const dispatch = useDispatch()
   const cartcount = useSelector(state => state.cartcount)
-  
+
 
   useEffect(() => {
     // loadData()
@@ -115,9 +116,9 @@ const ItemDetail = (props) => {
       saveObjectData(Key.CART, Constants.cart)
     }
 
-    
-    console.log("CartC",cartcount)
-    dispatch(setcartCount(cartcount+1))
+
+    console.log("CartC", cartcount)
+    dispatch(setcartCount(cartcount + 1))
     console.log(Constants.cart)
     props.navigation.navigate('CustomerFavorite', { total: total })
   }
@@ -230,6 +231,25 @@ const ItemDetail = (props) => {
           placeholder={'(sauce on the side)'}
         />
         <Separator customStyle={{ marginTop: 0 }} />
+
+        <View style={{ flexDirection: 'row', width: '100%', alignItems: 'center', alignContent: 'center' }}>
+          <TouchableOpacity style={styles.menutag}>
+            <ImageBackground source={require('../../assets/tag-left.png')} tintColor='blue' style={{ width: '100%', height: '100%', }}>
+              <View style={styles.menulabel}>
+                <Text style={styles.menutitle}>{I18n.t('Menu')}</Text>
+              </View>
+            </ImageBackground>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.carttag}>
+            <ImageBackground source={require('../../assets/tag-right.png')} tintColor='blue' style={{ width: '100%', height: '100%', }}>
+              <View style={styles.cartlabel}>
+                <Text style={styles.carttitle}>{I18n.t('Cart')}</Text>
+              </View>
+            </ImageBackground>
+          </TouchableOpacity>
+        </View>
+
         <TouchableOpacity style={styles.addCartBtn} onPress={() => addToCart()}>
           <Text style={styles.addCartTxt}>{I18n.t('Add to Cart')}</Text>
           <Text style={styles.totalTxt}>{"$" + total}</Text>
@@ -250,12 +270,61 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     backgroundColor: Color.WHITE
   },
+  menutag: {
+    height: 40,
+    width: 60,
+    alignSelf: 'flex-start',
+    marginTop: 5,
+    alignItems: 'center'
+  },
+  carttag: {
+    height: 40,
+    width: 60,
+    alignSelf: 'flex-end',
+    position: 'absolute',
+    right: 0,
+    marginTop: 10,
+    alignItems: 'center'
+  },
+  cartlabel: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  carttitle: {
+    width: 50,
+    color: Color.WHITE,
+    fontWeight: 'bold',
+    justifyContent: 'center',
+    textAlign: 'left',
+    paddingLeft: 5
+  },
   backBtn: {
     marginLeft: 10,
     marginTop: 20,
     marginBottom: 20,
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  menulabel: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  menutitle: {
+    width: 50,
+    color: Color.WHITE,
+    fontWeight: 'bold',
+    textAlign: 'right',
+    paddingRight: 5
   },
   upvaluecontainer: {
     height: 20,

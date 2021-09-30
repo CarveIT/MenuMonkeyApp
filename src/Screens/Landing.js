@@ -141,9 +141,12 @@ const Landing = (props) => {
         // setLoading(true)
         ApiCalls.postApiCall(params, endPoint).then(data => {
             console.log("DATA");
-            console.log(data)
+            console.log({data})
+            // Alert.alert(data)
             // setLoading(false)
             if (data.location != "error") {
+                // response location will be show in place of ibadan ok?
+                
             } else {
                 Alert.alert('Error', data.message);
             }
