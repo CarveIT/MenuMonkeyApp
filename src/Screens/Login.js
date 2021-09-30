@@ -32,6 +32,8 @@ import { GoogleSignin, statusCodes } from '@react-native-community/google-signin
 import I18n from 'i18n-js';
 import ForgetPasswordDialogue from '../Components/ForgetPasswordDialogue';
 import stripe from 'tipsi-stripe'
+import { saveData, saveObjectData } from '../Utilities/Storage';
+import Key from '../Utilities/Keys';
 
 const backIcon = require('../../assets/left-arrow.png')
 const monkeyImage = require('../../assets/monkey-2.jpg')
@@ -205,6 +207,7 @@ const Login = (props) => {
         Constants.user = user
         saveData(Key.ACCESS_TOKEN, data.success.token)
         saveObjectData(Key.USER, user)
+        props.navigation.replace('CheckOut', { cartDetails: props.route.params.cartDetails })
       } else {
         Alert.alert('Error', data.error);
       }

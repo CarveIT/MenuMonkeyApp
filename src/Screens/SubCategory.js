@@ -37,7 +37,7 @@ const SubCategory = (props) => {
     fetchFood('food/'+props.route.params.dishID)
   }, []);
 
-  renderItem = ({ item }) => {
+  const renderItem = ({ item }) => {
     return (
       <SubCategoryCell item={item} {...props} />
     );
