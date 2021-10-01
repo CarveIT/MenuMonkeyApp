@@ -195,6 +195,19 @@ const Login = (props) => {
     }
   }
 
+  const redirect = () => {
+    switch (props.route.params.previousScreen) {
+      case 'Cart':
+        props.navigation.replace('CheckOut', { cartDetails: props.route.params.cartDetails })
+        break;
+      case 'Tab':
+        props.navigation.goBack()
+        break
+      default:
+        break;
+    }
+  }
+
   const loginApi = (params, endPoint) => {
     setLoading(true)
     ApiCalls.postApiCall(params, endPoint).then(data => {
@@ -207,7 +220,7 @@ const Login = (props) => {
         Constants.user = user
         saveData(Key.ACCESS_TOKEN, data.success.token)
         saveObjectData(Key.USER, user)
-        props.navigation.replace('CheckOut', { cartDetails: props.route.params.cartDetails })
+        redirect()
       } else {
         Alert.alert('Error', data.error);
       }

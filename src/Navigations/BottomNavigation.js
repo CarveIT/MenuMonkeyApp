@@ -29,7 +29,7 @@ const BottomNavigation = (props) => {
 
   const LoginButton = () => {
     return (
-      <TouchableOpacity style={styles.loginButton} onPress={() => props.navigation.navigate('Login')}>
+      <TouchableOpacity style={styles.loginButton} onPress={() => props.navigation.navigate('Login', { previousScreen: 'Tab'})}>
         <Text style={styles.loginLbl}>{I18n.t('Sign in')}</Text>
       </TouchableOpacity>
     )
