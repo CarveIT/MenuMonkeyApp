@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
     btnContinue: {
         flex: 0.5,
         marginRight: 5,
-        backgroundColor: Color.RED
+        backgroundColor: Color.GREEN
     },
     btnCancel: {
         flex: 1,

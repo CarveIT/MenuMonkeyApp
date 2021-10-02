@@ -40,7 +40,7 @@ const RestaurantSearchCell = (props) => {
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
-        width: '50%',
+        width: '90%',
         marginVertical: 5,
         marginHorizontal: 20,
         borderRadius: 7,
@@ -55,6 +55,7 @@ const styles = StyleSheet.create({
         fontWeight: '700'
     },
     subTitle: {
+        marginTop: 10,
         marginLeft: 25,
         marginBottom: 5,
         fontSize: 15,

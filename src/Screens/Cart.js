@@ -170,8 +170,8 @@ const styles = StyleSheet.create({
   },
   addMore: {
     width: 180,
-    height: 30,
-    borderRadius: 15,
+    height: 40,
+    borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',
     alignSelf: 'center',

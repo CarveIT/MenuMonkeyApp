@@ -55,10 +55,6 @@ const Landing = (props) => {
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState(null);
     const [auth, setAuth] = useState(I18n.t('Sign in'))
-    const [items, setItems] = useState([
-        { label: 'Ibadan', value: 'Ibadan' },
-        { label: 'French', value: 'French' }
-    ]);
     const [date, setDate] = useState(moment().toDate());
     const [time, setTime] = useState();
     const [mode, setMode] = useState('date');
@@ -220,7 +216,7 @@ const Landing = (props) => {
                 <Image style={styles.banner} resizeMode='contain' source={require('../../assets/banner.png')} />
                 {/* <View style={styles.titleView}>{i18n.t('welcome')} */}
                 <View style={styles.titleView}>
-                    <Text style={styles.title}>{I18n.t('Are you at') + " Ibadan?"}</Text>
+                    <Text style={styles.title}>{I18n.t('Are you at') + "\nIbadan?"}</Text>
                 </View>
                 <View style={styles.splitBtnView}>
                     <TouchableOpacity style={yesBtn ? styles.selectedSplitBtn : styles.splitBtn} onPress={() => setYesBtn(true)}>
@@ -338,7 +334,7 @@ const styles = StyleSheet.create({
     },
     titleView: {
         width: '70%',
-        height: 45,
+        height: 60,
         marginTop: 30,
         alignSelf: 'center',
         alignItems: 'center',
@@ -348,6 +344,7 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 20,
         fontWeight: '900',
+        textAlign: 'center',
         color: Color.WHITE
     },
     splitBtnView: {

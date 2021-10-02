@@ -158,7 +158,7 @@ const ItemDetail = (props) => {
           <View key={'checkContainer' + index} style={{ width: '100%' }}>
             <View key={'checkRow' + index} style={styles.row}>
               <TouchableOpacity key={'checkBtn' + index} onPress={() => { appendSide(index) }}>
-                <Image key={'checkImg' + index} style={styles.checked} source={sides.includes(index) ? checkedImg : uncheckedImg} />
+                <Image key={'checkImg' + index} style={styles.checked} source={sides.includes(index) ? checkedImgradio : uncheckedImgradio} />
               </TouchableOpacity>
               <Text key={'checkTxt' + index} style={styles.sizeTxt}>{obj.name}</Text>
             </View>
@@ -234,15 +234,15 @@ const ItemDetail = (props) => {
 
         <View style={{ flexDirection: 'row', width: '100%', alignItems: 'center', alignContent: 'center' }}>
           <TouchableOpacity style={styles.menutag}>
-            <ImageBackground source={require('../../assets/tag-left.png')} tintColor='blue' style={{ width: '100%', height: '100%', }}>
+            <ImageBackground source={require('../../assets/tag-left.png')} tintColor={Color.BLUE} style={{ width: '100%', height: '100%', }}>
               <View style={styles.menulabel}>
                 <Text style={styles.menutitle}>{I18n.t('Menu')}</Text>
               </View>
             </ImageBackground>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.carttag}>
-            <ImageBackground source={require('../../assets/tag-right.png')} tintColor='blue' style={{ width: '100%', height: '100%', }}>
+          <TouchableOpacity style={styles.carttag} onPress={() => addToCart()}>
+            <ImageBackground source={require('../../assets/tag-right.png')} tintColor={Color.BLUE} style={{ width: '100%', height: '100%', }}>
               <View style={styles.cartlabel}>
                 <Text style={styles.carttitle}>{I18n.t('Cart')}</Text>
               </View>
@@ -348,6 +348,7 @@ const styles = StyleSheet.create({
     height: 20,
     width: 60,
     marginHorizontal: 2,
+    textAlign: 'center',
     paddingLeft: 2,
     borderWidth: 1,
     borderRadius: 1,
@@ -355,8 +356,8 @@ const styles = StyleSheet.create({
   },
   backimg: {
     marginLeft: 10,
-    height: 20,
-    width: 20,
+    height: 30,
+    width: 30,
     tintColor: Color.BLACK
   },
   scroller: {
@@ -383,8 +384,8 @@ const styles = StyleSheet.create({
     fontWeight: 'bold'
   },
   requiredView: {
-    width: 80,
-    height: 25,
+    width: 100,
+    height: 30,
     marginRight: 10,
     borderRadius: 15,
     marginLeft: 'auto',

@@ -91,7 +91,9 @@ const styles = StyleSheet.create({
     backgroundColor: Color.WHITE
   },
   title: {
-    color: Color.BLACK, fontWeight: 'bold'
+    fontSize: 20,
+    color: Color.RED, 
+    fontWeight: 'bold'
   }
 });
 export default PastOrders;

@@ -27,7 +27,7 @@ const CustomerFavoriteCell = (props) => {
         <View style={styles.container}>
             <Image resizeMode='contain' style={styles.menu} source={{uri: Constants.dishImageUrl+item.dish.imageName}} />
             <View style={styles.centerView}>
-                <Text style={styles.status}>{item.dish.name}</Text>
+                <Text style={styles.status}>{item.dish.name.charAt(0).toUpperCase() + item.dish.name.slice(1)}</Text>
                 <TouchableOpacity style={styles.addButton} onPress={() => navigation.navigate('ItemDetail')}>
                     <Image style={styles.plusImage} source={plusIcon}></Image>
                 </TouchableOpacity>
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     statusVal: {
         marginTop: 20,
         alignSelf: 'flex-start',
-        fontSize: 13,
+        fontSize: 16,
         color: 'gray'
     },
     order: {

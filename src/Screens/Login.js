@@ -27,6 +27,7 @@ import SocialButton from '../Components/SocialButton';
 import ApiCalls from '../Services/ApiCalls';
 import Constants from '../Utilities/Constants';
 import GuestSigninDialogue from '../Components/GuestSigninDialogue';
+import SignupDialogue from '../Components/SignupDialogue';
 import { LoginManager, AccessToken, GraphRequest, GraphRequestManager } from "react-native-fbsdk";
 import { GoogleSignin, statusCodes } from '@react-native-community/google-signin';
 import I18n from 'i18n-js';
@@ -63,9 +64,8 @@ const Login = (props) => {
   const [showPassword, setShowPassword] = useState(false)
   const [loading, setLoading] = useState(false)
   const [signinForm, setSigninForm] = useState(false)
-  const [userinfo, setuserinfo] = useState();
-  const [token, settoken] = useState();
   const [forgetForm, setForgetForm] = useState(false)
+  const [signupForm, setSignupForm] = useState(false)
 
   const validation = (password, confirmPassword) => {
     if (email == '' || password == '') {
@@ -271,6 +271,8 @@ const Login = (props) => {
             />
             <SocialButton
               onPress={() => loginWithFacebook()}
+              iconViewStyle={{backgroundColor: Color.BG_BLUE}}
+              iconStyle={{ width: 30, height: 30 }}
               icon={facebookIcon}
               title={'Facebook'}
             />
@@ -279,11 +281,10 @@ const Login = (props) => {
             icon={guestIcon}
             title={I18n.t('Guest')}
             onPress={() => setSigninForm(true)}
-          // onPress={() => handleCardPayPress()}
           />
           <View style={styles.signupView}>
             <Text style={styles.signupTitle}>{I18n.t('Dont have an account')}</Text>
-            <TouchableOpacity style={styles.forgetButton} onPress={() => props.navigation.navigate('Register')}>
+            <TouchableOpacity style={styles.forgetButton} onPress={() => setSignupForm(true)}>
               <Text style={styles.forgetTitle}>{I18n.t('Sign Up')}</Text>
             </TouchableOpacity>
           </View>
@@ -291,10 +292,12 @@ const Login = (props) => {
       </View>
       {signinForm && <GuestSigninDialogue callback={(data) => {
         setSigninForm(data)
-        props.navigation.replace('Landing')
       }} />}
       {forgetForm && <ForgetPasswordDialogue callback={(data) => {
         setForgetForm(data)
+      }} />}
+      {signupForm && <SignupDialogue callback={(data) => {
+        setSignupForm(data)
       }} />}
     </SafeAreaView>
   );
@@ -327,12 +330,11 @@ const styles = StyleSheet.create({
   backButton: {
     position: 'absolute',
     top: 5,
-    left: 0,
-    marginRight: 0,
+    left: 0
   },
   formContainer: {
-    flex: 1,
-    marginTop: -20,
+    // flex: 1,
+    marginTop: -40,
     marginBottom: 50,
     paddingTop: 30,
     alignItems: 'center',
@@ -341,6 +343,7 @@ const styles = StyleSheet.create({
     backgroundColor: Color.WHITE
   },
   forgetButton: {
+    // position: 'absolute',
     alignSelf: 'flex-end',
     marginRight: 20,
     marginVertical: 20
@@ -365,7 +368,7 @@ const styles = StyleSheet.create({
   },
   signupView: {
     flexDirection: 'row',
-    marginTop: 20,
+    // marginTop: 20,
     alignItems: 'center'
   },
   signupTitle: {
@@ -376,8 +379,8 @@ const styles = StyleSheet.create({
   backImage: {
     marginStart: 10,
     marginTop: 10,
-    height: 15,
-    width: 15
+    height: 30,
+    width: 30
   }
 });
 

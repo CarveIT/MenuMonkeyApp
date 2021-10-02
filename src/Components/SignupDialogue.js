@@ -25,12 +25,15 @@ import ProfileInput from './ProfileInput';
 import { ChangePasswordStatus } from '../Utilities/Enums';
 import ApiCalls from '../Services/ApiCalls';
 import Constants from '../Utilities/Constants';
+import I18n from 'i18n-js';
 
-const GuestSigninDialogue = (props) => {
+const SignupDialogue = (props) => {
     const { callback } = props;
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [phone, setPhone] = useState('')
+    const [password, setPassword] = useState('')
+    const [confirmPassword, setConfirmPassword] = useState('')
     const [loading, setLoading] = useState(false)
 
     const continueTapped = () => {
@@ -51,10 +54,17 @@ const GuestSigninDialogue = (props) => {
     }
 
     const validation = () => {
-        if (name == '' || phone == '' || email == '') {
+        if (name == '' || phone == '' || email == '' || password == '' || confirmPassword == '') {
             const obj = {
                 valid: false,
                 error: 'All fields is required'
+            }
+            return obj;
+        }
+        if (confirmPassword == password) {
+            const obj = {
+                valid: false,
+                error: 'Password mismatched'
             }
             return obj;
         }
@@ -63,6 +73,13 @@ const GuestSigninDialogue = (props) => {
             const obj = {
                 valid: false,
                 error: 'Please enter valid email format.'
+            }
+            return obj
+        }
+        if (password.length < 8) {
+            const obj = {
+                valid: false,
+                error: 'The password must be at least 8 characters.'
             }
             return obj
         }
@@ -102,35 +119,46 @@ const GuestSigninDialogue = (props) => {
         <View style={styles.container}>
             <View style={styles.form}>
                 <View style={styles.headingView}>
-                    <Text style={styles.heading}>{'Welcome'}</Text>
-                    <Text style={styles.subHeading}>{'Hello! Sign in as Guest'}</Text>
+                    <Text style={styles.heading}>{I18n.t('Sign Up')}</Text>
                 </View>
                 <TouchableOpacity style={styles.closeBtn} onPress={() => callback(false)}>
                     <Image resizeMode='contain' style={styles.closeImg} source={require('../../assets/red-cross.png')} />
                 </TouchableOpacity>
                 <ProfileInput
                     inputview={styles.inputview}
-                    placeholder={'Name'}
+                    placeholder={I18n.t('Name')}
                     input={styles.input}
                     onChangeText={(name) => setName(name)}
                 />
                 <ProfileInput
                     inputview={styles.inputview}
                     input={styles.input}
-                    placeholder={'Email'}
+                    placeholder={I18n.t('Mobile')}
+                    onChangeText={(mob) => setPhone(mob)}
+                />
+                <ProfileInput
+                    inputview={styles.inputview}
+                    placeholder={I18n.t('Email')}
+                    input={styles.input}
                     onChangeText={(email) => setEmail(email)}
                 />
                 <ProfileInput
                     inputview={styles.inputview}
-                    placeholder={'Phone'}
+                    placeholder={I18n.t('Password')}
                     input={styles.input}
-                    onChangeText={(phn) => setPhone(phn)}
+                    onChangeText={(pass) => setPassword(pass)}
+                />
+                <ProfileInput
+                    inputview={styles.inputview}
+                    placeholder={I18n.t('Confirm Password')}
+                    input={styles.input}
+                    onChangeText={(cPass) => setConfirmPassword(cPass)}
                 />
                 <View style={styles.btnRow}>
                     <Button
                         titlestyle={{ fontSize: 25 }}
                         style={styles.btnContinue}
-                        title={'Sign in'}
+                        title={I18n.t('Sign Up')}
                         loading={loading}
                         onPress={() => continueTapped()}
                     />
@@ -170,7 +198,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     heading: {
-        fontSize: 30,
+        fontSize: 25,
         fontWeight: 'bold',
         marginTop: 20,
         color: Color.WHITE
@@ -224,4 +252,4 @@ const styles = StyleSheet.create({
     }
 
 });
-export default GuestSigninDialogue;
+export default SignupDialogue;

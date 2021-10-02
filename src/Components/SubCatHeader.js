@@ -70,8 +70,8 @@ const styles = StyleSheet.create({
         marginStart: 10,
     },
     backBtn: {
-        width: 15,
-        height: 15,
+        width: 30,
+        height: 30,
         alignSelf: 'center',
         tintColor: Color.BLACK
     },

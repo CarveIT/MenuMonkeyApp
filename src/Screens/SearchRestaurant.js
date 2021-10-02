@@ -159,6 +159,8 @@ const styles = StyleSheet.create({
     width: '60%',
     height: 50,
     marginTop: 0,
+    paddingHorizontal: 0,
+    marginLeft: 5,
     backgroundColor: Color.BLUE
   },
   restaurantCell: {

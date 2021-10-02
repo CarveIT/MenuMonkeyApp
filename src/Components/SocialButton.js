@@ -20,11 +20,11 @@ import {
 import Color from '../Utilities/Color';
 
 const SocialButton = (props) => {
-    const { title, style, onPress, icon } = props
+    const { title, style, onPress, icon, iconViewStyle, iconStyle } = props
     return (
         <TouchableOpacity style={[styles.container, style]} onPress={onPress}>
-            <View style={styles.iconView}>
-                <Image resizeMode='contain' style={styles.icon} source={icon} />
+            <View style={[styles.iconView, iconViewStyle]}>
+                <Image resizeMode='contain' style={[styles.icon, iconStyle]} source={icon} />
             </View>
             <Text style={styles.title}>{title}</Text>
         </TouchableOpacity>
