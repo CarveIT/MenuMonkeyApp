@@ -233,7 +233,7 @@ const ItemDetail = (props) => {
         <Separator customStyle={{ marginTop: 0 }} />
 
         <View style={{ flexDirection: 'row', width: '100%', alignItems: 'center', alignContent: 'center' }}>
-          <TouchableOpacity style={styles.menutag}>
+          <TouchableOpacity style={styles.menutag} onPress={() => props.navigation.goBack()}>
             <ImageBackground source={require('../../assets/tag-left.png')} tintColor={Color.BLUE} style={{ width: '100%', height: '100%', }}>
               <View style={styles.menulabel}>
                 <Text style={styles.menutitle}>{I18n.t('Menu')}</Text>
