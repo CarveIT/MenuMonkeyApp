@@ -169,8 +169,9 @@ const styles = StyleSheet.create({
     marginTop: 20
   },
   addMore: {
-    width: 180,
+    // width: 210,
     height: 40,
+    padding:10,
     borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',

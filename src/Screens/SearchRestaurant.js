@@ -100,6 +100,7 @@ const SearchRestaurant = (props) => {
       </View>
       <View style={styles.searchcontainer}>
         <View style={styles.searchview}>
+        {/* <View style={{flexShrink:1,backgroundColor:'red',flexDirection:'row'}}> */}
           <ProfileInput
             inputview={styles.inputview}
             value={searchText}
@@ -157,7 +158,8 @@ const styles = StyleSheet.create({
   },
   inputview: {
     width: '60%',
-    height: 50,
+    // height: 50,
+    // flexWrap:'wrap',
     marginTop: 0,
     paddingHorizontal: 0,
     marginLeft: 5,
@@ -179,6 +181,7 @@ const styles = StyleSheet.create({
     tintColor: Color.WHITE
   },
   searchview: {
+    flexShrink:1,
     backgroundColor: Color.BLUE,
     flexDirection: 'row',
     alignItems: 'center',

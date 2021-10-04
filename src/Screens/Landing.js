@@ -137,12 +137,12 @@ const Landing = (props) => {
         // setLoading(true)
         ApiCalls.postApiCall(params, endPoint).then(data => {
             console.log("DATA");
-            console.log({data})
+            console.log({ data })
             // Alert.alert(data)
             // setLoading(false)
             if (data.location != "error") {
-                // response location will be show in place of ibadan ok?
-                
+                // response location will be show in place of ibadan ok? 
+
             } else {
                 Alert.alert('Error', data.message);
             }
@@ -216,7 +216,7 @@ const Landing = (props) => {
                 <Image style={styles.banner} resizeMode='contain' source={require('../../assets/banner.png')} />
                 {/* <View style={styles.titleView}>{i18n.t('welcome')} */}
                 <View style={styles.titleView}>
-                    <Text style={styles.title}>{I18n.t('Are you at') + "\nIbadan?"}</Text>
+                    <Text style={styles.title}>{I18n.t('Are you at') + " Ibadan?"}</Text>
                 </View>
                 <View style={styles.splitBtnView}>
                     <TouchableOpacity style={yesBtn ? styles.selectedSplitBtn : styles.splitBtn} onPress={() => setYesBtn(true)}>
@@ -237,6 +237,7 @@ const Landing = (props) => {
                 {!yesBtn && <ProfileInput
                     inputview={styles.inputview}
                     input={styles.profileInput}
+
                     placeholder={I18n.t('Enter Address or location')}
                     onChangeText={(text) => {
                         console.log(text)
@@ -302,7 +303,7 @@ const Landing = (props) => {
             <View style={{ position: 'absolute', bottom: 10, right: 10 }}>
                 <View style={{ flexDirection: 'row' }}>
                     {/* <Image style={{ width: 50, height: 50 }} resizeMode='contain' source={Langimg}></Image> */}
-                   <Text style={{textAlign:'center',alignSelf:'center',marginTop:10}}>{lang=="es"?"Spanish":"English"}</Text>
+                    <Text style={{ textAlign: 'center', alignSelf: 'center', marginTop: 10 }}>{lang == "es" ? "Spanish" : "English"}</Text>
                     <View style={{ width: 30 }}>
                         <OptionsMenu
                             button={require('../../assets/down-arrow.png')}
@@ -470,8 +471,10 @@ const styles = StyleSheet.create({
         height: 50,
         marginTop: 20,
         borderRadius: 1,
-        borderColor:'red',
-        borderWidth:2,
+        borderColor: 'red',
+        borderWidth: 2,
+        paddingHorizontal: 20,
+        // paddingVertical: 10,
         backgroundColor: Color.WHITE
     },
     restaurantCell: {
