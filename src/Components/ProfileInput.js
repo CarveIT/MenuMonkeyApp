@@ -47,9 +47,8 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
         fontSize: 16,
         color: 'black',
-        // textAlign: 'center',
         textAlign: 'center',
-      flex: 1,
+        flex: 1,
         backgroundColor: Color.WHITE
     }
 });

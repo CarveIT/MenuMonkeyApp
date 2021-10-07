@@ -50,7 +50,6 @@ const HomeHeader = (props) => {
     }
 
     const share = async () => {
-        console.log('SHARE')
         try {
             await Linking.openURL('https://www.facebook.com');
         } catch {
@@ -58,14 +57,12 @@ const HomeHeader = (props) => {
         }
     }
 
-    return (
+    return ( 
         <View style={styles.container}>
             <View>
                 <Text style={styles.title}>{title}</Text>
                 <Text style={styles.subTitle}>{subTitle}</Text>
-
             </View>
-
             <TouchableOpacity style={styles.heartView} onPress={() => add()}>
                 <Image style={styles.heart} source={image} />
             </TouchableOpacity>

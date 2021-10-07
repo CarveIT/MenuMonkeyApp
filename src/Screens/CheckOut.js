@@ -143,12 +143,14 @@ const styles = StyleSheet.create({
         height: 40,
         borderRadius: 25,
         borderColor: Color.BLACK,
-        borderWidth: 1
+        borderWidth: 1,
+        // backgroundColor: 'yellow'
     },
     tableInput: {
         // paddingHorizontal: 0,
         width: '100%',
         borderRadius: 25,
+        // backgroundColor: 'red'
     },
     addMore: {
         width: '100%',
@@ -189,7 +191,7 @@ const styles = StyleSheet.create({
     creditButton: {
         width: '100%',
         height: 35,
-        borderRadius: 15,
+        borderRadius: 17,
         marginTop: 5,
         justifyContent: 'center',
         alignItems: 'center',
@@ -245,7 +247,8 @@ const styles = StyleSheet.create({
         paddingHorizontal: 0,
         borderRadius: 3,
         includeFontPadding: true,
-        textAlignVertical: 'center'
+        textAlignVertical: 'center',
+        textAlign: 'center'
         // backgroundColor: 'blue'
     },
     tipView: {

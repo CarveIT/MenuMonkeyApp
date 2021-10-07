@@ -237,7 +237,6 @@ const Landing = (props) => {
                 {!yesBtn && <ProfileInput
                     inputview={styles.inputview}
                     input={styles.profileInput}
-
                     placeholder={I18n.t('Enter Address or location')}
                     onChangeText={(text) => {
                         console.log(text)
@@ -463,8 +462,7 @@ const styles = StyleSheet.create({
         width: '100%',
         borderRadius: 3,
         color: Color.BLACK,
-        textAlign: 'center'
-
+        // textAlign: 'center'
     },
     inputview: {
         width: '80%',
@@ -475,7 +473,7 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         paddingHorizontal: 20,
         // paddingVertical: 10,
-        backgroundColor: Color.WHITE
+        backgroundColor: Color.RED
     },
     restaurantCell: {
         width: '80%',
@@ -484,7 +482,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         alignSelf: 'center',
-        backgroundColor: Color.WHITE
+        backgroundColor: Color.YELLOW
     }
 });
 

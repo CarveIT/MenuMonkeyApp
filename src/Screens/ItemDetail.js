@@ -272,14 +272,14 @@ const styles = StyleSheet.create({
   },
   menutag: {
     height: 40,
-    width: 60,
+    width: 65,
     alignSelf: 'flex-start',
     marginTop: 5,
     alignItems: 'center'
   },
   carttag: {
     height: 40,
-    width: 60,
+    width: 65,
     alignSelf: 'flex-end',
     position: 'absolute',
     right: 0,
@@ -347,7 +347,7 @@ const styles = StyleSheet.create({
   txtcount: {
     height: 20,
     width: 60,
-    marginHorizontal: 2,
+    fontSize: 12,
     textAlign: 'center',
     paddingLeft: 2,
     borderWidth: 1,
