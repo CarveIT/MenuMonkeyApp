@@ -44,7 +44,9 @@ const ItemDetail = (props) => {
 
   const [details, setDetails] = useState(null)
   const [size, setSize] = useState(0)
+  const [sizes, setSizes] = useState([])
   const [sides, setSides] = useState([])
+  const [optionals, setOptionals] = useState([])
   const [count, setCount] = useState(1)
   const [isFirstTime, setIsFirstTime] = useState(true)
   const [total, setTotal] = useState(+(props.route.params.detail.price))
@@ -58,6 +60,7 @@ const ItemDetail = (props) => {
   useEffect(() => {
     // loadData()
     fetchDetails('upsell/' + props.route.params.detail.id)
+
   }, []);
 
   // const loadData = async () => {
@@ -83,6 +86,10 @@ const ItemDetail = (props) => {
       // setLoading(false)
       if (data.dish) {
         setDetails(data)
+        let tempSizes = getSizes(data.dishsizes, data.allsizes)
+        console.log('tempSizes')
+        console.log(tempSizes)
+        setSizes(tempSizes)
       } else {
         Alert.alert('Error', data.error);
       }
@@ -123,9 +130,25 @@ const ItemDetail = (props) => {
     props.navigation.navigate('CustomerFavorite', { total: total })
   }
 
+  const getSizes = (dishSizes, allSizes) => {
+    let temp = []
+    // if (details != null) {
+      
+      for (var i=0; i < dishSizes.length; i++) {
+        for(var j=0; j < allSizes.length; j++) {
+          if (dishSizes[i].size_id == allSizes[j].id) {
+            temp.push(allSizes[j])
+          }
+        }
+      }
+      
+    // }
+    return temp
+  }
+
   const SizeList = () => {
     return (
-      (details != null) && details.allsizes.map((obj, index) => {
+      (details != null) && sizes.map((obj, index) => {
         return (
           <View key={'container' + index} style={{ width: '100%' }}>
             <View key={'row' + index} style={styles.row}>
@@ -151,7 +174,53 @@ const ItemDetail = (props) => {
     setSides(temp)
   }
 
+  const appendOptional = (index) => {
+    let temp = [...optionals]
+    if (temp.indexOf(index) == -1) {
+      temp.push(index)
+    } else {
+      temp = temp.filter(obj => obj != index)
+    }
+    setOptionals(temp)
+  }
+
   const SideList = () => {
+    return (
+      (details != null) && details.dishItems.map((obj, index) => {
+        return (
+          <View key={'checkContainer' + index} style={{ width: '100%' }}>
+            <View key={'checkRow' + index} style={styles.row}>
+              <TouchableOpacity key={'checkBtn' + index} onPress={() => { appendSide(index) }}>
+                <Image key={'checkImg' + index} style={styles.checked} source={sides.includes(index) ? checkedImgradio : uncheckedImgradio} />
+              </TouchableOpacity>
+              <Text key={'checkTxt' + index} style={styles.sizeTxt}>{obj.name}</Text>
+            </View>
+            <Separator />
+          </View>
+        )
+      })
+    )
+  }
+
+  const OptionalItems = () => {
+    return (
+      (details != null) && details.optionalItems.map((obj, index) => {
+        return (
+          <View key={'checkContainer' + index} style={{ width: '100%' }}>
+            <View key={'checkRow' + index} style={styles.row}>
+              <TouchableOpacity key={'checkBtn' + index} onPress={() => { appendOptional(index) }}>
+                <Image key={'checkImg' + index} style={styles.checked} source={optionals.includes(index) ? checkedImgradio : uncheckedImgradio} />
+              </TouchableOpacity>
+              <Text key={'checkTxt' + index} style={styles.sizeTxt}>{obj.name}</Text>
+            </View>
+            <Separator />
+          </View>
+        )
+      })
+    )
+  }
+
+  const RequiredItems = () => {
     return (
       (details != null) && details.dishItems.map((obj, index) => {
         return (
@@ -180,21 +249,33 @@ const ItemDetail = (props) => {
         {/* <Text style={styles.header}>{props.route.params.detail.name.toUpperCase()}</Text> */}
         {/* <Separator /> */}
         <View style={styles.row}>
-          <Text style={styles.subHeading}>{I18n.t('Select') + " " + I18n.t('Size')}</Text>
+          <Text style={styles.subHeading}>{details != null && details.SelectItemText.size_name}</Text>
           <View style={styles.requiredView}>
             <Text style={styles.requiredTxt}>{I18n.t('Required')}</Text>
           </View>
         </View>
+        {/* <Text style={styles.selectUpto}>{I18n.t('Select Upto')+' '+details.SelectItemText.select_upto_item}</Text> */}
         {/* {(sides.length == 0 && !isFirstTime) && <Text style={styles.errorTxt}>{'You have not selected any size'}</Text>} */}
         <Separator />
-        <SizeList />
+        {(sizes != 0) && <SizeList />}
         <View style={styles.row}>
-          <Text style={styles.subHeading}>{I18n.t('Select') + " " + I18n.t('Side')}</Text>
+          <Text style={styles.subHeading}>{details != null && details.SelectItemText.item_name}</Text>
           <View style={styles.requiredView}>
             <Text style={styles.requiredTxt}>{I18n.t('Required')}</Text>
           </View>
         </View>
-
+        <Text style={styles.selectUpto}>{I18n.t('Select Upto') + ' ' + (details != null && details.SelectItemText.select_upto_item)}</Text>
+        {/* {(sides.length == 0 && !isFirstTime) && <Text style={styles.errorTxt}>{'You have not selected any size'}</Text>} */}
+        <Separator />
+        {/* <SizeList /> */}
+        <RequiredItems />
+        <View style={styles.row}>
+          <Text style={styles.subHeading}>{details != null && details.SelectItemText.optional_name}</Text>
+          <View style={styles.requiredView}>
+            <Text style={styles.requiredTxt}>{I18n.t('Optional')}</Text>
+          </View>
+        </View>
+        <Text style={styles.selectUpto}>{I18n.t('Select Upto') + ' ' + (details != null && details.SelectItemText.select_upto_optional)}</Text>
         {(sides.length == 0 && !isFirstTime) && <Text style={styles.errorTxt}>{'You have not selected any item'}</Text>}
         <Separator />
         {/* <View style={styles.row}>
@@ -204,8 +285,8 @@ const ItemDetail = (props) => {
           <Text style={styles.sizeTxt}>{'Free'}</Text>
         </View>
         <Separator /> */}
-        <SideList />
-
+        {/* <SideList /> */}
+        <OptionalItems />
         <View style={styles.row}>
           <Text style={styles.subHeading}>{I18n.t('Quantity')}</Text>
         </View>
@@ -259,8 +340,6 @@ const ItemDetail = (props) => {
   );
 
 };
-
-
 
 const styles = StyleSheet.create({
   container: {
@@ -463,6 +542,10 @@ const styles = StyleSheet.create({
   errorTxt: {
     alignSelf: 'flex-start',
     color: Color.RED
+  },
+  selectUpto: {
+    marginTop: 10,
+    alignSelf: 'flex-start'
   }
 });
 export default ItemDetail;

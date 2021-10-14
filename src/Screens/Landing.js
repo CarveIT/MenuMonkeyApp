@@ -352,7 +352,7 @@ const styles = StyleSheet.create({
         height: 40,
         width: 150,
         marginTop: 10,
-        borderRadius: 20,
+        // borderRadius: 20,
         alignSelf: 'center',
         justifyContent: 'center',
         alignItems: 'center',
@@ -362,14 +362,14 @@ const styles = StyleSheet.create({
         flex: 1,
         height: 40,
         fontSize: 20,
-        borderRadius: 20,
+        // borderRadius: 20,
         justifyContent: 'center',
         backgroundColor: Color.WHITE
     },
     splitBtn: {
         flex: 1,
         height: 40,
-        borderRadius: 20,
+        // borderRadius: 20,
         justifyContent: 'center',
     },
     btnTxt: {
@@ -473,7 +473,7 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         paddingHorizontal: 20,
         // paddingVertical: 10,
-        backgroundColor: Color.RED
+        backgroundColor: Color.WHITE
     },
     restaurantCell: {
         width: '80%',
@@ -482,7 +482,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         alignSelf: 'center',
-        backgroundColor: Color.YELLOW
+        backgroundColor: Color.WHITE
     }
 });
 
