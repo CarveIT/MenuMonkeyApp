@@ -104,6 +104,14 @@ const ItemDetail = (props) => {
     if (details.dishItems.length > 0 && sides.length == 0) {
       return
     }
+
+    if (sides.length > details.SelectItemText.select_upto_item) {
+      return
+    }
+
+    if (optionals.length > details.SelectItemText.select_upto_optional) {
+      return
+    }
     // console.log('RESTAURANT')
     // console.log(Constants.selectedRestaurant)
 
@@ -133,15 +141,14 @@ const ItemDetail = (props) => {
   const getSizes = (dishSizes, allSizes) => {
     let temp = []
     // if (details != null) {
-      
-      for (var i=0; i < dishSizes.length; i++) {
-        for(var j=0; j < allSizes.length; j++) {
-          if (dishSizes[i].size_id == allSizes[j].id) {
-            temp.push(allSizes[j])
-          }
+    for (var i = 0; i < dishSizes.length; i++) {
+      for (var j = 0; j < allSizes.length; j++) {
+        if (dishSizes[i].size_id == allSizes[j].id) {
+          temp.push(allSizes[j])
         }
       }
-      
+    }
+
     // }
     return temp
   }
@@ -265,7 +272,24 @@ const ItemDetail = (props) => {
           </View>
         </View>
         <Text style={styles.selectUpto}>{I18n.t('Select Upto') + ' ' + (details != null && details.SelectItemText.select_upto_item)}</Text>
-        {/* {(sides.length == 0 && !isFirstTime) && <Text style={styles.errorTxt}>{'You have not selected any size'}</Text>} */}
+        {/* {
+          (sides.length == 0 && !isFirstTime) &&
+          <Text style={styles.errorTxt}>{'You have not selected any size'}</Text>
+        } */}
+        {(() => {
+          if (sides.length == 0 && !isFirstTime) {
+            return (
+              <Text style={styles.errorTxt}>{'You have not selected any size'}</Text>
+            )
+          } else if (details != null && sides.length > details.SelectItemText.select_upto_item && !isFirstTime) {
+            return (
+              <Text style={styles.errorTxt}>{I18n.t('Please Select Upto') + ' ' + (details != null && details.SelectItemText.select_upto_item)}</Text>
+            )
+          }
+
+          return null;
+        })()}
+
         <Separator />
         {/* <SizeList /> */}
         <RequiredItems />
@@ -276,7 +300,9 @@ const ItemDetail = (props) => {
           </View>
         </View>
         <Text style={styles.selectUpto}>{I18n.t('Select Upto') + ' ' + (details != null && details.SelectItemText.select_upto_optional)}</Text>
-        {(sides.length == 0 && !isFirstTime) && <Text style={styles.errorTxt}>{'You have not selected any item'}</Text>}
+        {(details != null && optionals.length > details.SelectItemText.select_upto_optional && !isFirstTime) &&
+          <Text style={styles.errorTxt}>{I18n.t('Please Select Upto') + ' ' + (details != null && details.SelectItemText.select_upto_optional)}</Text>
+        }
         <Separator />
         {/* <View style={styles.row}>
           <TouchableOpacity onPress={() => { setFree(!free) }}>

@@ -85,9 +85,9 @@ const PickupView = (props) => {
     return (
         <View style={styles.container}>
             <View style={styles.form}>
-                <TouchableOpacity style={styles.closeBtn} onPress={() => onClose(false)}>
+                {/* <TouchableOpacity style={styles.closeBtn} onPress={() => onClose(false)}>
                     <Image resizeMode='contain' style={styles.closeImg} source={require('../../assets/red-cross.png')} />
-                </TouchableOpacity>
+                </TouchableOpacity> */}
                 <View style={styles.locationSplitBtnView}>
                     <TouchableOpacity style={dineIn ? styles.selectedLocationBtn : styles.locationBtn} onPress={() => {
                         setDineIn(true)
